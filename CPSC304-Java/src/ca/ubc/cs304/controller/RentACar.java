@@ -10,11 +10,11 @@ import ca.ubc.cs304.ui.TerminalTransactions;
 /**
  * This is the main controller class that will orchestrate everything.
  */
-public class TJJRentals implements LoginWindowDelegate, TerminalTransactionsDelegate {
+public class RentACar implements LoginWindowDelegate, TerminalTransactionsDelegate {
 	private DatabaseConnectionHandler dbHandler = null;
 	private LoginWindow loginWindow = null;
 
-	public TJJRentals() {
+	public RentACar() {
 		dbHandler = new DatabaseConnectionHandler();
 	}
 	
@@ -123,7 +123,7 @@ public class TJJRentals implements LoginWindowDelegate, TerminalTransactionsDele
 	 * Main method called at launch time
 	 */
 	public static void main(String args[]) {
-		TJJRentals store = new TJJRentals();
+		RentACar store = new RentACar();
 		store.start();
 	}
 }

@@ -78,4 +78,15 @@ create table customer (
     customer_dlicense integer,
 );
 
+create table retrns (
+	rent_id integer not null, 
+	return_date date not null,
+	return_time time not null, 
+	return_odomoter integer not null,
+	return_fulltank boolean not null,
+	return_value integer not null,
+	PRIMARY KEY (rent_id),
+	foreign key (rent_id) references Rent
+);
+
 commit;

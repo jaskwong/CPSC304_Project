@@ -1,51 +1,84 @@
 package ca.ubc.cs304.model;
+import java.sql.Date;
+import java.sql.Time;
 
 /**
  * The intent for this class is to update/store information about a single vehicle
  */
-public class Vehicle {
-	private final String vlicense;
-	private final String make;
-	private final String model;
-	private final int year;
-	private final String color;
-	private final int odomoter;
-	private final String status;
-	private final String vtname;
-	private final String location;
-	private final String city;
-	
-	public Vehicle(String vlicense, String make, String model, int year, String color, int odomoter, String status, String vtname, String location, String city) {
-		this.vlicense = vlicense;
-		this.make = make;
-		this.model = model;
-		this.year = year;
-		this.color = color;
+public class Rentals {
+	private final int rid;
+	private final int vid;
+	private final int cellphone;
+	private final Date fromDate;
+	private final Time fromTime;
+	private final Date toDate;
+	private final Time toTime;
+	private int odomoter;
+	private final String cardName;
+	private final int cardNo;
+	private final Date expDate;
+	private final int confNo;
+
+	public Rentals(int rid, int vid, int cellphone, Date fromDate, Time fromTime, Date toDate, Time toTime, int odomoter, String cardName, int cardNo, Date expDate, int confNo) {
+		this.rid = rid;
+		this.vid = vid;
+		this.cellphone = cellphone;
+		this.fromDate = fromDate;
+		this.fromTime = fromTime;
+		this.toDate = toDate;
+		this.toTime = toTime;
 		this.odomoter = odomoter;
-		this.status = status;
-		this.vtname = vtname;
-		this.location = location;
-		this.city = city;
+		this.cardName = cardName;
+		this.cardNo = cardNo;
+		this.expDate = expDate;
+		this.confNo = confNo;
 	}
 
-	public String getVlicense() {return vlicense;}
+	public int getRid() {
+		return rid;
+	}
 
-	public String getMake() {return make;}
+	public int getVid() {
+		return vid;
+	}
 
-	public String getModel() {return model;}
+	public int getCellphone() {
+		return cellphone;
+	}
 
-	public int getYear() {return year;}
+	public Date getFromDate() {
+		return fromDate;
+	}
 
-	public String getColor() {return color;}
+	public Time getFromTime() {
+		return fromTime;
+	}
 
-	public int getOdomoter() {return odomoter;}
+	public Date getToDate() {
+		return toDate;
+	}
 
-	public String getStatus() {return status;}
+	public Time getToTime() {
+		return toTime;
+	}
 
-	public String getVtname() {return vtname;}
+	public int getOdomoter() {
+		return odomoter;
+	}
 
-	public String getLocation() {return location;}
+	public String getCardName() {
+		return cardName;
+	}
 
-	public String getCity() {return city;}
+	public int getCardNo() {
+		return cardNo;
+	}
 
+	public Date getExpDate() {
+		return expDate;
+	}
+
+	public int getConfNo() {
+		return confNo;
+	}
 }

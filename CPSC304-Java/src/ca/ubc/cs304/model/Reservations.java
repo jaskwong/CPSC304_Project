@@ -1,51 +1,42 @@
 package ca.ubc.cs304.model;
+import java.sql.Date;
+import java.sql.Time;
 
 /**
- * The intent for this class is to update/store information about a single vehicle
+ * The intent for this class is to update/store information about a single reservation
  */
-public class Vehicle {
-	private final String vlicense;
-	private final String make;
-	private final String model;
-	private final int year;
-	private final String color;
-	private final int odomoter;
-	private final String status;
+public class Reservations {
+	private final int confNo;
 	private final String vtname;
-	private final String location;
-	private final String city;
-	
-	public Vehicle(String vlicense, String make, String model, int year, String color, int odomoter, String status, String vtname, String location, String city) {
-		this.vlicense = vlicense;
-		this.make = make;
-		this.model = model;
-		this.year = year;
-		this.color = color;
-		this.odomoter = odomoter;
-		this.status = status;
+	private final int cellphone;
+	private final Date fromDate;
+	private final Time fromTime;
+	private final Date toDate;
+	private final Time toTime;
+
+
+	public Reservations(int confNo, String vtname, int cellphone, Date fromDate, Time fromTime, Date toDate, Time toTime) {
+		this.confNo = confNo;
 		this.vtname = vtname;
-		this.location = location;
-		this.city = city;
+		this.cellphone = cellphone;
+		this.fromDate = fromDate;
+		this.fromTime = fromTime;
+		this.toDate = toDate;
+		this.toTime = toTime;
 	}
 
-	public String getVlicense() {return vlicense;}
+    public int getConfNo() {return confNo;}
 
-	public String getMake() {return make;}
+    public String getVtname() {return vtname;}
 
-	public String getModel() {return model;}
+    public int getCellphone() {return cellphone;}
 
-	public int getYear() {return year;}
+    public Date getFromDate() {return fromDate;}
 
-	public String getColor() {return color;}
+    public Time getFromTime() {return fromTime;}
 
-	public int getOdomoter() {return odomoter;}
+    public Date getToDate() {return  toDate;}
 
-	public String getStatus() {return status;}
-
-	public String getVtname() {return vtname;}
-
-	public String getLocation() {return location;}
-
-	public String getCity() {return city;}
+    public Time getToTime() {return toTime;}
 
 }

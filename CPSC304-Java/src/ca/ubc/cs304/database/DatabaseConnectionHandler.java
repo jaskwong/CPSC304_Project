@@ -8,7 +8,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-import ca.ubc.cs304.model.BranchModel;
+import ca.ubc.cs304.model.Vehicle;
 
 /**
  * This class handles all database related transactions
@@ -59,7 +59,7 @@ public class DatabaseConnectionHandler {
 		}
 	}
 	
-	public void insertBranch(BranchModel model) {
+	public void insertBranch(Vehicle model) {
 		try {
 			PreparedStatement ps = connection.prepareStatement("INSERT INTO branch VALUES (?,?,?,?,?)");
 			ps.setInt(1, model.getId());
@@ -82,8 +82,8 @@ public class DatabaseConnectionHandler {
 		}
 	}
 	
-	public BranchModel[] getBranchInfo() {
-		ArrayList<BranchModel> result = new ArrayList<BranchModel>();
+	public Vehicle[] getBranchInfo() {
+		ArrayList<Vehicle> result = new ArrayList<Vehicle>();
 		
 		try {
 			Statement stmt = connection.createStatement();
@@ -101,7 +101,7 @@ public class DatabaseConnectionHandler {
 //    		}
 			
 			while(rs.next()) {
-				BranchModel model = new BranchModel(rs.getString("branch_addr"),
+				Vehicle model = new Vehicle(rs.getString("branch_addr"),
 													rs.getString("branch_city"),
 													rs.getInt("branch_id"),
 													rs.getString("branch_name"),
@@ -115,7 +115,7 @@ public class DatabaseConnectionHandler {
 			System.out.println(EXCEPTION_TAG + " " + e.getMessage());
 		}	
 		
-		return result.toArray(new BranchModel[result.size()]);
+		return result.toArray(new Vehicle[result.size()]);
 	}
 	
 	public void updateBranch(int id, String name) {
