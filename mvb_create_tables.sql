@@ -1,41 +1,44 @@
-create table branch ( 
-	branch_id integer not null PRIMARY KEY,
-	branch_name varchar2(20) not null,
-	branch_addr varchar2(50),
-	branch_city varchar2(20) not null,
-	branch_phone integer 
+create table vehicletype (
+	vt_name varchar(20) not null PRIMARY KEY,
+	vt_features varchar(250),
+	vt_wrate numeric(5,2),
+	vt_drate numeric(5,2),
+	vt_hrate numeric(5,2),
+	vt_wirate numeric(5,2),
+	vt_dirate numeric(5,2),
+	vt_hirate numeric(5,2),
+	vt_krate numeric(5,2)
 );
 
-create table driver (
-	driver_sin integer not null PRIMARY KEY,
-	driver_name varchar(20) not null,
-	driver_addr varchar(50) not null,
-	driver_city varchar(20) not null,
-	driver_birthdate date not null,
-	driver_phone integer
+CREATE DOMAIN stat AS CHAR
+CHECK(
+   VALUE ~ 'AVAILABLE'
+OR VALUE ~ 'MAINTENANCE'
+OR VALUE ~ 'RENTED'
 );
 
-create table license ( 
-	license_no NUMBER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-	driver_sin integer not null,
-	license_type char not null,
-	license_class integer,
-	license_expiry date not null,
-	issue_date date not null,
-	branch_id integer not null,
-	foreign key (driver_sin) references driver,
-	foreign key (branch_id) references branch
+create table vehicle ( 
+	v_id: varchar(5) not null,
+	v_license: varchar(7),
+	v_make: varchar(20),
+	v_model varchar(20),
+	v_year int,
+	v_color CHAR(20),
+	v_odometer int,
+	v_status stat,
+	FOREIGN KEY vt_name varchar(20) references vehicletype,
+	v_location varchar,
+	v_city varchar
 );
 
-create table exam (
-	driver_sin integer not null,
-	branch_id integer not null,
-	exam_date date not null,
-	exam_type char not null,
-	exam_score integer,
-	PRIMARY KEY (driver_sin, branch_id, exam_date),
-	foreign key (driver_sin) references driver,
-	foreign key (branch_id) references branch
+create table ret ( 
+	FOREIGN KEY rent_rid int references rent,
+	ret_date date,
+	ret_time time,
+	ret_odometer int,
+	ret_fulltank int not null
+		constraint ret_fulltank check (active in (0, 1)),
+	ret_value numeric(5,2)
 );
 
 commit;
