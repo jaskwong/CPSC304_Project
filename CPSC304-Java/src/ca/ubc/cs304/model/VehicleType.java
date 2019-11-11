@@ -60,4 +60,32 @@ public class VehicleType {
 	public int getKrate() {
 		return krate;
 	}
+
+	public void setDirate(int dirate) {
+		this.dirate = dirate;
+	}
+
+	public void setDrate(int drate) {
+		this.drate = drate;
+	}
+
+	public void setHirate(int hirate) {
+		this.hirate = hirate;
+	}
+
+	public void setHrate(int hrate) {
+		this.hrate = hrate;
+	}
+
+	public void setKrate(int krate) {
+		this.krate = krate;
+	}
+
+	public void setWirate(int wirate) {
+		this.wirate = wirate;
+	}
+
+	public void setWrate(int wrate) {
+		this.wrate = wrate;
+	}
 }

@@ -48,4 +48,19 @@ public class Vehicle {
 
 	public String getCity() {return city;}
 
+	public void setCity(String city) {
+		this.city = city;
+	}
+
+	public void setLocation(String location) {
+		this.location = location;
+	}
+
+	public void setOdomoter(int odomoter) {
+		this.odomoter = odomoter;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
 }

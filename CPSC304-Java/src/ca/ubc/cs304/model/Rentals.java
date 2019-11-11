@@ -13,7 +13,7 @@ public class Rentals {
 	private final Time fromTime;
 	private final Date toDate;
 	private final Time toTime;
-	private int odomoter;
+	private final int odomoter;
 	private final String cardName;
 	private final int cardNo;
 	private final Date expDate;

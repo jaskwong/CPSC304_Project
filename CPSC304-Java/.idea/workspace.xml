@@ -2,24 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0e28de74-62e6-469a-94ba-81894da29c8c" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ca/ubc/cs304/model/Customers.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ca/ubc/cs304/model/Rentals.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ca/ubc/cs304/model/Reservations.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ca/ubc/cs304/model/Ret.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ca/ubc/cs304/model/VehicleType.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/CPSC304-JavaDemo/ca/ubc/cs304/controller/Bank.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/CPSC304-JavaDemo/ca/ubc/cs304/delegates/TerminalTransactionsDelegate.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/CPSC304-JavaDemo/ca/ubc/cs304/model/BranchModel.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ca/ubc/cs304/controller/Bank.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ca/ubc/cs304/controller/RentACar.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ca/ubc/cs304/database/DatabaseConnectionHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ca/ubc/cs304/database/DatabaseConnectionHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ca/ubc/cs304/delegates/TerminalTransactionsDelegate.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ca/ubc/cs304/delegates/TerminalTransactionsDelegate.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ca/ubc/cs304/model/BranchModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ca/ubc/cs304/model/Vehicle.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ca/ubc/cs304/ui/TerminalTransactions.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ca/ubc/cs304/ui/TerminalTransactions.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mvb_create_tables.sql" beforeDir="false" afterPath="$PROJECT_DIR$/../mvb_create_tables.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/CPSC304-JavaDemo/ca/ubc/cs304/model/Rentals.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/CPSC304-JavaDemo/ca/ubc/cs304/model/Rentals.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/CPSC304-JavaDemo/ca/ubc/cs304/model/Vehicle.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/CPSC304-JavaDemo/ca/ubc/cs304/model/Vehicle.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/CPSC304-JavaDemo/ca/ubc/cs304/model/VehicleType.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/CPSC304-JavaDemo/ca/ubc/cs304/model/VehicleType.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ca/ubc/cs304/model/Customers.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ca/ubc/cs304/model/Customers.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ca/ubc/cs304/model/Rentals.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ca/ubc/cs304/model/Rentals.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ca/ubc/cs304/model/Vehicle.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ca/ubc/cs304/model/Vehicle.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ca/ubc/cs304/model/VehicleType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ca/ubc/cs304/model/VehicleType.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />

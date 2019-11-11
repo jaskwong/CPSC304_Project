@@ -5,7 +5,7 @@ package ca.ubc.cs304.model;
  */
 public class Customers {
 	private int cellphone;
-	private final String name;
+	private String name;
 	private String address;
 	private final int dlicense;
 
@@ -30,5 +30,17 @@ public class Customers {
 
 	public int getDlicense() {
 		return dlicense;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public void setCellphone(int cellphone) {
+		this.cellphone = cellphone;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 }
