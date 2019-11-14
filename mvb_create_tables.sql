@@ -56,8 +56,7 @@ create table vehicles (
 	v_year int,
 	v_color CHAR(20),
 	v_odometer int,
-	v_status int not null
-		constraint rets_fulltank check (active in (0, 1, 2)),
+	v_status int,
 	FOREIGN KEY vt_name varchar(20) references vehicletypes,
 	v_location varchar,
 	v_city varchar
@@ -76,8 +75,7 @@ create table rets (
 	rets_date date,
 	rets_time time,
 	rets_odometer int,
-	rets_fulltank int not null
-		constraint rets_fulltank check (active in (0, 1)),
+	rets_fulltank int,
 	rets_value numeric(5,2),
 	foreign key (rentals_rid) references rentals
 );
