@@ -5,20 +5,20 @@ import java.sql.Time;
 /**
  * The intent for this class is to update/store information about a single reservation
  */
-public class Reservations {
+public class Reservation {
 	private final int confNo;
 	private final String vtname;
-	private final int cellphone;
+	private final int customer_dlicense;
 	private final Date fromDate;
 	private final Time fromTime;
 	private final Date toDate;
 	private final Time toTime;
 
 
-	public Reservations(int confNo, String vtname, int cellphone, Date fromDate, Time fromTime, Date toDate, Time toTime) {
+	public Reservation(int confNo, String vtname, int dlicense, Date fromDate, Time fromTime, Date toDate, Time toTime) {
 		this.confNo = confNo;
 		this.vtname = vtname;
-		this.cellphone = cellphone;
+		this.customer_dlicense = dlicense;
 		this.fromDate = fromDate;
 		this.fromTime = fromTime;
 		this.toDate = toDate;
@@ -29,7 +29,7 @@ public class Reservations {
 
     public String getVtname() {return vtname;}
 
-    public int getCellphone() {return cellphone;}
+    public int getCustomer_dlicense() {return customer_dlicense;}
 
     public Date getFromDate() {return fromDate;}
 

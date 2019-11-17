@@ -4,18 +4,20 @@ package ca.ubc.cs304.model;
  * The intent for this class is to update/store information about a single vehicle
  */
 public class Vehicle {
+    public enum Status{AVAILABLE, RENTED, MAINTENANCE}
+
 	private final String vlicense;
 	private final String make;
 	private final String model;
 	private final int year;
 	private final String color;
 	private int odomoter;
-	private String status;
+	private Status status;
 	private final String vtname;
 	private String location;
 	private String city;
 	
-	public Vehicle(String vlicense, String make, String model, int year, String color, int odomoter, String status, String vtname, String location, String city) {
+	public Vehicle(String vlicense, String make, String model, int year, String color, int odomoter, Status status, String vtname, String location, String city) {
 		this.vlicense = vlicense;
 		this.make = make;
 		this.model = model;
@@ -40,7 +42,7 @@ public class Vehicle {
 
 	public int getOdomoter() {return odomoter;}
 
-	public String getStatus() {return status;}
+	public Status getStatus() {return status;}
 
 	public String getVtname() {return vtname;}
 
