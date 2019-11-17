@@ -6,7 +6,6 @@ import ca.ubc.cs304.model.Vehicle;
 import ca.ubc.cs304.model.VehicleType;
 
 import java.sql.*;
-import java.util.ArrayList;
 import java.util.Random;
 
 /**
