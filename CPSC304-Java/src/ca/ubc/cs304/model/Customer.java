@@ -3,13 +3,13 @@ package ca.ubc.cs304.model;
 /**
  * The intent for this class is to update/store information about a single customer
  */
-public class Customers {
+public class Customer {
 	private int cellphone;
 	private String name;
 	private String address;
 	private final int dlicense;
 
-	public Customers(int cellphone, String name, String address, int dlicense) {
+	public Customer(int cellphone, String name, String address, int dlicense) {
 		this.cellphone = cellphone;
 		this.name = name;
 		this.address = address;
@@ -17,7 +17,7 @@ public class Customers {
 	}
 
 	public int getCellphone() {
-		return cellphone;
+		return  cellphone;
 	}
 
 	public String getName() {

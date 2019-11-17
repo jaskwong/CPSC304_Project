@@ -5,7 +5,7 @@ import java.sql.Time;
 /**
  * The intent for this class is to update/store information about a single rental
  */
-public class Rentals {
+public class Rental {
 	private final int rid;
 	private final int vid;
 	private final int cellphone;
@@ -19,7 +19,7 @@ public class Rentals {
 	private final Date expDate;
 	private final int confNo;
 
-	public Rentals(int rid, int vid, int cellphone, Date fromDate, Time fromTime, Date toDate, Time toTime, int odomoter, String cardName, int cardNo, Date expDate, int confNo) {
+	public Rental(int rid, int vid, int cellphone, Date fromDate, Time fromTime, Date toDate, Time toTime, int odomoter, String cardName, int cardNo, Date expDate, int confNo) {
 		this.rid = rid;
 		this.vid = vid;
 		this.cellphone = cellphone;

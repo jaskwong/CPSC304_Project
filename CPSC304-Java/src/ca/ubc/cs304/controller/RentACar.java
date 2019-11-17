@@ -3,7 +3,7 @@ package ca.ubc.cs304.controller;
 import ca.ubc.cs304.database.DatabaseConnectionHandler;
 import ca.ubc.cs304.delegates.LoginWindowDelegate;
 import ca.ubc.cs304.delegates.TerminalTransactionsDelegate;
-import ca.ubc.cs304.model.Rentals;
+import ca.ubc.cs304.model.Rental;
 import ca.ubc.cs304.model.Ret;
 import ca.ubc.cs304.model.Vehicle;
 import ca.ubc.cs304.ui.LoginWindow;
@@ -68,7 +68,7 @@ public class RentACar implements LoginWindowDelegate, TerminalTransactionsDelega
 		dbHandler.setRented(vlicense);
 	}
 
-	public void makeRental(Rentals rental) {
+	public void makeRental(Rental rental) {
 		dbHandler.makeRental(rental);
 	}
 
@@ -118,10 +118,10 @@ public class RentACar implements LoginWindowDelegate, TerminalTransactionsDelega
 	 */
     public void showBranch() {
     	Vehicle[] models = dbHandler.getBranchInfo();
-    	
+
     	for (int i = 0; i < models.length; i++) {
     		Vehicle model = models[i];
-    		
+
     		// simplified output formatting; truncation may occur
     		System.out.printf("%-10.10s", model.getId());
     		System.out.printf("%-20.20s", model.getName());
@@ -136,7 +136,7 @@ public class RentACar implements LoginWindowDelegate, TerminalTransactionsDelega
     		} else {
     			System.out.printf("%-15.15s", model.getPhoneNumber());
     		}
-    		
+
     		System.out.println();
     	}
     }
