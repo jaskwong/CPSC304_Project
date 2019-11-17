@@ -12,12 +12,12 @@ public class Vehicle {
 	private final int year;
 	private final String color;
 	private int odomoter;
-	private Status status;
+	private String status;
 	private final String vtname;
 	private String location;
 	private String city;
 	
-	public Vehicle(String vlicense, String make, String model, int year, String color, int odomoter, Status status, String vtname, String location, String city) {
+	public Vehicle(String vlicense, String make, String model, int year, String color, int odomoter, String status, String vtname, String location, String city) {
 		this.vlicense = vlicense;
 		this.make = make;
 		this.model = model;
@@ -42,7 +42,7 @@ public class Vehicle {
 
 	public int getOdomoter() {return odomoter;}
 
-	public Status getStatus() {return status;}
+	public String getStatus() {return status;}
 
 	public String getVtname() {return vtname;}
 
@@ -65,4 +65,5 @@ public class Vehicle {
 	public void setStatus(String status) {
 		this.status = status;
 	}
+
 }

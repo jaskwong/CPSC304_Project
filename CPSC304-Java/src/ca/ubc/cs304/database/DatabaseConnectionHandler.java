@@ -1,11 +1,11 @@
 package ca.ubc.cs304.database;
 
-import ca.ubc.cs304.model.Customer;
-import ca.ubc.cs304.model.Reservation;
-import ca.ubc.cs304.model.Vehicle;
-import ca.ubc.cs304.model.VehicleType;
+import ca.ubc.cs304.model.*;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.Random;
 
 /**
@@ -15,7 +15,7 @@ public class DatabaseConnectionHandler {
 	private static final String ORACLE_URL = "jdbc:oracle:thin:@dbhost.students.cs.ubc.ca:1522:stu";
 	private static final String EXCEPTION_TAG = "[EXCEPTION]";
 	private static final String WARNING_TAG = "[WARNING]";
-	
+
 	private Connection connection = null;
 	
 	public DatabaseConnectionHandler() {
@@ -38,6 +38,155 @@ public class DatabaseConnectionHandler {
 		}
 	}
 
+	public void setRented(String license) {
+		try {
+			PreparedStatement ps = connection.prepareStatement("UPDATE vehicle SET status WHERE vlicense = ?");
+			ps.setString(1, license);
+
+			int rowCount = ps.executeUpdate();
+			if (rowCount == 0) {
+				System.out.println(WARNING_TAG + " Vehicle " + license + " does not exist!");
+			}
+
+			connection.commit();
+
+			ps.close();
+		} catch (SQLException e) {
+			System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+			rollbackConnection();
+		}
+	}
+
+	public void makeRental(Rental rental) {
+		try {
+			PreparedStatement ps = connection.prepareStatement("INSERT INTO rental VALUES (?,?,?,?,?,?,?,?,?,?,?,?)");
+
+			ps.setInt(1, rental.getRid());
+			ps.setInt(2, rental.getVid());
+			ps.setInt(3, rental.getCellphone());
+			ps.setDate(4, rental.getFromDate());
+			ps.setTime(5, rental.getFromTime());
+			ps.setDate(6, rental.getToDate());
+			ps.setTime(7, rental.getToTime());
+			ps.setInt(8, rental.getOdomoter());
+			ps.setString(9, rental.getCardName());
+			ps.setInt(10, rental.getCardNo());
+			ps.setDate(11, rental.getExpDate());
+			ps.setInt(12, rental.getConfNo());
+
+			ps.executeUpdate();
+			connection.commit();
+
+			ps.close();
+		} catch (SQLException e) {
+			System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+			rollbackConnection();
+		}
+	}
+
+	public void makeVehicle(Vehicle vehicle) {
+		try {
+			PreparedStatement ps = connection.prepareStatement("INSERT INTO vehicle VALUES (?,?,?,?,?,?,?,?,?,?)");
+
+			ps.setString(1, vehicle.getVlicense());
+			ps.setString(2, vehicle.getMake());
+			ps.setString(3, vehicle.getModel());
+			ps.setInt(4, vehicle.getYear());
+			ps.setString(5, vehicle.getColor());
+			ps.setInt(6, vehicle.getOdomoter());
+			ps.setString(7, vehicle.getStatus());
+			ps.setString(8, vehicle.getVtname());
+			ps.setString(9, vehicle.getLocation());
+			ps.setString(10, vehicle.getCity());
+
+			ps.executeUpdate();
+			connection.commit();
+
+			ps.close();
+		} catch (SQLException e) {
+			System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+			rollbackConnection();
+		}
+	}
+
+	public void deleteVehicle(String vlicense) {
+		try {
+			PreparedStatement ps = connection.prepareStatement("DELETE FROM vehicle WHERE vlicense = ?");
+			ps.setString(1, vlicense);
+
+			int rowCount = ps.executeUpdate();
+			if (rowCount == 0) {
+				System.out.println(WARNING_TAG + " Rental " + vlicense + " does not exist!");
+			}
+
+			connection.commit();
+
+			ps.close();
+		} catch (SQLException e) {
+			System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+			rollbackConnection();
+		}
+	}
+
+	public void makeRet(Ret ret) {
+		try {
+			PreparedStatement ps = connection.prepareStatement("INSERT INTO ret VALUES (?,?,?,?,?,?)");
+
+			ps.setInt(1, ret.getRid());
+			ps.setDate(2, ret.getDate());
+			ps.setTime(3, ret.getTime());
+			ps.setInt(4, ret.getOdomoter());
+			ps.setBoolean(5, ret.isFulltank());
+			ps.setFloat(6, ret.getValue());
+
+			ps.executeUpdate();
+			connection.commit();
+
+			ps.close();
+		} catch (SQLException e) {
+			System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+			rollbackConnection();
+		}
+	}
+
+	public void deleteRet(int rid) {
+		try {
+			PreparedStatement ps = connection.prepareStatement("DELETE FROM ret WHERE rid = ?");
+			ps.setInt(1, rid);
+
+			int rowCount = ps.executeUpdate();
+			if (rowCount == 0) {
+				System.out.println(WARNING_TAG + " Return " + rid + " does not exist!");
+			}
+
+			connection.commit();
+
+			ps.close();
+		} catch (SQLException e) {
+			System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+			rollbackConnection();
+		}
+	}
+
+	public void deleteRental(int rid) {
+		try {
+			PreparedStatement ps = connection.prepareStatement("DELETE FROM rental WHERE rid = ?");
+			ps.setInt(1, rid);
+
+			int rowCount = ps.executeUpdate();
+			if (rowCount == 0) {
+				System.out.println(WARNING_TAG + " Rental " + rid + " does not exist!");
+			}
+
+			connection.commit();
+
+			ps.close();
+		} catch (SQLException e) {
+			System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+			rollbackConnection();
+		}
+	}
+
 	public void deleteBranch(int branchId) {
 		try {
 			PreparedStatement ps = connection.prepareStatement("DELETE FROM branch WHERE branch_id = ?");
@@ -47,7 +196,7 @@ public class DatabaseConnectionHandler {
 			if (rowCount == 0) {
 				System.out.println(WARNING_TAG + " Branch " + branchId + " does not exist!");
 			}
-			
+
 			connection.commit();
 	
 			ps.close();
