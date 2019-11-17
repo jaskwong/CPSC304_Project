@@ -63,4 +63,5 @@ public class Vehicle {
 	public void setStatus(String status) {
 		this.status = status;
 	}
+
 }

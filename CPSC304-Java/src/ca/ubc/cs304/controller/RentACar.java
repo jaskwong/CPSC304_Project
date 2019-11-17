@@ -3,6 +3,8 @@ package ca.ubc.cs304.controller;
 import ca.ubc.cs304.database.DatabaseConnectionHandler;
 import ca.ubc.cs304.delegates.LoginWindowDelegate;
 import ca.ubc.cs304.delegates.TerminalTransactionsDelegate;
+import ca.ubc.cs304.model.Rentals;
+import ca.ubc.cs304.model.Ret;
 import ca.ubc.cs304.model.Vehicle;
 import ca.ubc.cs304.ui.LoginWindow;
 import ca.ubc.cs304.ui.TerminalTransactions;
@@ -57,7 +59,40 @@ public class RentACar implements LoginWindowDelegate, TerminalTransactionsDelega
     	dbHandler.insertBranch(model);
     }
 
-    /**
+	/**
+	 *
+	 * Mark a vehicle as rented for a given time period.
+	 *
+	 */
+	public void setRented(String vlicense) {
+		dbHandler.setRented(vlicense);
+	}
+
+	public void makeRental(Rentals rental) {
+		dbHandler.makeRental(rental);
+	}
+
+	public void deleteRental(int rid) {
+		dbHandler.deleteRental(rid);
+	}
+
+	public void makeVehicle(Vehicle vehicle) {
+		dbHandler.makeVehicle(vehicle);
+	}
+
+	public void deleteVehicle(String vlicense) {
+		dbHandler.deleteVehicle(vlicense);
+	}
+
+	public void makeReturns(Ret ret) {
+		dbHandler.makeRet(ret);
+	}
+
+	public void deleteReturns(int rid) {
+		dbHandler.deleteRet(rid);
+	}
+
+	/**
 	 * TermainalTransactionsDelegate Implementation
 	 * 
 	 * Delete branch with given branch ID.

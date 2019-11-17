@@ -3,11 +3,12 @@
   <component name="ChangeListManager">
     <list default="true" id="0e28de74-62e6-469a-94ba-81894da29c8c" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/CPSC304-JavaDemo/ca/ubc/cs304/model/Rentals.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/CPSC304-JavaDemo/ca/ubc/cs304/model/Rentals.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/CPSC304-JavaDemo/ca/ubc/cs304/model/Vehicle.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/CPSC304-JavaDemo/ca/ubc/cs304/model/Vehicle.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/CPSC304-JavaDemo/ca/ubc/cs304/model/VehicleType.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/CPSC304-JavaDemo/ca/ubc/cs304/model/VehicleType.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/CPSC304-JavaDemo/ca/ubc/cs304/delegates/LoginWindowDelegate.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ca/ubc/cs304/controller/RentACar.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ca/ubc/cs304/controller/RentACar.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ca/ubc/cs304/database/DatabaseConnectionHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ca/ubc/cs304/database/DatabaseConnectionHandler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ca/ubc/cs304/model/Customers.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ca/ubc/cs304/model/Customers.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ca/ubc/cs304/model/Rentals.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ca/ubc/cs304/model/Rentals.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ca/ubc/cs304/model/Ret.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ca/ubc/cs304/model/Ret.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ca/ubc/cs304/model/Vehicle.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ca/ubc/cs304/model/Vehicle.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ca/ubc/cs304/model/VehicleType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ca/ubc/cs304/model/VehicleType.java" afterDir="false" />
     </list>
@@ -129,7 +130,9 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
           </value>
         </entry>
       </map>

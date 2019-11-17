@@ -1,7 +1,7 @@
 package ca.ubc.cs304.model;
 
 /**
- * The intent for this class is to update/store information about a single vehicle
+ * The intent for this class is to update/store information about a single vehiclye type
  */
 public class VehicleType {
 	private final String vtname;

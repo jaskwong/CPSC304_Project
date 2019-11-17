@@ -3,7 +3,7 @@ import java.sql.Date;
 import java.sql.Time;
 
 /**
- * The intent for this class is to update/store information about a single vehicle
+ * The intent for this class is to update/store information about a single return
  */
 public class Ret {
 	private final int rid;
