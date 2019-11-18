@@ -219,10 +219,10 @@ public class DatabaseConnectionHandler {
         }
     }
 
-    public void deleteCustomer(Customer c){
+    public void deleteCustomer(int dlic){
         try {
             PreparedStatement ps = connection.prepareStatement("DELETE FROM customers WHERE customer_dlicense = ?");
-            ps.setInt(1, c.getDlicense());
+            ps.setInt(1, dlic);
         } catch (SQLException e){
             System.out.println(EXCEPTION_TAG + " " + e.getMessage());
             rollbackConnection();
@@ -247,10 +247,10 @@ public class DatabaseConnectionHandler {
         }
     }
 
-    public void deleteReservation(Reservation r){
+    public void deleteReservation(int confno){
         try {
             PreparedStatement ps = connection.prepareStatement("DELETE FROM reservations WHERE reservations_confNo = ?");
-            ps.setInt(1, r.getConfNo());
+            ps.setInt(1, confno);
         } catch (SQLException e){
             System.out.println(EXCEPTION_TAG + " " + e.getMessage());
             rollbackConnection();
@@ -275,10 +275,10 @@ public class DatabaseConnectionHandler {
         }
     }
 
-    public void deleteVehicleType(VehicleType vt) {
+    public void deleteVehicleType(String vtName) {
         try {
             PreparedStatement ps = connection.prepareStatement("DELETE FROM vehicletypes WHERE vt_name = ?");
-            ps.setString(1, vt.getVtname());
+            ps.setString(1, vtName);
         } catch (SQLException e){
             System.out.println(EXCEPTION_TAG + " " + e.getMessage());
             rollbackConnection();

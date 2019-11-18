@@ -55,9 +55,9 @@ public class RentACar implements LoginWindowDelegate, TerminalTransactionsDelega
 	 * 
 	 * Insert a branch with the given info
 	 */
-    public void insertBranch(Vehicle model) {
-    	dbHandler.insertBranch(model);
-    }
+//    public void insertBranch(Vehicle model) {
+//    	dbHandler.insertBranch(model);
+//    }
 
 	/**
 	 *
@@ -107,39 +107,39 @@ public class RentACar implements LoginWindowDelegate, TerminalTransactionsDelega
 	 * Update the branch name for a specific ID
 	 */
 
-    public void updateBranch(int branchId, String name) {
-    	dbHandler.updateBranch(branchId, name);
-    }
-
-    /**
-	 * TermainalTransactionsDelegate Implementation
-	 * 
-	 * Displays information about varies bank branches.
-	 */
-    public void showBranch() {
-    	Vehicle[] models = dbHandler.getBranchInfo();
-
-    	for (int i = 0; i < models.length; i++) {
-    		Vehicle model = models[i];
-
-    		// simplified output formatting; truncation may occur
-    		System.out.printf("%-10.10s", model.getId());
-    		System.out.printf("%-20.20s", model.getName());
-    		if (model.getAddress() == null) {
-    			System.out.printf("%-20.20s", " ");
-    		} else {
-    			System.out.printf("%-20.20s", model.getAddress());
-    		}
-    		System.out.printf("%-15.15s", model.getCity());
-    		if (model.getPhoneNumber() == 0) {
-    			System.out.printf("%-15.15s", " ");
-    		} else {
-    			System.out.printf("%-15.15s", model.getPhoneNumber());
-    		}
-
-    		System.out.println();
-    	}
-    }
+//    public void updateBranch(int branchId, String name) {
+//    	dbHandler.updateBranch(branchId, name);
+//    }
+//
+//    /**
+//	 * TermainalTransactionsDelegate Implementation
+//	 *
+//	 * Displays information about varies bank branches.
+//	 */
+//    public void showBranch() {
+//    	Vehicle[] models = dbHandler.getBranchInfo();
+//
+//    	for (int i = 0; i < models.length; i++) {
+//    		Vehicle model = models[i];
+//
+//    		// simplified output formatting; truncation may occur
+//    		System.out.printf("%-10.10s", model.getId());
+//    		System.out.printf("%-20.20s", model.getName());
+//    		if (model.getAddress() == null) {
+//    			System.out.printf("%-20.20s", " ");
+//    		} else {
+//    			System.out.printf("%-20.20s", model.getAddress());
+//    		}
+//    		System.out.printf("%-15.15s", model.getCity());
+//    		if (model.getPhoneNumber() == 0) {
+//    			System.out.printf("%-15.15s", " ");
+//    		} else {
+//    			System.out.printf("%-15.15s", model.getPhoneNumber());
+//    		}
+//
+//    		System.out.println();
+//    	}
+//    }
 	
     /**
 	 * TerminalTransactionsDelegate Implementation
