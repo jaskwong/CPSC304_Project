@@ -1,7 +1,5 @@
 package ca.ubc.cs304.delegates;
 
-import ca.ubc.cs304.model.Vehicle;
-
 /**
  * This interface uses the delegation design pattern where instead of having
  * the TerminalTransactions class try to do everything, it will only
@@ -12,10 +10,10 @@ import ca.ubc.cs304.model.Vehicle;
  * Bank is the actual class that will implement the methods.
  */
 public interface TerminalTransactionsDelegate {
-	public void deleteBranch(int branchId);
-	public void insertBranch(Vehicle model);
-	public void showBranch();
-	public void updateBranch(int branchId, String name);
+//	public void deleteBranch(int branchId);
+//	public void insertBranch(Vehicle model);
+//	public void showBranch();
+//	public void updateBranch(int branchId, String name);
 	
 	public void terminalTransactionsFinished();
 }

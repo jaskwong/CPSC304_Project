@@ -1,11 +1,10 @@
 package ca.ubc.cs304.ui;
 
+import ca.ubc.cs304.delegates.TerminalTransactionsDelegate;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-
-import ca.ubc.cs304.delegates.TerminalTransactionsDelegate;
-import ca.ubc.cs304.model.Vehicle;
 
 /**
  * The class is only responsible for handling terminal text inputs. 
@@ -56,7 +55,7 @@ public class TerminalTransactions {
 					handleUpdateOption();
 					break;
 				case 4:  
-					delegate.showBranch(); 
+//					delegate.showBranch();
 					break;
 				case 5:
 					handleQuitOption();
@@ -75,7 +74,7 @@ public class TerminalTransactions {
 			System.out.print("Please enter the branch ID you wish to delete: ");
 			branchId = readInteger(false);
 			if (branchId != INVALID_INPUT) {
-				delegate.deleteBranch(branchId);
+//				delegate.deleteBranch(branchId);
 			}
 		}
 	}
@@ -112,12 +111,12 @@ public class TerminalTransactions {
 			phoneNumber = readInteger(true);
 		}
 		
-		Vehicle model = new Vehicle(address,
-											city,
-											id,
-											name,
-											phoneNumber);
-		delegate.insertBranch(model);
+//		Vehicle model = new Vehicle(address,
+//											city,
+//											id,
+//											name,
+//											phoneNumber);
+//		delegate.insertBranch(model);
 	}
 	
 	private void handleQuitOption() {
@@ -140,14 +139,14 @@ public class TerminalTransactions {
 			System.out.print("Please enter the branch ID you wish to update: ");
 			id = readInteger(false);
 		}
-		
+
 		String name = null;
 		while (name == null || name.length() <= 0) {
 			System.out.print("Please enter the branch name you wish to update: ");
 			name = readLine().trim();
 		}
 
-		delegate.updateBranch(id, name);
+//		delegate.updateBranch(id, name);
 	}
 	
 	private int readInteger(boolean allowEmpty) {
