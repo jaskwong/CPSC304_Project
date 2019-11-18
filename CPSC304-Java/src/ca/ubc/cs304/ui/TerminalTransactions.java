@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 import ca.ubc.cs304.delegates.TerminalTransactionsDelegate;
+import ca.ubc.cs304.model.Customer;
 import ca.ubc.cs304.model.Vehicle;
 
 /**
@@ -53,10 +54,10 @@ public class TerminalTransactions {
 					handleDeleteOption(); 
 					break;
 				case 3: 
-					handleUpdateOption();
+//					handleUpdateOption();
 					break;
 				case 4:  
-					delegate.showBranch(); 
+//					delegate.showBranch();
 					break;
 				case 5:
 					handleQuitOption();
@@ -70,40 +71,35 @@ public class TerminalTransactions {
 	}
 	
 	private void handleDeleteOption() {
-		int branchId = INVALID_INPUT;
-		while (branchId == INVALID_INPUT) {
+		int dlic = INVALID_INPUT;
+		while (dlic == INVALID_INPUT) {
 			System.out.print("Please enter the branch ID you wish to delete: ");
-			branchId = readInteger(false);
-			if (branchId != INVALID_INPUT) {
-				delegate.deleteBranch(branchId);
+			dlic = readInteger(false);
+			if (dlic != INVALID_INPUT) {
+				delegate.deleteCustomer(dlic);
 			}
 		}
 	}
 	
 	private void handleInsertOption() {
-		int id = INVALID_INPUT;
-		while (id == INVALID_INPUT) {
-			System.out.print("Please enter the branch ID you wish to insert: ");
-			id = readInteger(false);
+        String name = null;
+        while (name == null || name.length() <= 0) {
+            System.out.print("Please enter the customer name");
+            name = readLine().trim();
+        }
+
+        int dlic = INVALID_INPUT;
+		while (dlic == INVALID_INPUT) {
+			System.out.print("Please enter the drivers license");
+			dlic = readInteger(false);
 		}
 		
-		String name = null;
-		while (name == null || name.length() <= 0) {
-			System.out.print("Please enter the branch name you wish to insert: ");
-			name = readLine().trim();
-		}
-		
+
 		// branch address is allowed to be null so we don't need to repeatedly ask for the address
 		System.out.print("Please enter the branch address you wish to insert: ");
 		String address = readLine().trim();
 		if (address.length() == 0) {
 			address = null;
-		}
-		
-		String city = null;
-		while (city == null || city.length() <= 0) {
-			System.out.print("Please enter the branch city you wish to insert: ");
-			city = readLine().trim();
 		}
 		
 		int phoneNumber = INVALID_INPUT;
@@ -112,12 +108,8 @@ public class TerminalTransactions {
 			phoneNumber = readInteger(true);
 		}
 		
-		Vehicle model = new Vehicle(address,
-											city,
-											id,
-											name,
-											phoneNumber);
-		delegate.insertBranch(model);
+		Customer customer = new Customer(phoneNumber, name, address, dlic)
+		delegate.makeCustomer(customer);
 	}
 	
 	private void handleQuitOption() {
@@ -134,21 +126,21 @@ public class TerminalTransactions {
 		delegate.terminalTransactionsFinished();
 	}
 	
-	private void handleUpdateOption() {
-		int id = INVALID_INPUT;
-		while (id == INVALID_INPUT) {
-			System.out.print("Please enter the branch ID you wish to update: ");
-			id = readInteger(false);
-		}
-		
-		String name = null;
-		while (name == null || name.length() <= 0) {
-			System.out.print("Please enter the branch name you wish to update: ");
-			name = readLine().trim();
-		}
-
-		delegate.updateBranch(id, name);
-	}
+//	private void handleUpdateOption() {
+//		int id = INVALID_INPUT;
+//		while (id == INVALID_INPUT) {
+//			System.out.print("Please enter the branch ID you wish to update: ");
+//			id = readInteger(false);
+//		}
+//
+//		String name = null;
+//		while (name == null || name.length() <= 0) {
+//			System.out.print("Please enter the branch name you wish to update: ");
+//			name = readLine().trim();
+//		}
+//
+//		delegate.updateBranch(id, name);
+//	}
 	
 	private int readInteger(boolean allowEmpty) {
 		String line = null;
