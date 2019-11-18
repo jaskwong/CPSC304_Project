@@ -3,8 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="0e28de74-62e6-469a-94ba-81894da29c8c" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/src/ca/ubc/cs304/delegates/TerminalTransactionsDelegate.java" afterPath="$PROJECT_DIR$/src/ca/ubc/cs304/delegates/TerminalTransactionsDelegate.java" />
-      <change beforePath="$PROJECT_DIR$/src/ca/ubc/cs304/ui/TerminalTransactions.java" afterPath="$PROJECT_DIR$/src/ca/ubc/cs304/ui/TerminalTransactions.java" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -25,10 +23,10 @@
         <entry file="file://$PROJECT_DIR$/.idea/workspace.xml">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="673">
-              <caret line="571" column="10" lean-forward="false" selection-start-line="571" selection-start-column="10" selection-end-line="571" selection-end-column="10" />
+              <caret line="583" column="10" lean-forward="false" selection-start-line="583" selection-start-column="10" selection-end-line="583" selection-end-column="10" />
               <folding>
-                <marker date="1574037916832" expanded="true" signature="29086:29129" ph="..." />
-                <marker date="1574037916832" expanded="true" signature="29086:29160" ph="..." />
+                <marker date="1574037993306" expanded="true" signature="30087:30130" ph="..." />
+                <marker date="1574037993306" expanded="true" signature="30087:30161" ph="..." />
               </folding>
             </state>
           </provider>
@@ -47,8 +45,8 @@
       <file leaf-file-name="TerminalTransactions.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/ca/ubc/cs304/ui/TerminalTransactions.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-597">
-              <caret line="60" column="20" lean-forward="false" selection-start-line="60" selection-start-column="20" selection-end-line="60" selection-end-column="20" />
+            <state relative-caret-position="453">
+              <caret line="110" column="55" lean-forward="true" selection-start-line="110" selection-start-column="55" selection-end-line="110" selection-end-column="55" />
               <folding />
             </state>
           </provider>
@@ -409,8 +407,8 @@
         <state relative-caret-position="9744">
           <caret line="582" column="10" lean-forward="false" selection-start-line="582" selection-start-column="10" selection-end-line="582" selection-end-column="10" />
           <folding>
-            <marker date="1574037916832" expanded="true" signature="29086:29129" ph="..." />
-            <marker date="1574037916832" expanded="true" signature="29086:29160" ph="..." />
+            <marker date="1574037993306" expanded="true" signature="30087:30130" ph="..." />
+            <marker date="1574037993306" expanded="true" signature="30087:30161" ph="..." />
           </folding>
         </state>
       </provider>
@@ -452,10 +450,10 @@
     <entry file="file://$PROJECT_DIR$/.idea/workspace.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="673">
-          <caret line="571" column="10" lean-forward="false" selection-start-line="571" selection-start-column="10" selection-end-line="571" selection-end-column="10" />
+          <caret line="583" column="10" lean-forward="false" selection-start-line="583" selection-start-column="10" selection-end-line="583" selection-end-column="10" />
           <folding>
-            <marker date="1574037916832" expanded="true" signature="29086:29129" ph="..." />
-            <marker date="1574037916832" expanded="true" signature="29086:29160" ph="..." />
+            <marker date="1574037993306" expanded="true" signature="30087:30130" ph="..." />
+            <marker date="1574037993306" expanded="true" signature="30087:30161" ph="..." />
           </folding>
         </state>
       </provider>
@@ -521,8 +519,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/ca/ubc/cs304/ui/TerminalTransactions.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-597">
-          <caret line="60" column="20" lean-forward="false" selection-start-line="60" selection-start-column="20" selection-end-line="60" selection-end-column="20" />
+        <state relative-caret-position="453">
+          <caret line="110" column="55" lean-forward="true" selection-start-line="110" selection-start-column="55" selection-end-line="110" selection-end-column="55" />
           <folding />
         </state>
       </provider>
