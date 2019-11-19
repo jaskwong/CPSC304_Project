@@ -3,14 +3,11 @@ package ca.ubc.cs304.controller;
 import ca.ubc.cs304.database.DatabaseConnectionHandler;
 import ca.ubc.cs304.delegates.LoginWindowDelegate;
 import ca.ubc.cs304.delegates.TerminalTransactionsDelegate;
-<<<<<<< Updated upstream
 import ca.ubc.cs304.model.*;
-=======
 import ca.ubc.cs304.model.Rental;
 import ca.ubc.cs304.model.Ret;
 import ca.ubc.cs304.model.Vehicle;
 import ca.ubc.cs304.model.VehicleType;
->>>>>>> Stashed changes
 import ca.ubc.cs304.ui.LoginWindow;
 import ca.ubc.cs304.ui.TerminalTransactions;
 
