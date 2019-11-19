@@ -2,6 +2,7 @@ package ca.ubc.cs304.delegates;
 
 import ca.ubc.cs304.model.Customer;
 import ca.ubc.cs304.model.Reservation;
+import ca.ubc.cs304.model.Ret;
 
 /**
  * This interface uses the delegation design pattern where instead of having
@@ -23,4 +24,6 @@ public interface TerminalTransactionsDelegate {
 	public void terminalTransactionsFinished();
 
 	public void insertCustomer(Customer cust);
+
+    public void insertReturn(Ret ret);
 }

@@ -1,21 +1,20 @@
 package ca.ubc.cs304.model;
 import java.sql.Date;
 import java.sql.Time;
+import java.sql.Timestamp;
 
 /**
  * The intent for this class is to update/store information about a single return
  */
 public class Ret {
 	private final int rid;
-	private final Date date;
-	private final Time time;
+	private final Timestamp time;
 	private final int odomoter;
 	private final boolean fulltank;
 	private final float value;
 
-	public Ret(int rid, Date date, Time time, int odomoter, boolean fulltank, float value) {
+	public Ret(int rid, Timestamp time, int odomoter, boolean fulltank, float value) {
 		this.rid = rid;
-		this.date = date;
 		this.time = time;
 		this.odomoter = odomoter;
 		this.fulltank = fulltank;
@@ -26,11 +25,7 @@ public class Ret {
 		return rid;
 	}
 
-	public Date getDate() {
-		return date;
-	}
-
-	public Time getTime() {
+	public Timestamp getTime() {
 		return time;
 	}
 

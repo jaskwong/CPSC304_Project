@@ -3,6 +3,7 @@ package ca.ubc.cs304.ui;
 import ca.ubc.cs304.delegates.TerminalTransactionsDelegate;
 import ca.ubc.cs304.model.Customer;
 import ca.ubc.cs304.model.Reservation;
+import ca.ubc.cs304.model.Ret;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -210,6 +211,56 @@ public class TerminalTransactions {
 
 		delegate.insertCustomer(cust);
 	}
+
+	private void handleMakeRet() {
+        int rid = INVALID_INPUT;
+        while (rid == INVALID_INPUT) {
+            System.out.print("Please enter your rental id: ");
+            rid = readInteger(false);
+
+        }
+
+        String date = null;
+        Timestamp sqlDate = null;
+        while (sqlDate == null || date.length() <= 0) {
+            System.out.print("Please enter when you'd like to start your rental (yyyy-mm-dd hh:mm:ss): ");
+            date = readLine().trim();
+            try {
+                Date endDate = dateFormat.parse(date);
+                sqlDate = new java.sql.Timestamp(endDate.getTime());
+            } catch (ParseException e) {
+                System.out.println("Not a valid date");
+                date = null;
+                continue;
+            }
+        }
+
+        int odom = INVALID_INPUT;
+        while (odom == INVALID_INPUT) {
+            System.out.print("Please enter the odometer reading: ");
+            odom = readInteger(false);
+        }
+
+        int temp = INVALID_INPUT;
+        boolean fullTank = false;
+        while (temp == INVALID_INPUT) {
+            System.out.print("Was the gas tank full? 1. yes 2. no");
+            temp = readInteger(false);
+            if (temp == 1) {
+                fullTank = true;
+            } else if (temp == 2) {
+                fullTank = false;
+            } else {
+                System.out.println("Not a valid input");
+                temp = INVALID_INPUT;
+            }
+        }
+
+
+
+        Ret ret = new Ret(rid, sqlDate, odom, fullTank);
+	    delegate.insertReturn(ret);
+    }
 
 	private void handleMakeRental() {
 
