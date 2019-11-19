@@ -7,6 +7,7 @@ import ca.ubc.cs304.model.Reservation;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.sql.Time;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -21,7 +22,7 @@ public class TerminalTransactions {
 	private static final String WARNING_TAG = "[WARNING]";
 	private static final int INVALID_INPUT = Integer.MIN_VALUE;
 	private static final int EMPTY_INPUT = 0;
-	
+    private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 	private BufferedReader bufferedReader = null;
 	private TerminalTransactionsDelegate delegate = null;
 
@@ -132,7 +133,7 @@ public class TerminalTransactions {
 		}
 	}
 
-	private void handleMakeReservation() throws ParseException {
+	private void handleMakeReservation() {
 		int dlicense = INVALID_INPUT;
 		while (dlicense == INVALID_INPUT) {
 			System.out.print("Please enter your driver license number: ");
@@ -150,28 +151,38 @@ public class TerminalTransactions {
 		}
 
 		String start = null;
-		while (start == null || start.length() <= 0) {
+        Timestamp sqlStartDate = null;
+		while (sqlStartDate == null || start.length() <= 0) {
 			System.out.print("Please enter when you'd like to start your rental (yyyy-mm-dd hh:mm:ss.SSS): ");
 			start = readLine().trim();
+			try {
+                Date startDate = dateFormat.parse(start);
+                sqlStartDate = new java.sql.Timestamp(startDate.getTime());
+            } catch (ParseException e) {
+                System.out.println("Please enter a valid date");
+                start = null;
+                continue;
+            }
 		}
-
-			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss.SSS");
-			Date parsedDate = dateFormat.parse(start);
-			Timestamp startdate = new java.sql.Timestamp(parsedDate.getTime());
 
 		String end = null;
-		while (end == null || end.length() <= 0) {
-			System.out.print("Please enter when you'd like to start your rental (yyyy-mm-dd hh:mm:ss.SSS): ");
+		Timestamp sqlEndDate = null;
+		while (sqlEndDate == null || end.length() <= 0) {
+			System.out.print("Please enter when you'd like to start your rental (yyyy-mm-dd hh:mm:ss): ");
 			end = readLine().trim();
+			try {
+                Date endDate = dateFormat.parse(end);
+                sqlEndDate = new java.sql.Timestamp(endDate.getTime());
+            } catch (ParseException e) {
+                System.out.println("Not a valid date");
+                end = null;
+                continue;
+            }
 		}
-
-		SimpleDateFormat endDateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss.SSS");
-		Date parsedEndDate = endDateFormat.parse(end);
-		Timestamp enddate = new java.sql.Timestamp(parsedEndDate.getTime());
 
 		Random rand = new Random();
 		int confno = rand.nextInt(90000000) + 10000000;
-		Reservation reso = new Reservation(confno, vehicletype, dlicense, startdate, enddate);
+		Reservation reso = new Reservation(confno, vehicletype, dlicense, sqlStartDate, sqlEndDate);
 
 		delegate.insertReservation(reso);
 	}
