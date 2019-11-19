@@ -229,6 +229,11 @@ public class DatabaseConnectionHandler {
     }
 
     public void makeReservation(Reservation r){
+<<<<<<< Updated upstream
+=======
+        Random rand = new Random();
+        int confno = rand.nextInt(90000000) + 10000000;
+>>>>>>> Stashed changes
 	    try{
             PreparedStatement ps = connection.prepareStatement("INSERT INTO reservations VALUES(?,?,?,?,?,?,?)");
             ps.setInt(1,  r.getConfNo());
