@@ -104,7 +104,7 @@ public class TerminalTransactions {
 						handleMakeReservation();
 						break;
 					case 3:
-						handleUpdateOption();
+						handleMakeRental();
 						break;
 					case 4:
 //						delegate.showBranch();
@@ -139,9 +139,9 @@ public class TerminalTransactions {
 			dlicense = readInteger(false);
 		}
 
-		// if (customer with dlicense doesn't exist then)
-		handleNewCustomer(dlicense);
-
+		if (!delegate.customerExists(dlicense)) {
+			handleNewCustomer(dlicense);
+		}
 
 		String vehicletype = null;
 		while (vehicletype == null || vehicletype.length() <= 0) {
@@ -161,7 +161,7 @@ public class TerminalTransactions {
 
 		String end = null;
 		while (end == null || end.length() <= 0) {
-			System.out.print("Please enter when you'd like to start your rental (yyyy-mm-dd hh:mm:ss.SSS): ");
+			System.out.print("Please enter when you'd like to return your rental (yyyy-mm-dd hh:mm:ss.SSS): ");
 			end = readLine().trim();
 		}
 
@@ -174,6 +174,13 @@ public class TerminalTransactions {
 		Reservation reso = new Reservation(confno, vehicletype, dlicense, startdate, enddate);
 
 		delegate.insertReservation(reso);
+
+		System.out.println("Thank you for the completing the reservation with confirmation number: " + confno);
+		System.out.println("These are the details of your reservation: ");
+		System.out.println("Vehicle Type: " + vehicletype);
+		System.out.println("Start Date: " + startdate);
+		System.out.println("Return Date: " + enddate);
+		System.out.println("Your Driver License Number: " + dlicense);
 	}
 
 	private void handleNewCustomer(int dlicense) {

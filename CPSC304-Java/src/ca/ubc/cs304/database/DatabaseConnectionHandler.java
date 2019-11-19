@@ -2,10 +2,7 @@ package ca.ubc.cs304.database;
 
 import ca.ubc.cs304.model.*;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
 
 /**
  * This class handles all database related transactions
@@ -281,6 +278,18 @@ public class DatabaseConnectionHandler {
         }
     }
 
+    public boolean customerExists(int dlicense) {
+		try {
+			PreparedStatement ps = connection.prepareStatement("SELECT COUNT(*) from CUSTOMER where dlicense = ?");
+			ps.setInt(1, dlicense);
+			ResultSet rs = ps.executeQuery();
+			return rs.next();
+		} catch (SQLException e){
+			System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+			rollbackConnection();
+		}
+		return false;
+	}
 
 	
 //	public void insertBranch(Vehicle model) {

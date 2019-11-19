@@ -3,6 +3,8 @@ package ca.ubc.cs304.delegates;
 import ca.ubc.cs304.model.Customer;
 import ca.ubc.cs304.model.Reservation;
 
+import java.sql.SQLException;
+
 /**
  * This interface uses the delegation design pattern where instead of having
  * the TerminalTransactions class try to do everything, it will only
@@ -23,4 +25,6 @@ public interface TerminalTransactionsDelegate {
 	public void terminalTransactionsFinished();
 
 	public void insertCustomer(Customer cust);
+
+	public boolean customerExists(int dlicense);
 }

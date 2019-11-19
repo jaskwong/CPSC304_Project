@@ -11,6 +11,7 @@ import ca.ubc.cs304.model.VehicleType;
 import ca.ubc.cs304.ui.LoginWindow;
 import ca.ubc.cs304.ui.TerminalTransactions;
 
+import java.sql.SQLException;
 import java.text.ParseException;
 
 /**
@@ -101,6 +102,8 @@ public class RentACar implements LoginWindowDelegate, TerminalTransactionsDelega
 	}
 
 	public void insertCustomer(Customer cust) { dbHandler.makeCustomer(cust);}
+
+	public boolean customerExists(int dlicense) { return dbHandler.customerExists(dlicense);};
 
 	/**
 	 * TermainalTransactionsDelegate Implementation
