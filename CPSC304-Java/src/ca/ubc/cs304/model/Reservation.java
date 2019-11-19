@@ -1,6 +1,5 @@
 package ca.ubc.cs304.model;
-import java.sql.Date;
-import java.sql.Time;
+import java.sql.Timestamp;
 
 /**
  * The intent for this class is to update/store information about a single reservation
@@ -9,20 +8,16 @@ public class Reservation {
 	private final int confNo;
 	private final String vtname;
 	private final int customer_dlicense;
-	private final Date fromDate;
-	private final Time fromTime;
-	private final Date toDate;
-	private final Time toTime;
+	private final Timestamp fromDate;
+	private final Timestamp toDate;
 
 
-	public Reservation(int confNo, String vtname, int dlicense, Date fromDate, Time fromTime, Date toDate, Time toTime) {
+	public Reservation(int confNo, String vtname, int dlicense, Timestamp fromDate, Timestamp toDate) {
 		this.confNo = confNo;
 		this.vtname = vtname;
 		this.customer_dlicense = dlicense;
 		this.fromDate = fromDate;
-		this.fromTime = fromTime;
 		this.toDate = toDate;
-		this.toTime = toTime;
 	}
 
     public int getConfNo() {return confNo;}
@@ -31,12 +26,8 @@ public class Reservation {
 
     public int getCustomer_dlicense() {return customer_dlicense;}
 
-    public Date getFromDate() {return fromDate;}
+    public Timestamp getFromDate() {return fromDate;}
 
-    public Time getFromTime() {return fromTime;}
-
-    public Date getToDate() {return  toDate;}
-
-    public Time getToTime() {return toTime;}
+    public Timestamp getToDate() {return  toDate;}
 
 }

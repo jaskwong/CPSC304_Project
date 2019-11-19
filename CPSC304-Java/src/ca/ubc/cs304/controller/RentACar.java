@@ -3,11 +3,11 @@ package ca.ubc.cs304.controller;
 import ca.ubc.cs304.database.DatabaseConnectionHandler;
 import ca.ubc.cs304.delegates.LoginWindowDelegate;
 import ca.ubc.cs304.delegates.TerminalTransactionsDelegate;
-import ca.ubc.cs304.model.Rental;
-import ca.ubc.cs304.model.Ret;
-import ca.ubc.cs304.model.Vehicle;
+import ca.ubc.cs304.model.*;
 import ca.ubc.cs304.ui.LoginWindow;
 import ca.ubc.cs304.ui.TerminalTransactions;
+
+import java.text.ParseException;
 
 /**
  * This is the main controller class that will orchestrate everything.
@@ -30,7 +30,7 @@ public class RentACar implements LoginWindowDelegate, TerminalTransactionsDelega
 	 * 
      * connects to Oracle database with supplied username and password
      */ 
-	public void login(String username, String password) {
+	public void login(String username, String password) throws ParseException {
 		boolean didConnect = dbHandler.login(username, password);
 
 		if (didConnect) {
@@ -91,6 +91,12 @@ public class RentACar implements LoginWindowDelegate, TerminalTransactionsDelega
 	public void deleteReturns(int rid) {
 		dbHandler.deleteRet(rid);
 	}
+
+	public void insertReservation(Reservation reso) {
+		dbHandler.makeReservation(reso);
+	}
+
+	public void insertCustomer(Customer cust) { dbHandler.makeCustomer(cust);}
 
 	/**
 	 * TermainalTransactionsDelegate Implementation

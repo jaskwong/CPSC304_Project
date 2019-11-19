@@ -1,10 +1,17 @@
 package ca.ubc.cs304.ui;
 
 import ca.ubc.cs304.delegates.TerminalTransactionsDelegate;
+import ca.ubc.cs304.model.Customer;
+import ca.ubc.cs304.model.Reservation;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Random;
 
 /**
  * The class is only responsible for handling terminal text inputs. 
@@ -23,7 +30,7 @@ public class TerminalTransactions {
 
 	/**
 	 * Displays simple text interface
-	 */ 
+
 	public void showMainMenu(TerminalTransactionsDelegate delegate) {
 		this.delegate = delegate;
 		
@@ -67,7 +74,53 @@ public class TerminalTransactions {
 			}
 		}		
 	}
-	
+	 */
+
+	public void showMainMenu(TerminalTransactionsDelegate delegate) throws ParseException {
+		this.delegate = delegate;
+
+		bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+		int choice = INVALID_INPUT;
+
+		while (choice != 5) {
+			System.out.println();
+			System.out.println("1. View Available Vehicles");
+			System.out.println("2. Make a Reservation");
+			System.out.println("3. Rent a Vehicle");
+			System.out.println("4. Return a Vehicle");
+			System.out.println("5. Print a Report");
+			System.out.print("Please choose one of the above 5 options: ");
+
+			choice = readInteger(false);
+
+			System.out.println(" ");
+
+			if (choice != INVALID_INPUT) {
+				switch (choice) {
+					case 1:
+						handleInsertOption();
+						break;
+					case 2:
+						handleMakeReservation();
+						break;
+					case 3:
+						handleUpdateOption();
+						break;
+					case 4:
+//						delegate.showBranch();
+						break;
+					case 5:
+						handleQuitOption();
+						break;
+					default:
+						System.out.println(WARNING_TAG + " The number that you entered was not a valid option.");
+						break;
+				}
+			}
+		}
+	}
+
+
 	private void handleDeleteOption() {
 		int branchId = INVALID_INPUT;
 		while (branchId == INVALID_INPUT) {
@@ -77,6 +130,78 @@ public class TerminalTransactions {
 //				delegate.deleteBranch(branchId);
 			}
 		}
+	}
+
+	private void handleMakeReservation() throws ParseException {
+		int dlicense = INVALID_INPUT;
+		while (dlicense == INVALID_INPUT) {
+			System.out.print("Please enter your driver license number: ");
+			dlicense = readInteger(false);
+		}
+
+		// if (customer with dlicense doesn't exist then)
+		handleNewCustomer(dlicense);
+
+
+		String vehicletype = null;
+		while (vehicletype == null || vehicletype.length() <= 0) {
+			System.out.print("Please enter the vehicle type you'd like to rent: ");
+			vehicletype = readLine().trim();
+		}
+
+		String start = null;
+		while (start == null || start.length() <= 0) {
+			System.out.print("Please enter when you'd like to start your rental (yyyy-mm-dd hh:mm:ss.SSS): ");
+			start = readLine().trim();
+		}
+
+			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss.SSS");
+			Date parsedDate = dateFormat.parse(start);
+			Timestamp startdate = new java.sql.Timestamp(parsedDate.getTime());
+
+		String end = null;
+		while (end == null || end.length() <= 0) {
+			System.out.print("Please enter when you'd like to start your rental (yyyy-mm-dd hh:mm:ss.SSS): ");
+			end = readLine().trim();
+		}
+
+		SimpleDateFormat endDateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss.SSS");
+		Date parsedEndDate = endDateFormat.parse(end);
+		Timestamp enddate = new java.sql.Timestamp(parsedEndDate.getTime());
+
+		Random rand = new Random();
+		int confno = rand.nextInt(90000000) + 10000000;
+		Reservation reso = new Reservation(confno, vehicletype, dlicense, startdate, enddate);
+
+		delegate.insertReservation(reso);
+	}
+
+	private void handleNewCustomer(int dlicense) {
+		int phone = INVALID_INPUT;
+		while (phone == INVALID_INPUT) {
+			System.out.print("Please enter your phone number: ");
+			phone = readInteger(false);
+		}
+
+		String name = null;
+		while (name == null || name.length() <= 0) {
+			System.out.print("Please enter your name ");
+			name = readLine().trim();
+		}
+
+		String addr = null;
+		while (addr == null || addr.length() <= 0) {
+			System.out.print("Please enter your address ");
+			addr = readLine().trim();
+		}
+
+		Customer cust = new Customer(phone, name, addr, dlicense);
+
+		delegate.insertCustomer(cust);
+	}
+
+	private void handleMakeRental() {
+
 	}
 	
 	private void handleInsertOption() {

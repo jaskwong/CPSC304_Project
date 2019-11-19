@@ -6,7 +6,6 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.Random;
 
 /**
  * This class handles all database related transactions
@@ -229,18 +228,14 @@ public class DatabaseConnectionHandler {
         }
     }
 
-    public void makeRservation(Reservation r){
-        Random rand = new Random();
-        int confno = rand.nextInt(90000000) + 10000000;
+    public void makeReservation(Reservation r){
 	    try{
             PreparedStatement ps = connection.prepareStatement("INSERT INTO reservations VALUES(?,?,?,?,?,?,?)");
-            ps.setInt(1,  confno);
+            ps.setInt(1,  r.getConfNo());
             ps.setString(2, r.getVtname());
             ps.setInt(3, r.getCustomer_dlicense());
-            ps.setDate(4, r.getFromDate());
-            ps.setTime(5, r.getFromTime());
-            ps.setDate(6, r.getToDate());
-            ps.setTime(7, r.getToTime());
+            ps.setTimestamp(4, r.getFromDate());
+            ps.setTimestamp(5, r.getToDate());
         } catch (SQLException e){
             System.out.println(EXCEPTION_TAG + " " + e.getMessage());
             rollbackConnection();
