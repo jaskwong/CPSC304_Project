@@ -167,14 +167,9 @@ public class TerminalTransactions {
 		}
 
 		String end = null;
-<<<<<<< HEAD
-		while (end == null || end.length() <= 0) {
-			System.out.print("Please enter when you'd like to return your rental (yyyy-mm-dd hh:mm:ss.SSS): ");
-=======
 		Timestamp sqlEndDate = null;
 		while (sqlEndDate == null || end.length() <= 0) {
 			System.out.print("Please enter when you'd like to start your rental (yyyy-mm-dd hh:mm:ss): ");
->>>>>>> ac3b9b9cee7b8c3f4e7bdce5b96825722886f64d
 			end = readLine().trim();
 			try {
                 Date endDate = dateFormat.parse(end);
@@ -195,8 +190,8 @@ public class TerminalTransactions {
 		System.out.println("Thank you for the completing the reservation with confirmation number: " + confno);
 		System.out.println("These are the details of your reservation: ");
 		System.out.println("Vehicle Type: " + vehicletype);
-		System.out.println("Start Date: " + startdate);
-		System.out.println("Return Date: " + enddate);
+		System.out.println("Start Date: " + sqlStartDate);
+		System.out.println("Return Date: " + sqlEndDate);
 		System.out.println("Your Driver License Number: " + dlicense);
 	}
 
@@ -270,7 +265,7 @@ public class TerminalTransactions {
 
 
 
-        Ret ret = new Ret(rid, sqlDate, odom, fullTank);
+        Ret ret = new Ret(rid, sqlDate, odom, fullTank, 0);
 	    delegate.insertReturn(ret);
     }
 

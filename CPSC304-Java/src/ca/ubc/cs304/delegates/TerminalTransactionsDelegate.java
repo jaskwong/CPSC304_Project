@@ -27,9 +27,7 @@ public interface TerminalTransactionsDelegate {
 
 	public void insertCustomer(Customer cust);
 
-<<<<<<< HEAD
 	public boolean customerExists(int dlicense);
-=======
-    public void insertReturn(Ret ret);
->>>>>>> ac3b9b9cee7b8c3f4e7bdce5b96825722886f64d
+
+    public void makeReturn(Ret ret);
 }
