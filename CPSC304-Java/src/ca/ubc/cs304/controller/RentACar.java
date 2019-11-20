@@ -101,6 +101,18 @@ public class RentACar implements LoginWindowDelegate, TerminalTransactionsDelega
 		dbHandler.makeReservation(reso);
 	}
 
+	public float getInitOdom(int rid) {
+	    return dbHandler.getInitOdom(rid);
+    }
+
+    public VehicleType getVtFromRid(int rid) {
+	    return dbHandler.getVtFromRid(rid);
+    }
+
+    public Rental getRentalFromRid(int rid) {
+	    return dbHandler.getRentalFromRid(rid);
+    }
+
 	public void insertCustomer(Customer cust) { dbHandler.makeCustomer(cust);}
 
 	public boolean customerExists(int dlicense) { return dbHandler.customerExists(dlicense);};

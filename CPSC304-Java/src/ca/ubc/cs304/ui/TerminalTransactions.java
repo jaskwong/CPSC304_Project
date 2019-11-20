@@ -1,9 +1,7 @@
 package ca.ubc.cs304.ui;
 
 import ca.ubc.cs304.delegates.TerminalTransactionsDelegate;
-import ca.ubc.cs304.model.Customer;
-import ca.ubc.cs304.model.Reservation;
-import ca.ubc.cs304.model.Ret;
+import ca.ubc.cs304.model.*;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -274,7 +272,7 @@ public class TerminalTransactions {
         String date = null;
         Timestamp sqlDate = null;
         while (sqlDate == null || date.length() <= 0) {
-            System.out.print("Please enter when you'd like to start your rental (yyyy-mm-dd hh:mm:ss): ");
+            System.out.print("Please enter the date of the return (yyyy-mm-dd hh:mm:ss): ");
             date = readLine().trim();
             try {
                 Date endDate = dateFormat.parse(date);
@@ -307,10 +305,13 @@ public class TerminalTransactions {
             }
         }
 
+        int initOdom = Math.round(delegate.getInitOdom(rid));
+        VehicleType vt = delegate.getVtFromRid(rid);
+        Rental r = delegate.getRentalFromRid(rid);
+        int val = vt.calculateValue(sqlDate, sqlDate, initOdom - odom);
 
-
-        Ret ret = new Ret(rid, sqlDate, odom, fullTank, 0);
-	    delegate.insertReturn(ret);
+        Ret ret = new Ret(rid, sqlDate, odom, fullTank, val);
+	    delegate.makeReturn(ret);
     }
 
 	private void handleMakeRental() {

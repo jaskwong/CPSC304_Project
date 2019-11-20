@@ -15,15 +15,15 @@ import java.util.concurrent.TimeUnit;
 public class VehicleType {
 	private final String vtname;
 	private final String features;
-	private int wrate;
-	private int drate;
-	private int hrate;
-	private int wirate;
-	private int dirate;
-	private int hirate;
-	private int krate;
+	private float wrate;
+	private float drate;
+	private float hrate;
+	private float wirate;
+	private float dirate;
+	private float hirate;
+	private float krate;
 
-	public VehicleType(String vtname, String features, int wrate, int drate, int hrate, int wirate, int dirate, int hirate, int krate) {
+	public VehicleType(String vtname, String features, float wrate, float drate, float hrate, float wirate, float dirate, float hirate, float krate) {
 		this.vtname = vtname;
 		this.features = features;
 		this.wrate = wrate;
@@ -42,31 +42,31 @@ public class VehicleType {
 		return features;
 	}
 
-	public int getWrate() {
+	public float getWrate() {
 		return wrate;
 	}
 
-	public int getDrate() {
+	public float getDrate() {
 		return drate;
 	}
 
-	public int getHrate() {
+	public float getHrate() {
 		return hrate;
 	}
 
-	public int getWirate() {
+	public float getWirate() {
 		return wirate;
 	}
 
-	public int getDirate() {
+	public float getDirate() {
 		return dirate;
 	}
 
-	public int getHirate() {
+	public float getHirate() {
 		return hirate;
 	}
 
-	public int getKrate() {
+	public float getKrate() {
 		return krate;
 	}
 
@@ -98,13 +98,17 @@ public class VehicleType {
 		this.wrate = wrate;
 	}
 
-	public float calculateValue(Timestamp rent, Timestamp ret) {
+	public int calculateValue(Timestamp rent, Timestamp ret, int dist) {
         Date rentDate = new Date(rent.getTime());
         Date retDate = new Date(ret.getTime());
-        Long duration = retDate.getTime()-retDate.getTime();
+        Long duration = retDate.getTime()-rentDate.getTime();
 
-        Long days = TimeUnit.MILLISECONDS.toDays(duration);
+        double weeks = Math.floor(TimeUnit.MILLISECONDS.toDays(duration)/7);
+        double days = Math.floor(TimeUnit.MILLISECONDS.toDays(duration) % 7);
+        double hours = Math.ceil(TimeUnit.MILLISECONDS.toHours(duration) % 24);
 
-        return duration;
+        int val = (int) Math.round(weeks * (wirate + wrate) + days * (drate + dirate) + hours * (hrate + hirate) + krate * dist);
+
+        return val;
     }
 }

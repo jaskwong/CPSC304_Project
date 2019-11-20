@@ -25,7 +25,7 @@ create table vehicles (
 	v_year int,
 	v_color CHAR(20),
 	v_odometer int,
-	v_status int,
+	v_status varchar,
 	vt_name varchar(20),
 	v_location varchar(50),
 	v_city varchar(50),

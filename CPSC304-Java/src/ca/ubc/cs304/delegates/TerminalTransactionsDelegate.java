@@ -1,8 +1,6 @@
 package ca.ubc.cs304.delegates;
 
-import ca.ubc.cs304.model.Customer;
-import ca.ubc.cs304.model.Reservation;
-import ca.ubc.cs304.model.Ret;
+import ca.ubc.cs304.model.*;
 
 import java.sql.SQLException;
 
@@ -29,9 +27,19 @@ public interface TerminalTransactionsDelegate {
 
 	public boolean customerExists(int dlicense);
 
+<<<<<<< Updated upstream
     public void insertReturn(Ret ret);
 
     public boolean vehicleTypeAvailable(String vt_name);
 
 	public boolean confNumberExists(int confNumber);
+=======
+    public void makeReturn(Ret ret);
+
+    public float getInitOdom(int rid);
+
+    public Rental getRentalFromRid(int rid);
+
+    public VehicleType getVtFromRid(int rid);
+>>>>>>> Stashed changes
 }
