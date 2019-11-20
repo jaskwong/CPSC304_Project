@@ -529,6 +529,15 @@ public class DatabaseConnectionHandler {
 	}
 
 	public boolean confNumberExists(int confNumber) {
-		return true;
+		try {
+			PreparedStatement ps = connection.prepareStatement("SELECT COUNT(*) from RESERVATION where confNumber = ?");
+			ps.setInt(1, confNumber);
+			ResultSet rs = ps.executeQuery();
+			return rs.next();
+		} catch (SQLException e){
+			System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+			rollbackConnection();
+		}
+		return false;
 	}
 }
