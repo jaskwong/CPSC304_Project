@@ -308,7 +308,7 @@ public class TerminalTransactions {
         int initOdom = Math.round(delegate.getInitOdom(rid));
         VehicleType vt = delegate.getVtFromRid(rid);
         Rental r = delegate.getRentalFromRid(rid);
-        int val = vt.calculateValue(sqlDate, sqlDate, initOdom - odom);
+        int val = vt.calculateValue(sqlDate, r.getFromDate(), initOdom - odom);
 
         Ret ret = new Ret(rid, sqlDate, odom, fullTank, val);
 	    delegate.makeReturn(ret);
