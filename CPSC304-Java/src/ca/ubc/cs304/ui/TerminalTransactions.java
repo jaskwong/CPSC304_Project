@@ -100,7 +100,7 @@ public class TerminalTransactions {
 			if (choice != INVALID_INPUT) {
 				switch (choice) {
 					case 1:
-						handleInsertOption();
+						handleViewAvailableVehicles();
 						break;
 					case 2:
 						handleMakeReservation();
@@ -120,6 +120,10 @@ public class TerminalTransactions {
 				}
 			}
 		}
+	}
+
+	private void handleViewAvailableVehicles() {
+
 	}
 
 
@@ -145,11 +149,48 @@ public class TerminalTransactions {
 			handleNewCustomer(dlicense);
 		}
 
-		String vehicletype = null;
-		while (vehicletype == null || vehicletype.length() <= 0) {
-			System.out.print("Please enter the vehicle type you'd like to rent: ");
-			vehicletype = readLine().trim();
+		int vehicletype = INVALID_INPUT;
+		String vtname = null;
+		while (vehicletype == INVALID_INPUT) {
+			System.out.println("1. Sedan ");
+			System.out.println("2. SUV ");
+			System.out.println("3. Convertible ");
+			System.out.print("Please choose your vehicle type from the above options: ");
+			vehicletype = readInteger(false);
+
+			if (vehicletype != INVALID_INPUT) {
+				switch (vehicletype) {
+					case 1:
+						if (delegate.vehicleTypeAvailable("Sedan")) {
+							vtname = "Sedan";
+							break;
+						} else {
+							System.out.println(WARNING_TAG + " The vehicle type you are trying to rent is unavailable, please pick a different option.");
+							break;
+						}
+					case 2:
+						if (delegate.vehicleTypeAvailable("SUV")) {
+							vtname = "SUV";
+							break;
+						} else {
+							System.out.println(WARNING_TAG + " The vehicle type you are trying to rent is unavailable, please pick a different option.");
+							break;
+						}
+					case 3:
+						if (delegate.vehicleTypeAvailable("Convertible")) {
+							vtname = "Convertible";
+							break;
+						} else {
+							System.out.println(WARNING_TAG + " The vehicle type you are trying to rent is unavailable, please pick a different option.");
+							break;
+						}
+					default:
+						System.out.println(WARNING_TAG + " The number that you entered was not a valid option.");
+						break;
+				}
+			}
 		}
+
 
 		String start = null;
         Timestamp sqlStartDate = null;
@@ -183,13 +224,13 @@ public class TerminalTransactions {
 
 		Random rand = new Random();
 		int confno = rand.nextInt(90000000) + 10000000;
-		Reservation reso = new Reservation(confno, vehicletype, dlicense, sqlStartDate, sqlEndDate);
+		Reservation reso = new Reservation(confno, vtname, dlicense, sqlStartDate, sqlEndDate);
 
 		delegate.insertReservation(reso);
 
 		System.out.println("Thank you for the completing the reservation with confirmation number: " + confno);
 		System.out.println("These are the details of your reservation: ");
-		System.out.println("Vehicle Type: " + vehicletype);
+		System.out.println("Vehicle Type: " + vtname);
 		System.out.println("Start Date: " + sqlStartDate);
 		System.out.println("Return Date: " + sqlEndDate);
 		System.out.println("Your Driver License Number: " + dlicense);

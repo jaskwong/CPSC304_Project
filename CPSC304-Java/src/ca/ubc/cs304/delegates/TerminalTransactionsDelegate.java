@@ -29,5 +29,7 @@ public interface TerminalTransactionsDelegate {
 
 	public boolean customerExists(int dlicense);
 
-    public void makeReturn(Ret ret);
+    public void insertReturn(Ret ret);
+
+    public boolean vehicleTypeAvailable(String vt_name);
 }

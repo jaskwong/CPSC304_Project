@@ -89,7 +89,7 @@ public class RentACar implements LoginWindowDelegate, TerminalTransactionsDelega
 		dbHandler.deleteVehicle(vlicense);
 	}
 
-	public void makeReturn (Ret ret) {
+	public void insertReturn (Ret ret) {
 		dbHandler.makeRet(ret);
 	}
 
@@ -104,6 +104,9 @@ public class RentACar implements LoginWindowDelegate, TerminalTransactionsDelega
 	public void insertCustomer(Customer cust) { dbHandler.makeCustomer(cust);}
 
 	public boolean customerExists(int dlicense) { return dbHandler.customerExists(dlicense);};
+
+	public boolean vehicleTypeAvailable(String vt_name) { return dbHandler.vehicleTypeAvailable(vt_name);}
+
 
 	/**
 	 * TermainalTransactionsDelegate Implementation

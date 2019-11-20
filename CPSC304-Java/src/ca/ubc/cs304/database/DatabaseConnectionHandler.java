@@ -1,7 +1,7 @@
 package ca.ubc.cs304.database;
 
 import ca.ubc.cs304.model.*;
-
+import java.sql.Timestamp;
 import java.sql.*;
 
 /**
@@ -126,14 +126,13 @@ public class DatabaseConnectionHandler {
 
 	public void makeRet(Ret ret) {
 		try {
-			PreparedStatement ps = connection.prepareStatement("INSERT INTO ret VALUES (?,?,?,?,?,?)");
+			PreparedStatement ps = connection.prepareStatement("INSERT INTO ret VALUES (?,?,?,?,?)");
 
 			ps.setInt(1, ret.getRid());
-			ps.setDate(2, ret.getDate());
-			ps.setTime(3, ret.getTime());
-			ps.setInt(4, ret.getOdomoter());
-			ps.setBoolean(5, ret.isFulltank());
-			ps.setFloat(6, ret.getValue());
+			ps.setTimestamp(2, ret.getTime());
+			ps.setInt(3, ret.getOdomoter());
+			ps.setBoolean(4, ret.isFulltank());
+			ps.setFloat(5, ret.getValue());
 
 			ps.executeUpdate();
 			connection.commit();
@@ -282,6 +281,20 @@ public class DatabaseConnectionHandler {
 		try {
 			PreparedStatement ps = connection.prepareStatement("SELECT COUNT(*) from CUSTOMER where dlicense = ?");
 			ps.setInt(1, dlicense);
+			ResultSet rs = ps.executeQuery();
+			return rs.next();
+		} catch (SQLException e){
+			System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+			rollbackConnection();
+		}
+		return false;
+	}
+
+	public boolean vehicleTypeAvailable(String vtname) {
+		try {
+			PreparedStatement ps = connection.prepareStatement("SELECT COUNT(*) from VEHICLE where vt_name = ? AND v_status = ?");
+			ps.setString(1, vtname);
+			ps.setString(2, "AVAILABLE");
 			ResultSet rs = ps.executeQuery();
 			return rs.next();
 		} catch (SQLException e){
