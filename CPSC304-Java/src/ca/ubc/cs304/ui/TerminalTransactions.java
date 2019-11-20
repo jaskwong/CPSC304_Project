@@ -100,7 +100,7 @@ public class TerminalTransactions {
 			if (choice != INVALID_INPUT) {
 				switch (choice) {
 					case 1:
-						handleViewAvailableVehicles();
+//						handleViewAvailableVehicles();
 						break;
 					case 2:
 						handleMakeReservation();
@@ -109,9 +109,12 @@ public class TerminalTransactions {
 						handleMakeRental();
 						break;
 					case 4:
-//						delegate.showBranch();
+						handleMakeRet();
 						break;
 					case 5:
+						handleMakeReport();
+						break;
+					case 6:
 						handleQuitOption();
 						break;
 					default:
@@ -122,9 +125,9 @@ public class TerminalTransactions {
 		}
 	}
 
-	private void handleViewAvailableVehicles() {
-
+	private void handleMakeReport() {
 	}
+
 
 
 	private void handleDeleteOption() {
@@ -311,6 +314,15 @@ public class TerminalTransactions {
     }
 
 	private void handleMakeRental() {
+		int confNumber = INVALID_INPUT;
+		while (confNumber == INVALID_INPUT) {
+			System.out.print("Please your reservation confirmation number: ");
+			confNumber = readInteger(false);
+		}
+
+		if (!delegate.confNumberExists(confNumber)) {
+			handleMakeReservation();
+		}
 
 	}
 	

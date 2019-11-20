@@ -107,6 +107,8 @@ public class RentACar implements LoginWindowDelegate, TerminalTransactionsDelega
 
 	public boolean vehicleTypeAvailable(String vt_name) { return dbHandler.vehicleTypeAvailable(vt_name);}
 
+	public boolean confNumberExists(int confNumber) {return dbHandler.confNumberExists(confNumber);}
+
 
 	/**
 	 * TermainalTransactionsDelegate Implementation

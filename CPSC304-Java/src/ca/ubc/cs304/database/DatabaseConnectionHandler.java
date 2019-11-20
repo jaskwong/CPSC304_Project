@@ -55,20 +55,18 @@ public class DatabaseConnectionHandler {
 
 	public void makeRental(Rental rental) {
 		try {
-			PreparedStatement ps = connection.prepareStatement("INSERT INTO rental VALUES (?,?,?,?,?,?,?,?,?,?,?,?)");
+			PreparedStatement ps = connection.prepareStatement("INSERT INTO rental VALUES (?,?,?,?,?,?,?,?,?,?)");
 
 			ps.setInt(1, rental.getRid());
 			ps.setInt(2, rental.getVid());
 			ps.setInt(3, rental.getCellphone());
-			ps.setDate(4, rental.getFromDate());
-			ps.setTime(5, rental.getFromTime());
-			ps.setDate(6, rental.getToDate());
-			ps.setTime(7, rental.getToTime());
-			ps.setInt(8, rental.getOdomoter());
-			ps.setString(9, rental.getCardName());
-			ps.setInt(10, rental.getCardNo());
-			ps.setDate(11, rental.getExpDate());
-			ps.setInt(12, rental.getConfNo());
+			ps.setTimestamp(4, rental.getFromDate());
+			ps.setTimestamp(5, rental.getToDate());
+			ps.setInt(6, rental.getOdomoter());
+			ps.setString(7, rental.getCardName());
+			ps.setInt(8, rental.getCardNo());
+			ps.setDate(9, rental.getExpDate());
+			ps.setInt(10, rental.getConfNo());
 
 			ps.executeUpdate();
 			connection.commit();
@@ -112,7 +110,7 @@ public class DatabaseConnectionHandler {
 
 			int rowCount = ps.executeUpdate();
 			if (rowCount == 0) {
-				System.out.println(WARNING_TAG + " Rental " + vlicense + " does not exist!");
+				System.out.println(WARNING_TAG + " Vehicle " + vlicense + " does not exist!");
 			}
 
 			connection.commit();
@@ -208,6 +206,10 @@ public class DatabaseConnectionHandler {
             ps.setString(2, c.getName());
             ps.setString(3, c.getAddress());
             ps.setInt(4, c.getDlicense());
+
+			ps.executeUpdate();
+			connection.commit();
+			ps.close();
         } catch (SQLException e){
             System.out.println(EXCEPTION_TAG + " " + e.getMessage());
             rollbackConnection();
@@ -218,6 +220,10 @@ public class DatabaseConnectionHandler {
         try {
             PreparedStatement ps = connection.prepareStatement("DELETE FROM customers WHERE customer_dlicense = ?");
             ps.setInt(1, dlic);
+
+			ps.executeUpdate();
+			connection.commit();
+			ps.close();
         } catch (SQLException e){
             System.out.println(EXCEPTION_TAG + " " + e.getMessage());
             rollbackConnection();
@@ -233,6 +239,10 @@ public class DatabaseConnectionHandler {
             ps.setInt(3, r.getCustomer_dlicense());
             ps.setTimestamp(4, r.getFromDate());
             ps.setTimestamp(5, r.getToDate());
+
+			ps.executeUpdate();
+			connection.commit();
+			ps.close();
         } catch (SQLException e){
             System.out.println(EXCEPTION_TAG + " " + e.getMessage());
             rollbackConnection();
@@ -243,6 +253,10 @@ public class DatabaseConnectionHandler {
         try {
             PreparedStatement ps = connection.prepareStatement("DELETE FROM reservations WHERE reservations_confNo = ?");
             ps.setInt(1, confno);
+
+			ps.executeUpdate();
+			connection.commit();
+			ps.close();
         } catch (SQLException e){
             System.out.println(EXCEPTION_TAG + " " + e.getMessage());
             rollbackConnection();
@@ -261,6 +275,10 @@ public class DatabaseConnectionHandler {
             ps.setFloat(7, vt.getDirate());
             ps.setFloat(8, vt.getHirate());
             ps.setFloat(9, vt.getKrate());
+
+			ps.executeUpdate();
+			connection.commit();
+			ps.close();
         } catch (SQLException e){
             System.out.println(EXCEPTION_TAG + " " + e.getMessage());
             rollbackConnection();
@@ -292,7 +310,7 @@ public class DatabaseConnectionHandler {
 
 	public boolean vehicleTypeAvailable(String vtname) {
 		try {
-			PreparedStatement ps = connection.prepareStatement("SELECT COUNT(*) from VEHICLE where vt_name = ? AND v_status = ?");
+			PreparedStatement ps = connection.prepareStatement("SELECT COUNT(*) from VEHICLE where (vt_name = ? AND v_status = ?)");
 			ps.setString(1, vtname);
 			ps.setString(2, "AVAILABLE");
 			ResultSet rs = ps.executeQuery();
@@ -407,5 +425,9 @@ public class DatabaseConnectionHandler {
 		} catch (SQLException e) {
 			System.out.println(EXCEPTION_TAG + " " + e.getMessage());
 		}
+	}
+
+	public boolean confNumberExists(int confNumber) {
+		return true;
 	}
 }

@@ -32,4 +32,6 @@ public interface TerminalTransactionsDelegate {
     public void insertReturn(Ret ret);
 
     public boolean vehicleTypeAvailable(String vt_name);
+
+	public boolean confNumberExists(int confNumber);
 }
