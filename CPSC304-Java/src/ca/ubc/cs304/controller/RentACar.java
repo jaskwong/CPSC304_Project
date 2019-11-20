@@ -89,7 +89,7 @@ public class RentACar implements LoginWindowDelegate, TerminalTransactionsDelega
 		dbHandler.deleteVehicle(vlicense);
 	}
 
-	public void insertReturn (Ret ret) {
+	public void makeReturn (Ret ret) {
 		dbHandler.makeRet(ret);
 	}
 
