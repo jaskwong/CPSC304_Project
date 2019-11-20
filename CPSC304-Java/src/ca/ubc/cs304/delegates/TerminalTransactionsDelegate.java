@@ -27,13 +27,10 @@ public interface TerminalTransactionsDelegate {
 
 	public boolean customerExists(int dlicense);
 
-<<<<<<< Updated upstream
-    public void insertReturn(Ret ret);
-
     public boolean vehicleTypeAvailable(String vt_name);
 
 	public boolean confNumberExists(int confNumber);
-=======
+
     public void makeReturn(Ret ret);
 
     public float getInitOdom(int rid);
@@ -41,5 +38,4 @@ public interface TerminalTransactionsDelegate {
     public Rental getRentalFromRid(int rid);
 
     public VehicleType getVtFromRid(int rid);
->>>>>>> Stashed changes
 }
