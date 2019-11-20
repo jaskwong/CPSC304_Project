@@ -1,5 +1,14 @@
 package ca.ubc.cs304.model;
 
+import javax.xml.datatype.Duration;
+import java.sql.Time;
+import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.Period;
+import java.util.Date;
+import java.util.Timer;
+import java.util.concurrent.TimeUnit;
+
 /**
  * The intent for this class is to update/store information about a single vehiclye type
  */
@@ -88,4 +97,14 @@ public class VehicleType {
 	public void setWrate(int wrate) {
 		this.wrate = wrate;
 	}
+
+	public float calculateValue(Timestamp rent, Timestamp ret) {
+        Date rentDate = new Date(rent.getTime());
+        Date retDate = new Date(ret.getTime());
+        Long duration = retDate.getTime()-retDate.getTime();
+
+        Long days = TimeUnit.MILLISECONDS.toDays(duration);
+
+        return duration;
+    }
 }

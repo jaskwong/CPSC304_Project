@@ -3,10 +3,12 @@ package ca.ubc.cs304.ui;
 import ca.ubc.cs304.delegates.TerminalTransactionsDelegate;
 import ca.ubc.cs304.model.Customer;
 import ca.ubc.cs304.model.Reservation;
+import ca.ubc.cs304.model.Ret;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.sql.Time;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -21,7 +23,7 @@ public class TerminalTransactions {
 	private static final String WARNING_TAG = "[WARNING]";
 	private static final int INVALID_INPUT = Integer.MIN_VALUE;
 	private static final int EMPTY_INPUT = 0;
-	
+    private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 	private BufferedReader bufferedReader = null;
 	private TerminalTransactionsDelegate delegate = null;
 
@@ -132,7 +134,7 @@ public class TerminalTransactions {
 		}
 	}
 
-	private void handleMakeReservation() throws ParseException {
+	private void handleMakeReservation() {
 		int dlicense = INVALID_INPUT;
 		while (dlicense == INVALID_INPUT) {
 			System.out.print("Please enter your driver license number: ");
@@ -150,28 +152,43 @@ public class TerminalTransactions {
 		}
 
 		String start = null;
-		while (start == null || start.length() <= 0) {
+        Timestamp sqlStartDate = null;
+		while (sqlStartDate == null || start.length() <= 0) {
 			System.out.print("Please enter when you'd like to start your rental (yyyy-mm-dd hh:mm:ss.SSS): ");
 			start = readLine().trim();
+			try {
+                Date startDate = dateFormat.parse(start);
+                sqlStartDate = new java.sql.Timestamp(startDate.getTime());
+            } catch (ParseException e) {
+                System.out.println("Please enter a valid date");
+                start = null;
+                continue;
+            }
 		}
-
-			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss.SSS");
-			Date parsedDate = dateFormat.parse(start);
-			Timestamp startdate = new java.sql.Timestamp(parsedDate.getTime());
 
 		String end = null;
+<<<<<<< HEAD
 		while (end == null || end.length() <= 0) {
 			System.out.print("Please enter when you'd like to return your rental (yyyy-mm-dd hh:mm:ss.SSS): ");
+=======
+		Timestamp sqlEndDate = null;
+		while (sqlEndDate == null || end.length() <= 0) {
+			System.out.print("Please enter when you'd like to start your rental (yyyy-mm-dd hh:mm:ss): ");
+>>>>>>> ac3b9b9cee7b8c3f4e7bdce5b96825722886f64d
 			end = readLine().trim();
+			try {
+                Date endDate = dateFormat.parse(end);
+                sqlEndDate = new java.sql.Timestamp(endDate.getTime());
+            } catch (ParseException e) {
+                System.out.println("Not a valid date");
+                end = null;
+                continue;
+            }
 		}
-
-		SimpleDateFormat endDateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss.SSS");
-		Date parsedEndDate = endDateFormat.parse(end);
-		Timestamp enddate = new java.sql.Timestamp(parsedEndDate.getTime());
 
 		Random rand = new Random();
 		int confno = rand.nextInt(90000000) + 10000000;
-		Reservation reso = new Reservation(confno, vehicletype, dlicense, startdate, enddate);
+		Reservation reso = new Reservation(confno, vehicletype, dlicense, sqlStartDate, sqlEndDate);
 
 		delegate.insertReservation(reso);
 
@@ -206,6 +223,56 @@ public class TerminalTransactions {
 
 		delegate.insertCustomer(cust);
 	}
+
+	private void handleMakeRet() {
+        int rid = INVALID_INPUT;
+        while (rid == INVALID_INPUT) {
+            System.out.print("Please enter your rental id: ");
+            rid = readInteger(false);
+
+        }
+
+        String date = null;
+        Timestamp sqlDate = null;
+        while (sqlDate == null || date.length() <= 0) {
+            System.out.print("Please enter when you'd like to start your rental (yyyy-mm-dd hh:mm:ss): ");
+            date = readLine().trim();
+            try {
+                Date endDate = dateFormat.parse(date);
+                sqlDate = new java.sql.Timestamp(endDate.getTime());
+            } catch (ParseException e) {
+                System.out.println("Not a valid date");
+                date = null;
+                continue;
+            }
+        }
+
+        int odom = INVALID_INPUT;
+        while (odom == INVALID_INPUT) {
+            System.out.print("Please enter the odometer reading: ");
+            odom = readInteger(false);
+        }
+
+        int temp = INVALID_INPUT;
+        boolean fullTank = false;
+        while (temp == INVALID_INPUT) {
+            System.out.print("Was the gas tank full? 1. yes 2. no");
+            temp = readInteger(false);
+            if (temp == 1) {
+                fullTank = true;
+            } else if (temp == 2) {
+                fullTank = false;
+            } else {
+                System.out.println("Not a valid input");
+                temp = INVALID_INPUT;
+            }
+        }
+
+
+
+        Ret ret = new Ret(rid, sqlDate, odom, fullTank);
+	    delegate.insertReturn(ret);
+    }
 
 	private void handleMakeRental() {
 

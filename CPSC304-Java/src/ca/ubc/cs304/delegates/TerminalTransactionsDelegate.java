@@ -2,6 +2,7 @@ package ca.ubc.cs304.delegates;
 
 import ca.ubc.cs304.model.Customer;
 import ca.ubc.cs304.model.Reservation;
+import ca.ubc.cs304.model.Ret;
 
 import java.sql.SQLException;
 
@@ -26,5 +27,9 @@ public interface TerminalTransactionsDelegate {
 
 	public void insertCustomer(Customer cust);
 
+<<<<<<< HEAD
 	public boolean customerExists(int dlicense);
+=======
+    public void insertReturn(Ret ret);
+>>>>>>> ac3b9b9cee7b8c3f4e7bdce5b96825722886f64d
 }
