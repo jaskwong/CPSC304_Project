@@ -1,15 +1,16 @@
 package ca.ubc.cs304.database;
 
 import ca.ubc.cs304.model.*;
-import java.sql.Timestamp;
+
+import javax.xml.transform.Result;
 import java.sql.*;
-import java.util.ArrayList;
+import java.util.Random;
 
 /**
  * This class handles all database related transactions
  */
 public class DatabaseConnectionHandler {
-	private static final String ORACLE_URL = "jdbc:oracle:thin:@dbhost.students.cs.ubc.ca:1522:stu";
+	private static final String ORACLE_URL = "jdbc:oracle:thin:@localhost:1522:stu";
 	private static final String EXCEPTION_TAG = "[EXCEPTION]";
 	private static final String WARNING_TAG = "[WARNING]";
 
@@ -56,12 +57,17 @@ public class DatabaseConnectionHandler {
 		}
 	}
 
+	public static int generateRid() {
+	    return (int) Math.round((Math.random() * 9000000)+1000000);
+    }
+
+
 	public void makeRental(Rental rental) {
 		try {
 			PreparedStatement ps = connection.prepareStatement("INSERT INTO rental VALUES (?,?,?,?,?,?,?,?,?,?)");
 
-			ps.setInt(1, rental.getRid());
-			ps.setInt(2, rental.getVid());
+			ps.setInt(1, generateRid());
+			ps.setString(2, rental.getV_license());
 			ps.setInt(3, rental.getCellphone());
 			ps.setTimestamp(4, rental.getFromDate());
 			ps.setTimestamp(5, rental.getToDate());
@@ -127,7 +133,7 @@ public class DatabaseConnectionHandler {
 
 	public void makeRet(Ret ret) {
 		try {
-			PreparedStatement ps = connection.prepareStatement("INSERT INTO ret VALUES (?,?,?,?,?)");
+			PreparedStatement ps = connection.prepareStatement("INSERT INTO rets VALUES (?,?,?,?,?)");
 
 			ps.setInt(1, ret.getRid());
 			ps.setTimestamp(2, ret.getTime());
@@ -205,7 +211,7 @@ public class DatabaseConnectionHandler {
     public void makeCustomer(Customer c){
         try {
             PreparedStatement ps = connection.prepareStatement("INSERT INTO customers VALUES(?,?,?,?)");
-            ps.setInt(1, c.getCellphone());
+            ps.setString(1, c.getCellphone());
             ps.setString(2, c.getName());
             ps.setString(3, c.getAddress());
             ps.setInt(4, c.getDlicense());
@@ -300,12 +306,12 @@ public class DatabaseConnectionHandler {
 
     public boolean customerExists(int dlicense) {
 		try {
-			PreparedStatement ps = connection.prepareStatement("SELECT COUNT(*) from CUSTOMER where dlicense = ?");
+			PreparedStatement ps = connection.prepareStatement("SELECT customer_dlicense FROM customers where customer_dlicense = ?");
 			ps.setInt(1, dlicense);
 			ResultSet rs = ps.executeQuery();
-			return rs.next();
+            return rs.next();
 		} catch (SQLException e){
-			System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+            System.out.println(EXCEPTION_TAG + " " + e.getMessage());
 			rollbackConnection();
 		}
 		return false;
@@ -313,46 +319,63 @@ public class DatabaseConnectionHandler {
 
 	public boolean vehicleTypeAvailable(String vtname) {
 		try {
-			PreparedStatement ps = connection.prepareStatement("SELECT COUNT(*) from VEHICLE where (vt_name = ? AND v_status = ?)");
+			PreparedStatement ps = connection.prepareStatement("SELECT vt_name FROM vehicles where (vt_name = ? AND v_status = ?)");
 			ps.setString(1, vtname);
-			ps.setString(2, "AVAILABLE");
+			ps.setString(2, "A");
 			ResultSet rs = ps.executeQuery();
 			return rs.next();
 		} catch (SQLException e){
-			System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+            System.out.println(EXCEPTION_TAG + " " + e.getMessage());
 			rollbackConnection();
 		}
 		return false;
 	}
 
-	public float getInitOdom(int rid) {
+	public int getInitOdom(int rid) {
             try {
-                PreparedStatement ps = connection.prepareStatement("SELECT rentals_odometer FROM rentals" +
-                        "WHERE rentals.rid = ?");
+                PreparedStatement ps = connection.prepareStatement("SELECT rentals_odometer FROM rentals WHERE rentals_rid = ?");
                 ps.setInt(1, rid);
                 ResultSet rs = ps.executeQuery();
 
                 // get info on ResultSet
                 ResultSetMetaData rsmd = rs.getMetaData();
-
-                Float initOdom = rs.getFloat(1);
+                rs.next();
+                int initOdom = rs.getInt("rentals_odometer");
                 rs.close();
                 return initOdom;
             } catch (SQLException e) {
-                System.out.println("Not a valid rid");
+                System.out.println(EXCEPTION_TAG + " " + e.getMessage());
                 return -1;
             }
 
     }
 
-    public Rental getRentalFromRid(int rid) {
-        Rental r;
+    public Timestamp getRentalFromDateFromRid(int rid) {
         try {
             Statement stmt = connection.createStatement();
-            PreparedStatement ps = connection.prepareStatement("SELECT * FROM rentals" +
-                    "WHERE rentals.rid = ?");
+            PreparedStatement ps = connection.prepareStatement("SELECT rentals_from FROM rentals WHERE rentals_rid = ?");
             ps.setInt(1, rid);
             ResultSet rs = ps.executeQuery();
+            rs.next();
+
+            // get info on ResultSet
+
+            Timestamp t = rs.getTimestamp("rentals_from");
+            rs.close();
+            stmt.close();
+
+            return t;
+        } catch (SQLException e) {
+            System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+            return null;
+        }
+    }
+
+    public void viewAvailableVehicles() {
+
+        try {
+            Statement stmt = connection.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT * FROM vehicles WHERE v_status = 'A'");
 
             // get info on ResultSet
             ResultSetMetaData rsmd = rs.getMetaData();
@@ -361,48 +384,97 @@ public class DatabaseConnectionHandler {
 
             // display column names;
             for (int i = 0; i < rsmd.getColumnCount(); i++) {
+                if (i == 5) {
+                    continue;
+                }
                 // get column name and print it
-                System.out.printf("%-15s", rsmd.getColumnName(i + 1));
+                System.out.printf("%-25s", rsmd.getColumnName(i + 1));
             }
-            r = new Rental(rs.getInt(1),
-                    rs.getInt(2),
-                    rs.getInt(3),
-                    rs.getTimestamp(4),
-                    rs.getTimestamp(5),
-                    rs.getInt(6),
-                    rs.getString(7),
-                    rs.getInt(8),
-                    rs.getDate(9),
-                    rs.getInt(10));
+
+            while(rs.next()) {
+                Vehicle v = new Vehicle(rs.getString("v_license"),
+                        rs.getString("v_make"),
+                        rs.getString("v_model"),
+                        rs.getInt("v_year"),
+                        rs.getString("v_color"),
+                        rs.getInt("v_odometer"),
+                        rs.getString("v_status"),
+                        rs.getString("vt_name"),
+                        rs.getString("v_location"),
+                        rs.getString("v_city"));
+                System.out.println("\n");
+                System.out.printf("%-25s", v.getVlicense());
+                System.out.printf("%-25s", v.getMake());
+                System.out.printf("%-25s", v.getMake());
+                System.out.printf("%-25s", v.getYear());
+                System.out.printf("%-25s", v.getColor());
+                System.out.printf("%-25s", v.getOdomoter());
+                System.out.printf("%-25s", v.getVtname());
+                System.out.printf("%-25s", v.getLocation());
+                System.out.printf("%-25s", v.getCity());
+            }
 
             rs.close();
             stmt.close();
-
-            return r;
         } catch (SQLException e) {
             System.out.println(EXCEPTION_TAG + " " + e.getMessage());
-            return null;
         }
+
     }
 
+    public void viewReservations() {
 
-    public VehicleType getVtFromRid(int rid) {
-        VehicleType vt;
 		try {
-			Statement stmt = connection.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT * FROM vehicles, rentals, vehicletypes " +
-                    "WHERE rentals.rid = ? and rentals.vid = vehicles.vid and vehicles.vt_name = vehicletypes.vt_name");
+            Statement stmt = connection.createStatement();
+			ResultSet rs = stmt.executeQuery("SELECT * FROM reservations");
 
     		// get info on ResultSet
-            ResultSetMetaData rsmd = rs.getMetaData();
+    		ResultSetMetaData rsmd = rs.getMetaData();
+
+    		System.out.println(" ");
+
+    		// display column names;
+    		for (int i = 0; i < rsmd.getColumnCount(); i++) {
+    			// get column name and print it
+    			System.out.printf("%-25s", rsmd.getColumnName(i + 1));
+    		}
+
+			while(rs.next()) {
+				Reservation res = new Reservation(rs.getInt("reservations_confNo"),
+													rs.getString("vt_name"),
+													rs.getInt("customer_dlicense"),
+													rs.getTimestamp("reservations_from"),
+                                                    rs.getTimestamp("reservations_to"));
+                System.out.println("\n");
+                System.out.printf("%-25s", res.getConfNo());
+                System.out.printf("%-25s", res.getVtname());
+                System.out.printf("%-25s", res.getCustomer_dlicense());
+                System.out.printf("%-25s", res.getFromDate());
+                System.out.printf("%-25s", res.getToDate());
+			}
+
+			rs.close();
+			stmt.close();
+		} catch (SQLException e) {
+			System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+		}
+
+    }
+
+        public VehicleType getVtFromRid(int rid) {
+        VehicleType vt;
+		try {
+            Statement stmt = connection.createStatement();
+            PreparedStatement ps = connection.prepareStatement("SELECT vehicletypes.vt_name, vehicletypes.vt_features, vehicletypes.vt_wrate, vehicletypes.vt_drate, vehicletypes.vt_hrate, vehicletypes.vt_wirate, vehicletypes.vt_dirate, vehicletypes.vt_hirate, vehicletypes.vt_krate FROM vehicles, rentals, vehicletypes " +
+                    "WHERE rentals_rid = ? and rentals.v_license = vehicles.v_license and vehicles.vt_name = vehicletypes.vt_name");
+
+    		// get info on ResultSet
+            ps.setInt(1, rid);
+            ResultSet rs = ps.executeQuery();
+            rs.next();
 
             System.out.println(" ");
 
-            // display column names;
-            for (int i = 0; i < rsmd.getColumnCount(); i++) {
-                // get column name and print it
-                System.out.printf("%-15s", rsmd.getColumnName(i + 1));
-            }
             vt = new VehicleType(rs.getString("vt_name"),
                     rs.getString("vt_features"),
                     rs.getFloat("vt_wrate"),

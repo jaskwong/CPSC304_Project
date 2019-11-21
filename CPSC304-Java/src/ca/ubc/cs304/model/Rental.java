@@ -1,6 +1,5 @@
 package ca.ubc.cs304.model;
 import java.sql.Date;
-import java.sql.Time;
 import java.sql.Timestamp;
 
 /**
@@ -8,7 +7,7 @@ import java.sql.Timestamp;
  */
 public class Rental {
 	private final int rid;
-	private final int vid;
+	private final String v_license;
 	private final int cellphone;
 	private final Timestamp fromDate;
 	private final Timestamp toDate;
@@ -18,9 +17,9 @@ public class Rental {
 	private final Date expDate;
 	private final int confNo;
 
-	public Rental(int rid, int vid, int cellphone, Timestamp fromDate, Timestamp toDate, int odomoter, String cardName, int cardNo, Date expDate, int confNo) {
+	public Rental(int rid, String v_license, int cellphone, Timestamp fromDate, Timestamp toDate, int odomoter, String cardName, int cardNo, Date expDate, int confNo) {
 		this.rid = rid;
-		this.vid = vid;
+		this.v_license = v_license;
 		this.cellphone = cellphone;
 		this.fromDate = fromDate;
 		this.toDate = toDate;
@@ -35,8 +34,8 @@ public class Rental {
 		return rid;
 	}
 
-	public int getVid() {
-		return vid;
+	public String getV_license() {
+		return v_license;
 	}
 
 	public int getCellphone() {

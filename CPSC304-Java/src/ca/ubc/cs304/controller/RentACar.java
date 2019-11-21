@@ -11,7 +11,7 @@ import ca.ubc.cs304.model.VehicleType;
 import ca.ubc.cs304.ui.LoginWindow;
 import ca.ubc.cs304.ui.TerminalTransactions;
 
-import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.text.ParseException;
 
 /**
@@ -109,17 +109,21 @@ public class RentACar implements LoginWindowDelegate, TerminalTransactionsDelega
 	    return dbHandler.getVtFromRid(rid);
     }
 
-    public Rental getRentalFromRid(int rid) {
-	    return dbHandler.getRentalFromRid(rid);
+    public Timestamp getRentalFromDateFromRid(int rid) {
+	    return dbHandler.getRentalFromDateFromRid(rid);
     }
 
-	public void insertCustomer(Customer cust) { dbHandler.makeCustomer(cust);}
+	public void makeCustomer(Customer cust) { dbHandler.makeCustomer(cust);}
 
 	public boolean customerExists(int dlicense) { return dbHandler.customerExists(dlicense);};
 
 	public boolean vehicleTypeAvailable(String vt_name) { return dbHandler.vehicleTypeAvailable(vt_name);}
 
 	public boolean confNumberExists(int confNumber) {return dbHandler.confNumberExists(confNumber);}
+
+	public void viewReservations() {dbHandler.viewReservations();}
+
+	public void viewAvailableVehicles() {dbHandler.viewAvailableVehicles();}
 
 
 	/**

@@ -4,19 +4,19 @@ package ca.ubc.cs304.model;
  * The intent for this class is to update/store information about a single customer
  */
 public class Customer {
-	private int cellphone;
+	private String cellphone;
 	private String name;
 	private String address;
 	private final int dlicense;
 
-	public Customer(int cellphone, String name, String address, int dlicense) {
+	public Customer(String cellphone, String name, String address, int dlicense) {
 		this.cellphone = cellphone;
 		this.name = name;
 		this.address = address;
 		this.dlicense = dlicense;
 	}
 
-	public int getCellphone() {
+	public String getCellphone() {
 		return  cellphone;
 	}
 
@@ -36,7 +36,7 @@ public class Customer {
 		this.address = address;
 	}
 
-	public void setCellphone(int cellphone) {
+	public void setCellphone(String cellphone) {
 		this.cellphone = cellphone;
 	}
 

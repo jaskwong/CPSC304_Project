@@ -4,8 +4,6 @@ package ca.ubc.cs304.model;
  * The intent for this class is to update/store information about a single vehicle
  */
 public class Vehicle {
-    public enum Status{AVAILABLE, RENTED, MAINTENANCE}
-
 	private final String vlicense;
 	private final String make;
 	private final String model;

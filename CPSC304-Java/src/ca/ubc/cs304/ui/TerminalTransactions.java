@@ -113,8 +113,14 @@ public class TerminalTransactions {
 						handleMakeReport();
 						break;
 					case 6:
-						handleQuitOption();
+						handleViewReservations();
 						break;
+                    case 7:
+                        handleViewAvailableVehicles();
+                        break;
+                    case 8:
+                        handleQuitOption();
+                        break;
 					default:
 						System.out.println(WARNING_TAG + " The number that you entered was not a valid option.");
 						break;
@@ -127,6 +133,9 @@ public class TerminalTransactions {
 	}
 
 
+    private void handleViewAvailableVehicles() {
+	    delegate.viewAvailableVehicles();
+    }
 
 	private void handleDeleteOption() {
 		int branchId = INVALID_INPUT;
@@ -147,6 +156,7 @@ public class TerminalTransactions {
 		}
 
 		if (!delegate.customerExists(dlicense)) {
+            System.out.println("Please register as a new customer first");
 			handleNewCustomer(dlicense);
 		}
 
@@ -166,7 +176,8 @@ public class TerminalTransactions {
 							vtname = "Sedan";
 							break;
 						} else {
-							System.out.println(WARNING_TAG + " The vehicle type you are trying to rent is unavailable, please pick a different option.");
+                            System.out.println(WARNING_TAG + " The vehicle type you are trying to rent is unavailable, please pick a different option.");
+							vehicletype = INVALID_INPUT;
 							break;
 						}
 					case 2:
@@ -174,7 +185,8 @@ public class TerminalTransactions {
 							vtname = "SUV";
 							break;
 						} else {
-							System.out.println(WARNING_TAG + " The vehicle type you are trying to rent is unavailable, please pick a different option.");
+                            System.out.println(WARNING_TAG + " The vehicle type you are trying to rent is unavailable, please pick a different option.");
+						    vehicletype = INVALID_INPUT;
 							break;
 						}
 					case 3:
@@ -182,11 +194,13 @@ public class TerminalTransactions {
 							vtname = "Convertible";
 							break;
 						} else {
-							System.out.println(WARNING_TAG + " The vehicle type you are trying to rent is unavailable, please pick a different option.");
+                            System.out.println(WARNING_TAG + " The vehicle type you are trying to rent is unavailable, please pick a different option.");
+						    vehicletype = INVALID_INPUT;
 							break;
 						}
 					default:
 						System.out.println(WARNING_TAG + " The number that you entered was not a valid option.");
+                        vehicletype = INVALID_INPUT;
 						break;
 				}
 			}
@@ -196,7 +210,7 @@ public class TerminalTransactions {
 		String start = null;
         Timestamp sqlStartDate = null;
 		while (sqlStartDate == null || start.length() <= 0) {
-			System.out.print("Please enter when you'd like to start your rental (yyyy-mm-dd hh:mm:ss.SSS): ");
+			System.out.print("Please enter when you'd like to start your rental (yyyy-mm-dd hh:mm:ss): ");
 			start = readLine().trim();
 			try {
                 Date startDate = dateFormat.parse(start);
@@ -211,7 +225,7 @@ public class TerminalTransactions {
 		String end = null;
 		Timestamp sqlEndDate = null;
 		while (sqlEndDate == null || end.length() <= 0) {
-			System.out.print("Please enter when you'd like to start your rental (yyyy-mm-dd hh:mm:ss): ");
+			System.out.print("Please enter when you'd like to finish your rental (yyyy-mm-dd hh:mm:ss): ");
 			end = readLine().trim();
 			try {
                 Date endDate = dateFormat.parse(end);
@@ -231,6 +245,7 @@ public class TerminalTransactions {
 
 		System.out.println("Thank you for the completing the reservation with confirmation number: " + confno);
 		System.out.println("These are the details of your reservation: ");
+        System.out.println("Confirmation No: " + confno);
 		System.out.println("Vehicle Type: " + vtname);
 		System.out.println("Start Date: " + sqlStartDate);
 		System.out.println("Return Date: " + sqlEndDate);
@@ -238,10 +253,10 @@ public class TerminalTransactions {
 	}
 
 	private void handleNewCustomer(int dlicense) {
-		int phone = INVALID_INPUT;
-		while (phone == INVALID_INPUT) {
+		String phone = null;
+		while (phone == null || phone.length() <= 0) {
 			System.out.print("Please enter your phone number: ");
-			phone = readInteger(false);
+            phone = readLine().trim();
 		}
 
 		String name = null;
@@ -257,8 +272,7 @@ public class TerminalTransactions {
 		}
 
 		Customer cust = new Customer(phone, name, addr, dlicense);
-
-		delegate.insertCustomer(cust);
+		delegate.makeCustomer(cust);
 	}
 
 	private void handleMakeRet() {
@@ -293,7 +307,7 @@ public class TerminalTransactions {
         int temp = INVALID_INPUT;
         boolean fullTank = false;
         while (temp == INVALID_INPUT) {
-            System.out.print("Was the gas tank full? 1. yes 2. no");
+            System.out.print("Was the gas tank full? 1. yes 2. no ");
             temp = readInteger(false);
             if (temp == 1) {
                 fullTank = true;
@@ -307,8 +321,8 @@ public class TerminalTransactions {
 
         int initOdom = Math.round(delegate.getInitOdom(rid));
         VehicleType vt = delegate.getVtFromRid(rid);
-        Rental r = delegate.getRentalFromRid(rid);
-        int val = vt.calculateValue(sqlDate, r.getFromDate(), initOdom - odom);
+        Timestamp t = delegate.getRentalFromDateFromRid(rid);
+        int val = vt.calculateValue(sqlDate, t, initOdom - odom);
 
         Ret ret = new Ret(rid, sqlDate, odom, fullTank, val);
 	    delegate.makeReturn(ret);
@@ -366,6 +380,10 @@ public class TerminalTransactions {
 //											phoneNumber);
 //		delegate.insertBranch(model);
 	}
+
+	private void handleViewReservations() {
+	    delegate.viewReservations();
+    }
 	
 	private void handleQuitOption() {
 		System.out.println("Good Bye!");

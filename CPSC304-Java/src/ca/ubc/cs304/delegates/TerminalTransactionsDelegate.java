@@ -3,6 +3,7 @@ package ca.ubc.cs304.delegates;
 import ca.ubc.cs304.model.*;
 
 import java.sql.SQLException;
+import java.sql.Timestamp;
 
 /**
  * This interface uses the delegation design pattern where instead of having
@@ -19,23 +20,27 @@ public interface TerminalTransactionsDelegate {
 //	public void showBranch();
 //	public void updateBranch(int branchId, String name);
 
-	public void insertReservation(Reservation reso);
+	void insertReservation(Reservation reso);
 	
-	public void terminalTransactionsFinished();
+	void terminalTransactionsFinished();
 
-	public void insertCustomer(Customer cust);
+	void makeCustomer(Customer cust);
 
-	public boolean customerExists(int dlicense);
+	boolean customerExists(int dlicense);
 
-    public boolean vehicleTypeAvailable(String vt_name);
+    boolean vehicleTypeAvailable(String vt_name);
 
-	public boolean confNumberExists(int confNumber);
+	boolean confNumberExists(int confNumber);
 
-    public void makeReturn(Ret ret);
+    void makeReturn(Ret ret);
 
-    public float getInitOdom(int rid);
+    float getInitOdom(int rid);
 
-    public Rental getRentalFromRid(int rid);
+    Timestamp getRentalFromDateFromRid(int rid);
 
-    public VehicleType getVtFromRid(int rid);
+    VehicleType getVtFromRid(int rid);
+
+    void viewReservations();
+
+    void viewAvailableVehicles();
 }
