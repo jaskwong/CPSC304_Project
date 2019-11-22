@@ -286,7 +286,7 @@ public class TerminalTransactions {
                     rid = INVALID_INPUT;
                 } else if (delegate.returnExists(rid)){
                     System.out.println("This rental has already been returned");
-                    rid = INVALID_INPUT;
+                    return;
                 }
             }
         }
@@ -332,7 +332,6 @@ public class TerminalTransactions {
         VehicleType vt = delegate.getVtFromRid(rid);
         Timestamp t = delegate.getRentalFromDateFromRid(rid);
         float val = vt.calculateValue(t, sqlDate, odom - initOdom);
-
         Ret ret = new Ret(rid, sqlDate, odom, fullTank, val);
 	    delegate.makeReturn(ret);
     }
