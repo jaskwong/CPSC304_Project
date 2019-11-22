@@ -94,7 +94,13 @@ insert into vehicles values('23333', 'Volkswagen', 'large', 2018, 'red', 10000, 
 insert into vehicles values('24444', 'Chevrolet', 'middle', 2018, 'white', 10000, 'M', 'Sedan', 'West', 'Vancouver');
 insert into vehicles values('11111', 'Vlokswagen', 'middle', 2018, 'white', 10000, 'M', 'Sedan', 'West', 'Vancouver');
 insert into vehicles values('22223', 'Chevrolet', 'middle', 2018, 'black', 10000, 'A', 'Convertible', 'West', 'Vancouver');
-insert into vehicles values('24122', 'Benz', 'middle', 2018, 'green', 10000, 'A', 'Convertible', 'West', 'Vancouver');
+insert into vehicles values('24122', 'Benz', 'middle', 2016, 'green', 10000, 'A', 'Convertible', 'West', 'Vancouver');
+insert into vehicles values('90231', 'Chevrolet', 'large', 2018, 'green', 29000, 'R', 'SUV', 'East', 'Vancouver');
+insert into vehicles values('78311', 'Volkswagen', 'large', 2018, 'red', 48000, 'M', 'SUV', 'West', 'Vancouver');
+insert into vehicles values('24411', 'Chevrolet', 'middle', 2008, 'white', 20000, 'M', 'Sedan', 'East', 'Vancouver');
+insert into vehicles values('11040', 'Vlokswagen', 'middle', 2011, 'white', 30000, 'M', 'Sedan', 'West', 'Vancouver');
+insert into vehicles values('22895', 'Chevrolet', 'middle', 2014, 'black', 40000, 'A', 'Convertible', 'East', 'Vancouver');
+insert into vehicles values('99999', 'Benz', 'middle', 2013, 'green', 50000, 'A', 'Convertible', 'West', 'Vancouver');
 insert into customers values(3748399876, 'Jackson', '3857 qwe st.', 22291782);
 insert into customers values(7483987534, 'Tom', '6482 ert st.', 82392872);
 insert into customers values(7483747384, 'Jerry', '4356 rty st.', 84920493);

@@ -125,16 +125,81 @@ public class RentACar implements LoginWindowDelegate, TerminalTransactionsDelega
 
 	public void viewAvailableVehicles() {dbHandler.viewAvailableVehicles();}
 
+    public void viewCarnum(String vtname, int startYear, int endYear, String location) {dbHandler.viewVehiclenum(vtname, startYear, endYear, location);};
 
 	/**
 	 * TermainalTransactionsDelegate Implementation
 	 * 
 	 * Delete branch with given branch ID.
-	 */ 
-    public void deleteBranch(int branchId) {
-    	dbHandler.deleteBranch(branchId);
+	 */
+
+
+    public void viewCardetail(String vtname, int startYear, int endYear, String location) {
+        Vehicle[] models = dbHandler.getCarInfom(vtname, startYear, endYear, location);
+
+        for (int i = 0; i < models.length; i++) {
+            Vehicle model = models[i];
+
+            // simplified output formatting; truncation may occur
+            System.out.printf("%-10.10s", model.getVlicense());
+            if (model.getMake() == null) {
+                System.out.printf("%-20.20s", " ");
+            } else {
+                System.out.printf("%-20.20s", model.getMake());
+            }
+            if (model.getModel() == null) {
+                System.out.printf("%-20.20s", " ");
+            } else {
+                System.out.printf("%-20.20s", model.getModel());
+            }
+            if (model.getYear() == 0) {
+                System.out.printf("%-15.15s", " ");
+            } else {
+                System.out.printf("%-15.15s", model.getYear());
+            }
+            if (model.getColor() == null) {
+                System.out.printf("%-20.20s", " ");
+            } else {
+                System.out.printf("%-20.20s", model.getColor());
+            }
+            if (model.getOdomoter() == 0) {
+                System.out.printf("%-15.15s", " ");
+            } else {
+                System.out.printf("%-15.15s", model.getOdomoter());
+            }
+            if (model.getStatus() == null) {
+                System.out.printf("%-20.20s", " ");
+            } else {
+                System.out.printf("%-20.20s", model.getStatus());
+            }
+            if (model.getVtname() == null) {
+                System.out.printf("%-20.20s", " ");
+            } else {
+                System.out.printf("%-20.20s", model.getVtname());
+            }
+            if (model.getLocation() == null) {
+                System.out.printf("%-20.20s", " ");
+            } else {
+                System.out.printf("%-20.20s", model.getLocation());
+            }
+            if (model.getCity() == null) {
+                System.out.printf("%-20.20s", " ");
+            } else {
+                System.out.printf("%-20.20s", model.getCity());
+            }
+            System.out.println();
+        }
     }
-    
+
+
+    public void viewRentalReport(String location, String city) {
+
+    }
+
+    public void viewReturnReport(String location, String city) {
+
+    }
+
     /**
 	 * TermainalTransactionsDelegate Implementation
 	 * 

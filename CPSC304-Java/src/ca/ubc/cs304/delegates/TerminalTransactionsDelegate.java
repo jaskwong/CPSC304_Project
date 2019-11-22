@@ -1,8 +1,9 @@
 package ca.ubc.cs304.delegates;
 
-import ca.ubc.cs304.model.*;
-
-import java.sql.SQLException;
+import ca.ubc.cs304.model.Customer;
+import ca.ubc.cs304.model.Reservation;
+import ca.ubc.cs304.model.Ret;
+import ca.ubc.cs304.model.VehicleType;
 import java.sql.Timestamp;
 
 /**
@@ -43,4 +44,12 @@ public interface TerminalTransactionsDelegate {
     void viewReservations();
 
     void viewAvailableVehicles();
+
+    void viewCarnum(String vtname, int startYear, int endYear, String location);
+
+    void viewCardetail(String vtname, int startYear, int endYear, String location);
+
+    void viewRentalReport(String location, String city);
+
+    void viewReturnReport(String location, String city);
 }

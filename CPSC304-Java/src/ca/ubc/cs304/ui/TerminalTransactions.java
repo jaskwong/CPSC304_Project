@@ -1,12 +1,14 @@
 package ca.ubc.cs304.ui;
 
 import ca.ubc.cs304.delegates.TerminalTransactionsDelegate;
-import ca.ubc.cs304.model.*;
+import ca.ubc.cs304.model.Customer;
+import ca.ubc.cs304.model.Reservation;
+import ca.ubc.cs304.model.Ret;
+import ca.ubc.cs304.model.VehicleType;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.sql.Time;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -98,7 +100,7 @@ public class TerminalTransactions {
 			if (choice != INVALID_INPUT) {
 				switch (choice) {
 					case 1:
-//						handleViewAvailableVehicles();
+						handleViewAvailableCar();
 						break;
 					case 2:
 						handleMakeReservation();
@@ -130,11 +132,100 @@ public class TerminalTransactions {
 	}
 
 	private void handleMakeReport() {
+
+        int c = INVALID_INPUT;
+        while (c == INVALID_INPUT) {
+            System.out.println("Enter 1 to see the all Rentals report");
+            System.out.println("Enter 2 to see the all Return report");
+            System.out.println("Enter 3 to see the Rentals report of the branch you specify");
+            System.out.print("Enter 4 to see the Return report of the branch you specify: ");
+            c = readInteger(false);
+        }
+
+        if (c == 1) {
+
+        } else if (c ==2) {
+
+        } else if (c == 3) {
+            System.out.print("Please enter the branch's location of the rentals report you want to view: ");
+            String location = readLine().trim();
+            if (location.length() == 0) {
+                location = null;
+            } else {
+                location = location.substring(0, 1).toUpperCase()+location.substring(1);
+            }
+            System.out.print("Please enter the branch's city of the rentals report you want to view: ");
+            String city = readLine().trim();
+            if (city.length() == 0) {
+                city = null;
+            } else {
+                city = city.substring(0, 1).toUpperCase()+city.substring(1);
+            }
+            delegate.viewRentalReport(location, city);
+        } else {
+            System.out.print("Please enter the branch's location of the return report you want to view: ");
+            String location = readLine().trim();
+            if (location.length() == 0) {
+                location = null;
+            } else {
+                location = location.substring(0, 1).toUpperCase()+location.substring(1);
+            }
+            System.out.print("Please enter the branch's city of the return report you want to view: ");
+            String city = readLine().trim();
+            if (city.length() == 0) {
+                city = null;
+            } else {
+                city = city.substring(0, 1).toUpperCase()+city.substring(1);
+            }
+            delegate.viewReturnReport(location, city);
+        }
 	}
 
 
     private void handleViewAvailableVehicles() {
 	    delegate.viewAvailableVehicles();
+    }
+
+    private void handleViewAvailableCar() {
+        System.out.print("Please enter the car type you want to view: ");
+        String vtname = readLine().trim();
+        if (vtname.length() == 0) {
+            vtname = null;
+        } else if (vtname.equals("suv")) {
+            vtname = vtname.toUpperCase();
+        } else {
+            vtname = vtname.substring(0, 1).toUpperCase()+vtname.substring(1);
+        }
+
+        int startYear = INVALID_INPUT;
+        while (startYear == INVALID_INPUT) {
+            System.out.print("Please enter the start year of the car you want to view: ");
+            startYear = readInteger(true);
+        }
+
+        int endYear = INVALID_INPUT;
+        while (endYear == INVALID_INPUT) {
+            System.out.print("Please enter the end year of the car you want to view: ");
+            endYear = readInteger(true);
+        }
+
+        System.out.print("Please enter the location of the car you want to view: ");
+        String location = readLine().trim();
+        if (location.length() == 0) {
+            location = null;
+        } else {
+            location = location.substring(0, 1).toUpperCase()+location.substring(1);
+        }
+
+        delegate.viewCarnum(vtname, startYear, endYear, location);
+        int c = INVALID_INPUT;
+        while (c == INVALID_INPUT) {
+            System.out.print("Enter 1 to see detail of the cars, enter 2 to return to the main menu: ");
+            c = readInteger(false);
+        }
+        if (c == 1) {
+            delegate.viewCardetail(vtname, startYear, endYear, location);
+        }
     }
 
 	private void handleDeleteOption() {
