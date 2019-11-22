@@ -21,7 +21,7 @@ public class TerminalTransactions {
 	private static final String WARNING_TAG = "[WARNING]";
 	private static final int INVALID_INPUT = Integer.MIN_VALUE;
 	private static final int EMPTY_INPUT = 0;
-    private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+    private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	private BufferedReader bufferedReader = null;
 	private TerminalTransactionsDelegate delegate = null;
 
@@ -280,8 +280,17 @@ public class TerminalTransactions {
         while (rid == INVALID_INPUT) {
             System.out.print("Please enter your rental id: ");
             rid = readInteger(false);
-
+            if (rid != INVALID_INPUT) {
+                if (!delegate.rentalExists(rid)) {
+                    System.out.println("There is no such rental");
+                    rid = INVALID_INPUT;
+                } else if (delegate.returnExists(rid)){
+                    System.out.println("This rental has already been returned");
+                    rid = INVALID_INPUT;
+                }
+            }
         }
+
 
         String date = null;
         Timestamp sqlDate = null;
@@ -322,7 +331,7 @@ public class TerminalTransactions {
         int initOdom = Math.round(delegate.getInitOdom(rid));
         VehicleType vt = delegate.getVtFromRid(rid);
         Timestamp t = delegate.getRentalFromDateFromRid(rid);
-        int val = vt.calculateValue(sqlDate, t, initOdom - odom);
+        float val = vt.calculateValue(t, sqlDate, odom - initOdom);
 
         Ret ret = new Ret(rid, sqlDate, odom, fullTank, val);
 	    delegate.makeReturn(ret);

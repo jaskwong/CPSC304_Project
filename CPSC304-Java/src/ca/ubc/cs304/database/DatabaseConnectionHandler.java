@@ -4,6 +4,7 @@ import ca.ubc.cs304.model.*;
 
 import javax.xml.transform.Result;
 import java.sql.*;
+import java.text.DecimalFormat;
 import java.util.Random;
 
 /**
@@ -139,6 +140,7 @@ public class DatabaseConnectionHandler {
 			ps.setTimestamp(2, ret.getTime());
 			ps.setInt(3, ret.getOdomoter());
 			ps.setBoolean(4, ret.isFulltank());
+            System.out.println(ret.getValue());
 			ps.setFloat(5, ret.getValue());
 
 			ps.executeUpdate();
@@ -316,6 +318,32 @@ public class DatabaseConnectionHandler {
 		}
 		return false;
 	}
+
+    public boolean rentalExists(int rid) {
+        try {
+            PreparedStatement ps = connection.prepareStatement("SELECT rentals_rid FROM rentals where rentals_rid = ?");
+            ps.setInt(1, rid);
+            ResultSet rs = ps.executeQuery();
+            return rs.next();
+        } catch (SQLException e){
+            System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+            rollbackConnection();
+        }
+        return false;
+    }
+
+    public boolean returnExists(int rid) {
+        try {
+            PreparedStatement ps = connection.prepareStatement("SELECT rentals_rid FROM rets where rentals_rid = ?");
+            ps.setInt(1, rid);
+            ResultSet rs = ps.executeQuery();
+            return rs.next();
+        } catch (SQLException e){
+            System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+            rollbackConnection();
+        }
+        return false;
+    }
 
 	public boolean vehicleTypeAvailable(String vtname) {
 		try {

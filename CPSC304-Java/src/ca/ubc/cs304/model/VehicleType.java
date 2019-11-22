@@ -1,12 +1,6 @@
 package ca.ubc.cs304.model;
-
-import javax.xml.datatype.Duration;
-import java.sql.Time;
 import java.sql.Timestamp;
-import java.time.LocalDate;
-import java.time.Period;
 import java.util.Date;
-import java.util.Timer;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -98,17 +92,16 @@ public class VehicleType {
 		this.wrate = wrate;
 	}
 
-	public int calculateValue(Timestamp rent, Timestamp ret, int dist) {
+	public float calculateValue(Timestamp rent, Timestamp ret, int dist) {
         Date rentDate = new Date(rent.getTime());
         Date retDate = new Date(ret.getTime());
-        Long duration = retDate.getTime()-rentDate.getTime();
+        long duration = retDate.getTime()-rentDate.getTime();
 
         double weeks = Math.floor(TimeUnit.MILLISECONDS.toDays(duration)/7);
-        double days = Math.floor(TimeUnit.MILLISECONDS.toDays(duration) % 7);
-        double hours = Math.ceil(TimeUnit.MILLISECONDS.toHours(duration) % 24);
+        double days = Math.floor((TimeUnit.MILLISECONDS.toDays(duration) % 7));
+        double hours = Math.floor(TimeUnit.MILLISECONDS.toHours(duration) % 24);
 
-        int val = (int) Math.round(weeks * (wirate + wrate) + days * (drate + dirate) + hours * (hrate + hirate) + krate * dist);
-
-        return val;
+        double val = (weeks *(wirate + wrate) + days * (drate + dirate) + hours * (hrate + hirate) + krate * dist);
+        return (float) val;
     }
 }

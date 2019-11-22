@@ -32,6 +32,10 @@ public interface TerminalTransactionsDelegate {
 
 	boolean confNumberExists(int confNumber);
 
+	boolean rentalExists(int rid);
+
+	boolean returnExists(int rid);
+
     void makeReturn(Ret ret);
 
     float getInitOdom(int rid);

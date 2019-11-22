@@ -69,14 +69,14 @@ create table rets (
 	rets_datetime timestamp,
 	rets_odometer int,
 	rets_fulltank int,
-	rets_value numeric(5,2),
+	rets_value numeric(7,2),
 	foreign key (rentals_rid) references rentals
 );
 
 
-insert into vehicletypes values('Sedan', 'a passenger car in a three-box configuration with separate compartments for engine, passenger, and cargo', 123.54, 346.32, 221.54, 234.64, 236.35,853.68, 560.57);
-insert into vehicletypes values('SUV','a category of motor vehicles that combine elements of road-going passenger cars with features from off-road vehicles',234.75, 344.63, 213.45, 456.23, 423.53, 394.39, 812.34);
-insert into vehicletypes values('Convertible','a passenger car that can be driven with or without a roof in place', 123.23, 901.23, 561.28, 223.11, 342.34, 123.22, 345.23);
+insert into vehicletypes values('Sedan', 'a passenger car in a three-box configuration with separate compartments for engine, passenger, and cargo', 100.54, 40.32, 12.54, 70.64, 9.35, 1.68, 1.50);
+insert into vehicletypes values('SUV','a category of motor vehicles that combine elements of road-going passenger cars with features from off-road vehicles',200.75, 70.63, 20.45, 150.23, 19.53, 3.39, 1.00);
+insert into vehicletypes values('Convertible','a passenger car that can be driven with or without a roof in place', 150.23, 60.23, 15.28, 105.11, 15.34, 2.22, 0.99);
 insert into vehicles values('28491', 'Honda', 'middle', 2018, 'green', 10000, 'R', 'SUV', 'West', 'Vancouver');
 insert into vehicles values('28345', 'Benz', 'middle', 2018, 'red', 10000, 'A', 'SUV', 'West', 'Vancouver');
 insert into vehicles values('28235', 'Honda', 'small', 2018, 'green', 10000, 'R', 'Sedan', 'West', 'Vancouver');
@@ -111,7 +111,6 @@ insert into rentals values(59330234, '28222', 82392872, TIMESTAMP '2019-01-01 08
 insert into rentals values(47289183, '28333', 84920493, TIMESTAMP '2019-02-03 09:30:00', TIMESTAMP '2019-09-01 10:00:00', 84593, 'Jerry', 6583748590284533,DATE '2020-03-04', 74829203);
 insert into rentals values(94839832, '28444', 22291782, TIMESTAMP '2019-05-06 11:30:00', TIMESTAMP '2019-08-12 11:00:00', 94855, 'Jackson', 2839875487208973, DATE '2020-01-01', 83837652);
 insert into rentals values(14847723, '28235', 90865432, TIMESTAMP '2019-04-02 11:22:00', TIMESTAMP '2019-04-30 09:22:00', 49384, 'Kevin', 7483927463849222, DATE '2020-03-04', 74739821);
-insert into rets values(74839203, TIMESTAMP '2019-02-01 09:00:00', 10020, 23, 239.24);
 insert into rets values(59330234, TIMESTAMP '2019-02-01 08:00:00', 98393, 45, 345.33);
 insert into rets values(47289183, TIMESTAMP '2019-09-01 10:00:00', 84593, 34, 238.44);
 insert into rets values(94839832, TIMESTAMP '2019-08-12 11:00:00', 94855, 55, 873.44);
