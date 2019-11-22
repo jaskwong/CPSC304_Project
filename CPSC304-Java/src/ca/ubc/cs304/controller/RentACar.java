@@ -113,6 +113,8 @@ public class RentACar implements LoginWindowDelegate, TerminalTransactionsDelega
 	    return dbHandler.getRentalFromDateFromRid(rid);
     }
 
+    public boolean returnExists(int rid) { return dbHandler.returnExists(rid); }
+
 	public void makeCustomer(Customer cust) { dbHandler.makeCustomer(cust);}
 
 	public boolean customerExists(int dlicense) { return dbHandler.customerExists(dlicense);};
@@ -126,6 +128,8 @@ public class RentACar implements LoginWindowDelegate, TerminalTransactionsDelega
 	public void viewAvailableVehicles() {dbHandler.viewAvailableVehicles();}
 
     public void viewCarnum(String vtname, int startYear, int endYear, String location) {dbHandler.viewVehiclenum(vtname, startYear, endYear, location);};
+
+	public boolean rentalExists(int rid){ return dbHandler.rentalExists(rid); }
 
 	/**
 	 * TermainalTransactionsDelegate Implementation
