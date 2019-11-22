@@ -2,10 +2,8 @@ package ca.ubc.cs304.database;
 
 import ca.ubc.cs304.model.*;
 
-import javax.xml.transform.Result;
 import java.sql.*;
-import java.text.DecimalFormat;
-import java.util.Random;
+import java.util.ArrayList;
 
 /**
  * This class handles all database related transactions
@@ -521,6 +519,241 @@ public class DatabaseConnectionHandler {
             System.out.println(EXCEPTION_TAG + " " + e.getMessage());
             return null;
         }
+    }
+
+
+    public void viewVehiclenum(String vtname, int startYear, int endYear, String location) {
+        PreparedStatement ps;
+        try {
+            if (vtname == null) {
+                if (startYear == 0) {
+                    if (endYear == 0) {
+                        if (location == null) {
+                            ps = connection.prepareStatement("SELECT COUNT(*) FROM vehicles WHERE v_status = 'A'");
+                        } else {
+                            ps = connection.prepareStatement("SELECT COUNT(*) FROM vehicles WHERE v_status = 'A' AND v_location = ?");
+                            ps.setString(1, location);
+                        }
+                    } else {
+                        if (location == null) {
+                            ps = connection.prepareStatement("SELECT COUNT(*) FROM vehicles WHERE v_status = 'A' AND v_year <= ?");
+                            ps.setInt(1, endYear);
+                        } else {
+                            ps = connection.prepareStatement("SELECT COUNT(*) FROM vehicles WHERE v_status = 'A' AND v_year_ <= ? AND v_location = ?");
+                            ps.setInt(1, endYear);
+                            ps.setString(2, location);
+                        }
+                    }
+                } else{
+                    if (endYear == 0) {
+                        if (location == null) {
+                            ps = connection.prepareStatement("SELECT COUNT(*) FROM vehicles WHERE v_status = 'A' AND v_year >= ?");
+                            ps.setInt(1, startYear);
+                        } else {
+                            ps = connection.prepareStatement("SELECT COUNT(*) FROM vehicles WHERE v_status = 'A' AND v_year >= ? AND v_location = ?");
+                            ps.setInt(1,startYear);
+                            ps.setString(2, location);
+                        }
+                    } else {
+                        if (location == null) {
+                            ps = connection.prepareStatement("SELECT COUNT(*) FROM vehicles WHERE v_status = 'A' AND v_year >= ? AND v_year <= ?");
+                            ps.setInt(1, startYear);
+                            ps.setInt(2, endYear);
+                        } else {
+                            ps = connection.prepareStatement("SELECT COUNT(*) FROM vehicles WHERE v_status = 'A' AND v_year >= ? And v_year <= ? v_location = ?");
+                            ps.setInt(1, startYear);
+                            ps.setInt(2, endYear);
+                            ps.setString(3, location);
+                        }
+                    }
+                }
+            } else {
+                if (startYear == 0) {
+                    if (endYear == 0) {
+                        if (location == null) {
+                            ps = connection.prepareStatement("SELECT COUNT(*) FROM vehicles WHERE v_status = 'A' AND vt_name = ?");
+                            ps.setString(1, vtname);
+                        } else {
+                            ps = connection.prepareStatement("SELECT COUNT(*) FROM vehicles WHERE v_status = 'A' AND vt_name = ? AND v_location = ?");
+                            ps.setString(1,vtname);
+                            ps.setString(2, location);
+                        }
+                    } else {
+                        if (location == null) {
+                            ps = connection.prepareStatement("SELECT COUNT(*) FROM vehicles WHERE v_status = 'A' AND vt_name = ? AND v_year <= ?");
+                            ps.setString(1, vtname);
+                            ps.setInt(2, endYear);
+                        } else {
+                            ps = connection.prepareStatement("SELECT COUNT(*) FROM vehicles WHERE v_status = 'A' AND vt_name = ? AND v_year <= ? AND v_lovation = ?");
+                            ps.setString(1, vtname);
+                            ps.setInt(2, endYear);
+                            ps.setString(3, location);
+                        }
+                    }
+                } else{
+                    if (endYear == 0) {
+                        if (location == null) {
+                            ps = connection.prepareStatement("SELECT COUNT(*) FROM vehicles WHERE v_status = 'A' AND vt_name = ? AND v_year >= ?");
+                            ps.setString(1, vtname);
+                            ps.setInt(2, startYear);
+                        } else {
+                            ps = connection.prepareStatement("SELECT COUNT(*) FROM vehicles WHERE v_status = 'A' AND vt_name = ? AND v_year >= ? AND v_location = ?");
+                            ps.setString(1, vtname);
+                            ps.setInt(2,startYear);
+                            ps.setString(3, location);
+                        }
+                    } else {
+                        if (location == null) {
+                            ps = connection.prepareStatement("SELECT COUNT(*) FROM vehicles WHERE v_status = 'A' AND vt_name = ? AND v_year >= ? AND v_year <= ?");
+                            ps.setString(1,vtname);
+                            ps.setInt(2, startYear);
+                            ps.setInt(3, endYear);
+                        } else {
+                            ps = connection.prepareStatement("SELECT COUNT(*) FROM vehicles WHERE v_status = 'A' AND vt_name = ? AND v_year >= ? AND v_year <= ? AND v_location = ?");
+                            ps.setString(1, vtname);
+                            ps.setInt(2, startYear);
+                            ps.setInt(3, endYear);
+                            ps.setString(4, location);
+                        }
+                    }
+                }
+            }
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                Integer n = rs.getInt(1);
+                System.out.println("There are " + n + " available vehicles with these options");
+            }
+            rs.close();
+            ps.close();
+
+        } catch (SQLException e) {
+            System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+            rollbackConnection();
+        }
+    }
+
+    public Vehicle[] getCarInfom(String vtname, int startYear, int endYear, String location) {
+        PreparedStatement ps;
+        ResultSet rs;
+        ArrayList<Vehicle> result = new ArrayList<Vehicle>();
+        try {
+            if (vtname == null) {
+                if (startYear == 0) {
+                    if (endYear == 0) {
+                        if (location == null) {
+                            ps = connection.prepareStatement("SELECT * FROM vehicles WHERE v_status = 'A'");
+                        } else {
+                            ps = connection.prepareStatement("SELECT * FROM vehicles WHERE v_status = 'A' AND v_location = ?");
+                            ps.setString(1, location);;
+                        }
+                    } else {
+                        if (location == null) {
+                            ps = connection.prepareStatement("SELECT * FROM vehicles WHERE v_status = 'A' AND v_year <= ?");
+                            ps.setInt(1, endYear);
+                        } else {
+                            ps = connection.prepareStatement("SELECT * FROM vehicles WHERE v_status = 'A' AND v_year_ <= ? AND v_location = ?");
+                            ps.setInt(1, endYear);
+                            ps.setString(2, location);
+                        }
+                    }
+                } else{
+                    if (endYear == 0) {
+                        if (location == null) {
+                            ps = connection.prepareStatement("SELECT * FROM vehicles WHERE v_status = 'A' AND v_year >= ?");
+                            ps.setInt(1, startYear);
+                        } else {
+                            ps = connection.prepareStatement("SELECT * FROM vehicles WHERE v_status = 'A' AND v_year >= ? AND v_location = ?");
+                            ps.setInt(1,startYear);
+                            ps.setString(2, location);
+                        }
+                    } else {
+                        if (location == null) {
+                            ps = connection.prepareStatement("SELECT * FROM vehicles WHERE v_status = 'A' AND v_year >= ? AND v_year <= ?");
+                            ps.setInt(1, startYear);
+                            ps.setInt(2, endYear);
+                        } else {
+                            ps = connection.prepareStatement("SELECT * FROM vehicles WHERE v_status = 'A' AND v_year >= ? And v_year <= ? v_location = ?");
+                            ps.setInt(1, startYear);
+                            ps.setInt(2, endYear);
+                            ps.setString(3, location);
+                        }
+                    }
+                }
+            } else {
+                if (startYear == 0) {
+                    if (endYear == 0) {
+                        if (location == null) {
+                            ps = connection.prepareStatement("SELECT * FROM vehicles WHERE v_status = 'A' AND vt_name = ?");
+                            ps.setString(1, vtname);
+                        } else {
+                            ps = connection.prepareStatement("SELECT * FROM vehicles WHERE v_status = 'A' AND vt_name = ? AND v_location = ?");
+                            ps.setString(1,vtname);
+                            ps.setString(2, location);
+                        }
+                    } else {
+                        if (location == null) {
+                            ps = connection.prepareStatement("SELECT * FROM vehicles WHERE v_status = 'A' AND vt_name = ? AND v_year <= ?");
+                            ps.setString(1, vtname);
+                            ps.setInt(2, endYear);
+                        } else {
+                            ps = connection.prepareStatement("SELECT * FROM vehicles WHERE v_status = 'A' AND vt_name = ? AND v_year <= ? AND v_lovation = ?");
+                            ps.setString(1, vtname);
+                            ps.setInt(2, endYear);
+                            ps.setString(3, location);
+                        }
+                    }
+                } else{
+                    if (endYear == 0) {
+                        if (location == null) {
+                            ps = connection.prepareStatement("SELECT * FROM vehicles WHERE v_status = 'A' AND vt_name = ? AND v_year >= ?");
+                            ps.setString(1, vtname);
+                            ps.setInt(2, startYear);
+                        } else {
+                            ps = connection.prepareStatement("SELECT * FROM vehicles WHERE v_status = 'A' AND vt_name = ? AND v_year >= ? AND v_location = ?");
+                            ps.setString(1, vtname);
+                            ps.setInt(2,startYear);
+                            ps.setString(3, location);
+                        }
+                    } else {
+                        if (location == null) {
+                            ps = connection.prepareStatement("SELECT * FROM vehicles WHERE v_status = 'A' AND vt_name = ? AND v_year >= ? AND v_year <= ?");
+                            ps.setString(1,vtname);
+                            ps.setInt(2, startYear);
+                            ps.setInt(3, endYear);
+                        } else {
+                            ps = connection.prepareStatement("SELECT * FROM vehicles WHERE v_status = 'A' AND vt_name = ? AND v_year >= ? AND v_year <= ? AND v_location = ?");
+                            ps.setString(1, vtname);
+                            ps.setInt(2, startYear);
+                            ps.setInt(3, endYear);
+                            ps.setString(4, location);
+                        }
+                    }
+                }
+            }
+
+            rs = ps.executeQuery();
+
+            while(rs.next()) {
+                Vehicle model = new Vehicle(rs.getString("v_license"),
+                        rs.getString("v_make"),
+                        rs.getString("v_model"),
+                        rs.getInt("v_year"),
+                        rs.getString("v_color"),
+                        rs.getInt("v_odometer"),
+                        rs.getString("v_status"),
+                        rs.getString("vt_name"),
+                        rs.getString("v_location"),
+                        rs.getString("v_city"));
+                result.add(model);
+            }
+
+            rs.close();
+            ps.close();
+        } catch (SQLException e) {
+            System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+            rollbackConnection();
+        }
+        return result.toArray(new Vehicle[result.size()]);
     }
 
 	
