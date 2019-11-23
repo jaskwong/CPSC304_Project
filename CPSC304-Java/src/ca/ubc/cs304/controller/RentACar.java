@@ -131,6 +131,21 @@ public class RentACar implements LoginWindowDelegate, TerminalTransactionsDelega
 
 	public boolean rentalExists(int rid){ return dbHandler.rentalExists(rid); }
 
+	public String getAvailableVlicenseOfType(String vt) { return dbHandler.getAvailableOfType(vt);}
+
+	public String getVtFromRes(int confNumber) {return dbHandler.getVtFromRes(confNumber);}
+
+	public Timestamp getFromDateFromRes(int confNumber) {return dbHandler.getFromDateFromRes(confNumber);}
+
+	public Timestamp getToDateFromRes(int confNumber) {return dbHandler.getToDateFromRes(confNumber);}
+
+	public int getDlicenseFromRes(int confNumber) {return dbHandler.getDLicenseFromRes(confNumber);}
+
+	public int getPhoneFromCustomer(int dlicense) {return dbHandler.getPhoneFromCustomer(dlicense);}
+
+	public int getOdomFromVehicle(String vlicense) {return dbHandler.getOdomFromVehicle(vlicense);}
+
+
 	/**
 	 * TermainalTransactionsDelegate Implementation
 	 * 

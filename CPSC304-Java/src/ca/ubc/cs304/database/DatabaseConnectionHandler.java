@@ -65,7 +65,7 @@ public class DatabaseConnectionHandler {
 		try {
 			PreparedStatement ps = connection.prepareStatement("INSERT INTO rental VALUES (?,?,?,?,?,?,?,?,?,?)");
 
-			ps.setInt(1, generateRid());
+			ps.setInt(1, rental.getRid());
 			ps.setString(2, rental.getV_license());
 			ps.setInt(3, rental.getCellphone());
 			ps.setTimestamp(4, rental.getFromDate());
@@ -73,7 +73,7 @@ public class DatabaseConnectionHandler {
 			ps.setInt(6, rental.getOdomoter());
 			ps.setString(7, rental.getCardName());
 			ps.setInt(8, rental.getCardNo());
-			ps.setDate(9, rental.getExpDate());
+			ps.setTimestamp(9, rental.getExpDate());
 			ps.setInt(10, rental.getConfNo());
 
 			ps.executeUpdate();
@@ -344,18 +344,106 @@ public class DatabaseConnectionHandler {
     }
 
 	public boolean vehicleTypeAvailable(String vtname) {
-		try {
-			PreparedStatement ps = connection.prepareStatement("SELECT vt_name FROM vehicles where (vt_name = ? AND v_status = ?)");
-			ps.setString(1, vtname);
-			ps.setString(2, "A");
-			ResultSet rs = ps.executeQuery();
-			return rs.next();
-		} catch (SQLException e){
+        try {
+            PreparedStatement ps = connection.prepareStatement("SELECT vt_name FROM vehicles where (vt_name = ? AND v_status = ?)");
+            ps.setString(1, vtname);
+            ps.setString(2, "A");
+            ResultSet rs = ps.executeQuery();
+            return rs.next();
+        } catch (SQLException e){
             System.out.println(EXCEPTION_TAG + " " + e.getMessage());
-			rollbackConnection();
-		}
-		return false;
-	}
+            rollbackConnection();
+        }
+        return false;
+    }
+
+    public String getAvailableOfType(String vtname) {
+        try {
+            PreparedStatement ps = connection.prepareStatement("SELECT v_license FROM vehicles where (vt_name = ? AND v_status = ?)");
+            ps.setString(1, vtname);
+            ps.setString(2, "A");
+            ResultSet rs = ps.executeQuery();
+            return vtname;
+        } catch (SQLException e){
+            System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+            rollbackConnection();
+        }
+        return null;
+    }
+
+	public String getVtFromRes(int confNumber) {
+        try {
+            PreparedStatement ps = connection.prepareStatement("SELECT vt_name FROM reservations WHERE reservations_confno = ?");
+            ps.setInt(1, confNumber);
+            ResultSet rs = ps.executeQuery();
+
+            // get info on ResultSet
+            ResultSetMetaData rsmd = rs.getMetaData();
+            rs.next();
+            String vt = rs.getString("vt_name");
+            rs.close();
+            return vt;
+        } catch (SQLException e) {
+            System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+            return null;
+        }
+
+    }
+
+    public Timestamp getFromDateFromRes(int confNumber) {
+        try {
+            PreparedStatement ps = connection.prepareStatement("SELECT reservations_from FROM reservations WHERE reservations_confNo = ?");
+            ps.setInt(1, confNumber);
+            ResultSet rs = ps.executeQuery();
+
+            // get info on ResultSet
+            ResultSetMetaData rsmd = rs.getMetaData();
+            rs.next();
+            Timestamp from = rs.getTimestamp("reservations_from");
+            rs.close();
+            return from;
+        } catch (SQLException e) {
+            System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+            return null;
+        }
+    }
+
+    public Timestamp getToDateFromRes(int confNumber) {
+        try {
+            PreparedStatement ps = connection.prepareStatement("SELECT reservations_to FROM reservations WHERE reservations_confNo = ?");
+            ps.setInt(1, confNumber);
+            ResultSet rs = ps.executeQuery();
+
+            // get info on ResultSet
+            ResultSetMetaData rsmd = rs.getMetaData();
+            rs.next();
+            Timestamp to = rs.getTimestamp("reservations_to");
+            rs.close();
+            return to;
+        } catch (SQLException e) {
+            System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+            return null;
+        }
+    }
+
+    public int getDLicenseFromRes(int confNumber) {
+        try {
+            PreparedStatement ps = connection.prepareStatement("SELECT customer_dlicense FROM reservations WHERE reservations_confNo = ?");
+            ps.setInt(1, confNumber);
+            ResultSet rs = ps.executeQuery();
+
+            // get info on ResultSet
+            ResultSetMetaData rsmd = rs.getMetaData();
+            rs.next();
+            int dlicense = rs.getInt("reservations_to");
+            rs.close();
+            return dlicense;
+        } catch (SQLException e) {
+            System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+            return -1;
+        }
+    }
+
 
 	public int getInitOdom(int rid) {
             try {
@@ -873,4 +961,40 @@ public class DatabaseConnectionHandler {
 		}
 		return false;
 	}
+
+    public int getPhoneFromCustomer(int dlicense) {
+        try {
+            PreparedStatement ps = connection.prepareStatement("SELECT customer_cellphone FROM customers WHERE customer_dlicense = ?");
+            ps.setInt(1, dlicense);
+            ResultSet rs = ps.executeQuery();
+
+            // get info on ResultSet
+            ResultSetMetaData rsmd = rs.getMetaData();
+            rs.next();
+            int phone = rs.getInt("reservations_to");
+            rs.close();
+            return phone;
+        } catch (SQLException e) {
+            System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+            return -1;
+        }
+    }
+
+    public int getOdomFromVehicle(String vlicense) {
+        try {
+            PreparedStatement ps = connection.prepareStatement("SELECT v_odometer FROM vehicles WHERE v_license = ?");
+            ps.setString(1, vlicense);
+            ResultSet rs = ps.executeQuery();
+
+            // get info on ResultSet
+            ResultSetMetaData rsmd = rs.getMetaData();
+            rs.next();
+            int odom = rs.getInt("reservations_to");
+            rs.close();
+            return odom;
+        } catch (SQLException e) {
+            System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+            return -1;
+        }
+    }
 }

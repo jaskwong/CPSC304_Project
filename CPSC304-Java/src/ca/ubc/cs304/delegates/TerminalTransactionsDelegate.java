@@ -1,9 +1,7 @@
 package ca.ubc.cs304.delegates;
 
-import ca.ubc.cs304.model.Customer;
-import ca.ubc.cs304.model.Reservation;
-import ca.ubc.cs304.model.Ret;
-import ca.ubc.cs304.model.VehicleType;
+import ca.ubc.cs304.model.*;
+
 import java.sql.Timestamp;
 
 /**
@@ -56,4 +54,22 @@ public interface TerminalTransactionsDelegate {
     void viewRentalReport(String location, String city);
 
     void viewReturnReport(String location, String city);
+
+    void setRented(String vlicense);
+
+    void makeRental(Rental rental);
+
+    String getAvailableVlicenseOfType(String vt);
+
+    String getVtFromRes(int confNumber);
+
+    Timestamp getFromDateFromRes(int confNumber);
+
+    Timestamp getToDateFromRes(int confNumber);
+
+    int getDlicenseFromRes(int confNumber);
+
+    int getPhoneFromCustomer(int dlicense);
+
+    int getOdomFromVehicle(String vlicense);
 }

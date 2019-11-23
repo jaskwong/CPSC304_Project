@@ -14,10 +14,10 @@ public class Rental {
 	private final int odomoter;
 	private final String cardName;
 	private final int cardNo;
-	private final Date expDate;
+	private final Timestamp expDate;
 	private final int confNo;
 
-	public Rental(int rid, String v_license, int cellphone, Timestamp fromDate, Timestamp toDate, int odomoter, String cardName, int cardNo, Date expDate, int confNo) {
+	public Rental(int rid, String v_license, int cellphone, Timestamp fromDate, Timestamp toDate, int odomoter, String cardName, int cardNo, Timestamp expDate, int confNo) {
 		this.rid = rid;
 		this.v_license = v_license;
 		this.cellphone = cellphone;
@@ -62,7 +62,7 @@ public class Rental {
 		return cardNo;
 	}
 
-	public Date getExpDate() {
+	public Timestamp getExpDate() {
 		return expDate;
 	}
 

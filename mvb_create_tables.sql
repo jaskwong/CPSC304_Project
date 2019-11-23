@@ -57,7 +57,7 @@ create table rentals (
     rentals_odometer integer,
     rentals_cardName varchar(20),
     rentals_cardNo integer,
-    rentals_ExpDate date,
+    rentals_ExpDate timestamp,
     reservations_confNo integer,
     foreign key (v_license) references vehicles,
     foreign key (customer_dlicense) references customers,

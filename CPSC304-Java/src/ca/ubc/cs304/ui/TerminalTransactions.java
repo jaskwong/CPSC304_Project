@@ -1,10 +1,7 @@
 package ca.ubc.cs304.ui;
 
 import ca.ubc.cs304.delegates.TerminalTransactionsDelegate;
-import ca.ubc.cs304.model.Customer;
-import ca.ubc.cs304.model.Reservation;
-import ca.ubc.cs304.model.Ret;
-import ca.ubc.cs304.model.VehicleType;
+import ca.ubc.cs304.model.*;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -430,14 +427,76 @@ public class TerminalTransactions {
 	private void handleMakeRental() {
 		int confNumber = INVALID_INPUT;
 		while (confNumber == INVALID_INPUT) {
-			System.out.print("Please your reservation confirmation number: ");
+			System.out.print("Please enter your reservation confirmation number: ");
 			confNumber = readInteger(false);
 		}
 
 		if (!delegate.confNumberExists(confNumber)) {
+			System.out.println("Please complete a reservation first");
 			handleMakeReservation();
+			int newResConfNo = INVALID_INPUT;
+			while (newResConfNo == INVALID_INPUT) {
+				System.out.print("Please enter your new reservation confirmation number: ");
+				newResConfNo = readInteger(false);
+			}
 		}
 
+		String cardName = null;
+		while (cardName == null || cardName.length() <= 0) {
+			System.out.print("Please enter credit card name: ");
+			cardName = readLine().trim();
+		}
+
+		int cardNo = INVALID_INPUT;
+		while (cardNo == INVALID_INPUT) {
+			System.out.print("Please enter your credit card number: ");
+			cardNo = readInteger(false);
+		}
+
+		String date = null;
+		Timestamp sqlDate = null;
+		while (sqlDate == null || date.length() <= 0) {
+			System.out.print("Please enter your credit card expiry (yyyy-mm-dd 00:00:00): ");
+			date = readLine().trim();
+			try {
+				Date endDate = dateFormat.parse(date);
+				sqlDate = new java.sql.Timestamp(endDate.getTime());
+			} catch (ParseException e) {
+				System.out.println("Not a valid date");
+				date = null;
+				continue;
+			}
+		}
+
+		Random rand = new Random();
+		int rid = rand.nextInt(90000000) + 10000000;
+
+		String vt = delegate.getVtFromRes(confNumber);
+		String vlicense = delegate.getAvailableVlicenseOfType(vt);
+		delegate.setRented(vlicense);
+
+
+		Timestamp from = delegate.getFromDateFromRes(confNumber);
+		Timestamp to = delegate.getToDateFromRes(confNumber);
+		int dlicense = delegate.getDlicenseFromRes(confNumber);
+		int cellphone = delegate.getPhoneFromCustomer(dlicense);
+		int odomoter = delegate.getOdomFromVehicle(vlicense);
+
+		Rental rental = new Rental(rid, vlicense, cellphone, from, to, odomoter, cardName, cardNo, sqlDate, confNumber);
+
+		delegate.makeRental(rental);
+
+		System.out.println("Thank you for the completing your rental from Reservation: " + confNumber);
+		System.out.println("These are the details of your Rental: ");
+		System.out.println("Rental ID: " + rid);
+		System.out.println("Vehicle License: " + vlicense);
+		System.out.println("Customer Phone Number: " + cellphone);
+		System.out.println("Start of Rental: " + from);
+		System.out.println("End of Rental: " + to);
+		System.out.println("Vehicle Initial Odometer: " + odomoter);
+		System.out.println("Customer Card Name: " + cardName);
+		System.out.println("Customer Card Number: " + cardNo);
+		System.out.println("Customer Card Exp Date: " + sqlDate);
 	}
 	
 	private void handleInsertOption() {
