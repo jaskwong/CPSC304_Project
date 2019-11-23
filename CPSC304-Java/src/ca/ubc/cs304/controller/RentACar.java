@@ -139,14 +139,10 @@ public class RentACar implements LoginWindowDelegate, TerminalTransactionsDelega
 
     public int getPhoneFromCustomer(int dlicense) {return dbHandler.getPhoneFromCustomer(dlicense);}
 
+
     public int getOdomFromVehicle(String vlicense) {return dbHandler.getOdomFromVehicle(vlicense);}
 
 
-    /**
-     * TermainalTransactionsDelegate Implementation
-     *
-     * Delete branch with given branch ID.
-     */
 
 
     public void viewCardetail(String vtname, int startYear, int endYear, String location) {

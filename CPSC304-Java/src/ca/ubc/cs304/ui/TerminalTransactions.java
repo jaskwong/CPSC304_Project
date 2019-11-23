@@ -86,21 +86,7 @@ public class TerminalTransactions {
 
 
     private void handleMakeReport() {
-//        String date = null;
-//        Timestamp sqlDate = null;
-//        while (sqlDate == null || date.length() <= 0) {
-//            System.out.print("Please enter the date of report you want to view (yyyy-mm-dd): ");
-//            date = readLine().trim();
-//            try {
-////                java.util.Date date1;
-//                Date date1 = new SimpleDateFormat("YYYY-MM-DD").parse(date);
-//                sqlDate = new java.sql.Timestamp(date1.getTime());
-//            } catch (ParseException e) {
-//                System.out.println("Not a valid date");
-//                date = null;
-//                continue;
-//            }
-//        }
+
 
         String date = null;
         Timestamp sqlDate = null;
@@ -118,7 +104,7 @@ public class TerminalTransactions {
         }
 
         int c = INVALID_INPUT;
-        date = date.substring (0, 10);
+        date = date.substring(0, 10);
         while (c == INVALID_INPUT) {
             System.out.println("Enter 1 to see the all Rentals report on " + date);
             System.out.println("Enter 2 to see the all Return report on " + date);
@@ -184,7 +170,7 @@ public class TerminalTransactions {
         } else if (vtname.equals("suv")) {
             vtname = vtname.toUpperCase();
         } else {
-            vtname = vtname.substring(0, 1).toUpperCase()+vtname.substring(1);
+            vtname = vtname.substring(0, 1).toUpperCase() + vtname.substring(1);
         }
 
         int startYear = INVALID_INPUT;
@@ -208,7 +194,7 @@ public class TerminalTransactions {
         if (location.length() == 0) {
             location = null;
         } else {
-            location = location.substring(0, 1).toUpperCase()+location.substring(1);
+            location = location.substring(0, 1).toUpperCase() + location.substring(1);
         }
 
         delegate.viewCarnum(vtname, startYear, endYear, location);
@@ -225,7 +211,6 @@ public class TerminalTransactions {
             }
         }
     }
-
 
 
     private void handleMakeReservation() {
@@ -364,7 +349,7 @@ public class TerminalTransactions {
                 if (!delegate.rentalExists(rid)) {
                     System.out.println("There is no such rental");
                     rid = INVALID_INPUT;
-                } else if (delegate.returnExists(rid)){
+                } else if (delegate.returnExists(rid)) {
                     System.out.println("This rental has already been returned");
                     return;
                 }
@@ -537,5 +522,7 @@ public class TerminalTransactions {
             System.out.println(EXCEPTION_TAG + " " + e.getMessage());
         }
         return result;
+
     }
 }
+

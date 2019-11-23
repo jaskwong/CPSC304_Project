@@ -29,6 +29,8 @@ public class Rental {
         this.confNo = confNo;
     }
 
+
+
     public int getRid() {
         return rid;
     }

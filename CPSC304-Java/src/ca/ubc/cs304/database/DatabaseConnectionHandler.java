@@ -47,6 +47,7 @@ public class DatabaseConnectionHandler {
                 ps.setString(2, "RENTED");
             }
 
+
             connection.commit();
 
             ps.close();
@@ -57,7 +58,7 @@ public class DatabaseConnectionHandler {
     }
 
     public static int generateRid() {
-        return (int) Math.round((Math.random() * 9000000)+1000000);
+        return (int) Math.round((Math.random() * 9000000) + 1000000);
     }
 
 
@@ -138,10 +139,7 @@ public class DatabaseConnectionHandler {
             ps.setTimestamp(2, ret.getTime());
             ps.setInt(3, ret.getOdomoter());
             ps.setBoolean(4, ret.isFulltank());
-            System.out.println(ret.getValue());
-            ps.setFloat(5, ret.getValue());
 
-            ps.executeUpdate();
             connection.commit();
 
             ps.close();
@@ -150,6 +148,7 @@ public class DatabaseConnectionHandler {
             rollbackConnection();
         }
     }
+
 
     public void deleteRet(int rid) {
         try {
@@ -189,26 +188,8 @@ public class DatabaseConnectionHandler {
         }
     }
 
-    public void deleteBranch(int branchId) {
-        try {
-            PreparedStatement ps = connection.prepareStatement("DELETE FROM branch WHERE branch_id = ?");
-            ps.setInt(1, branchId);
 
-            int rowCount = ps.executeUpdate();
-            if (rowCount == 0) {
-                System.out.println(WARNING_TAG + " Branch " + branchId + " does not exist!");
-            }
-
-            connection.commit();
-
-            ps.close();
-        } catch (SQLException e) {
-            System.out.println(EXCEPTION_TAG + " " + e.getMessage());
-            rollbackConnection();
-        }
-    }
-
-    public void makeCustomer(Customer c){
+    public void makeCustomer(Customer c) {
         try {
             PreparedStatement ps = connection.prepareStatement("INSERT INTO customers VALUES(?,?,?,?)");
             ps.setString(1, c.getCellphone());
@@ -219,13 +200,13 @@ public class DatabaseConnectionHandler {
             ps.executeUpdate();
             connection.commit();
             ps.close();
-        } catch (SQLException e){
+        } catch (SQLException e) {
             System.out.println(EXCEPTION_TAG + " " + e.getMessage());
             rollbackConnection();
         }
     }
 
-    public void deleteCustomer(int dlic){
+    public void deleteCustomer(int dlic) {
         try {
             PreparedStatement ps = connection.prepareStatement("DELETE FROM customers WHERE customer_dlicense = ?");
             ps.setInt(1, dlic);
@@ -233,17 +214,17 @@ public class DatabaseConnectionHandler {
             ps.executeUpdate();
             connection.commit();
             ps.close();
-        } catch (SQLException e){
+        } catch (SQLException e) {
             System.out.println(EXCEPTION_TAG + " " + e.getMessage());
             rollbackConnection();
         }
     }
 
-    public void makeReservation(Reservation r){
+    public void makeReservation(Reservation r) {
 
         try {
             PreparedStatement ps = connection.prepareStatement("INSERT INTO reservations VALUES(?,?,?,?,?)");
-            ps.setInt(1,  r.getConfNo());
+            ps.setInt(1, r.getConfNo());
             ps.setString(2, r.getVtname());
             ps.setInt(3, r.getCustomer_dlicense());
             ps.setTimestamp(4, r.getFromDate());
@@ -252,13 +233,13 @@ public class DatabaseConnectionHandler {
             ps.executeUpdate();
             connection.commit();
             ps.close();
-        } catch (SQLException e){
+        } catch (SQLException e) {
             System.out.println(EXCEPTION_TAG + " " + e.getMessage());
             rollbackConnection();
         }
     }
 
-    public void deleteReservation(int confno){
+    public void deleteReservation(int confno) {
         try {
             PreparedStatement ps = connection.prepareStatement("DELETE FROM reservations WHERE reservations_confNo = ?");
             ps.setInt(1, confno);
@@ -266,16 +247,16 @@ public class DatabaseConnectionHandler {
             ps.executeUpdate();
             connection.commit();
             ps.close();
-        } catch (SQLException e){
+        } catch (SQLException e) {
             System.out.println(EXCEPTION_TAG + " " + e.getMessage());
             rollbackConnection();
         }
     }
 
-    public void makeVehicleType(VehicleType vt){
-        try{
+    public void makeVehicleType(VehicleType vt) {
+        try {
             PreparedStatement ps = connection.prepareStatement("INSERT INTO vehicletypes VALUES(?,?,?,?,?,?,?)");
-            ps.setString(1,  vt.getVtname());
+            ps.setString(1, vt.getVtname());
             ps.setString(2, vt.getFeatures());
             ps.setFloat(3, vt.getWrate());
             ps.setFloat(4, vt.getDrate());
@@ -288,7 +269,7 @@ public class DatabaseConnectionHandler {
             ps.executeUpdate();
             connection.commit();
             ps.close();
-        } catch (SQLException e){
+        } catch (SQLException e) {
             System.out.println(EXCEPTION_TAG + " " + e.getMessage());
             rollbackConnection();
         }
@@ -298,7 +279,7 @@ public class DatabaseConnectionHandler {
         try {
             PreparedStatement ps = connection.prepareStatement("DELETE FROM vehicletypes WHERE vt_name = ?");
             ps.setString(1, vtName);
-        } catch (SQLException e){
+        } catch (SQLException e) {
             System.out.println(EXCEPTION_TAG + " " + e.getMessage());
             rollbackConnection();
         }
@@ -310,7 +291,7 @@ public class DatabaseConnectionHandler {
             ps.setInt(1, dlicense);
             ResultSet rs = ps.executeQuery();
             return rs.next();
-        } catch (SQLException e){
+        } catch (SQLException e) {
             System.out.println(EXCEPTION_TAG + " " + e.getMessage());
             rollbackConnection();
         }
@@ -323,7 +304,7 @@ public class DatabaseConnectionHandler {
             ps.setInt(1, rid);
             ResultSet rs = ps.executeQuery();
             return rs.next();
-        } catch (SQLException e){
+        } catch (SQLException e) {
             System.out.println(EXCEPTION_TAG + " " + e.getMessage());
             rollbackConnection();
         }
@@ -336,7 +317,7 @@ public class DatabaseConnectionHandler {
             ps.setInt(1, rid);
             ResultSet rs = ps.executeQuery();
             return rs.next();
-        } catch (SQLException e){
+        } catch (SQLException e) {
             System.out.println(EXCEPTION_TAG + " " + e.getMessage());
             rollbackConnection();
         }
@@ -350,7 +331,7 @@ public class DatabaseConnectionHandler {
             ps.setString(2, "A");
             ResultSet rs = ps.executeQuery();
             return rs.next();
-        } catch (SQLException e){
+        } catch (SQLException e) {
             System.out.println(EXCEPTION_TAG + " " + e.getMessage());
             rollbackConnection();
         }
@@ -364,7 +345,7 @@ public class DatabaseConnectionHandler {
             ps.setString(2, "A");
             ResultSet rs = ps.executeQuery();
             return vtname;
-        } catch (SQLException e){
+        } catch (SQLException e) {
             System.out.println(EXCEPTION_TAG + " " + e.getMessage());
             rollbackConnection();
         }
@@ -372,6 +353,7 @@ public class DatabaseConnectionHandler {
     }
 
     public String getVtFromRes(int confNumber) {
+
         try {
             PreparedStatement ps = connection.prepareStatement("SELECT vt_name FROM reservations WHERE reservations_confno = ?");
             ps.setInt(1, confNumber);
@@ -461,8 +443,8 @@ public class DatabaseConnectionHandler {
             System.out.println(EXCEPTION_TAG + " " + e.getMessage());
             return -1;
         }
-
     }
+
 
     public Timestamp getRentalFromDateFromRid(int rid) {
         try {
@@ -505,7 +487,7 @@ public class DatabaseConnectionHandler {
                 System.out.printf("%-25s", rsmd.getColumnName(i + 1));
             }
 
-            while(rs.next()) {
+            while (rs.next()) {
                 Vehicle v = new Vehicle(rs.getString("v_license"),
                         rs.getString("v_make"),
                         rs.getString("v_model"),
@@ -553,7 +535,7 @@ public class DatabaseConnectionHandler {
                 System.out.printf("%-25s", rsmd.getColumnName(i + 1));
             }
 
-            while(rs.next()) {
+            while (rs.next()) {
                 Reservation res = new Reservation(rs.getInt("reservations_confNo"),
                         rs.getString("vt_name"),
                         rs.getInt("customer_dlicense"),
@@ -632,14 +614,14 @@ public class DatabaseConnectionHandler {
                             ps.setString(2, location);
                         }
                     }
-                } else{
+                } else {
                     if (endYear == 0) {
                         if (location == null) {
                             ps = connection.prepareStatement("SELECT COUNT(*) FROM vehicles WHERE v_status = 'A' AND v_year >= ?");
                             ps.setInt(1, startYear);
                         } else {
                             ps = connection.prepareStatement("SELECT COUNT(*) FROM vehicles WHERE v_status = 'A' AND v_year >= ? AND v_location = ?");
-                            ps.setInt(1,startYear);
+                            ps.setInt(1, startYear);
                             ps.setString(2, location);
                         }
                     } else {
@@ -663,7 +645,7 @@ public class DatabaseConnectionHandler {
                             ps.setString(1, vtname);
                         } else {
                             ps = connection.prepareStatement("SELECT COUNT(*) FROM vehicles WHERE v_status = 'A' AND vt_name = ? AND v_location = ?");
-                            ps.setString(1,vtname);
+                            ps.setString(1, vtname);
                             ps.setString(2, location);
                         }
                     } else {
@@ -678,7 +660,7 @@ public class DatabaseConnectionHandler {
                             ps.setString(3, location);
                         }
                     }
-                } else{
+                } else {
                     if (endYear == 0) {
                         if (location == null) {
                             ps = connection.prepareStatement("SELECT COUNT(*) FROM vehicles WHERE v_status = 'A' AND vt_name = ? AND v_year >= ?");
@@ -687,13 +669,13 @@ public class DatabaseConnectionHandler {
                         } else {
                             ps = connection.prepareStatement("SELECT COUNT(*) FROM vehicles WHERE v_status = 'A' AND vt_name = ? AND v_year >= ? AND v_location = ?");
                             ps.setString(1, vtname);
-                            ps.setInt(2,startYear);
+                            ps.setInt(2, startYear);
                             ps.setString(3, location);
                         }
                     } else {
                         if (location == null) {
                             ps = connection.prepareStatement("SELECT COUNT(*) FROM vehicles WHERE v_status = 'A' AND vt_name = ? AND v_year >= ? AND v_year <= ?");
-                            ps.setString(1,vtname);
+                            ps.setString(1, vtname);
                             ps.setInt(2, startYear);
                             ps.setInt(3, endYear);
                         } else {
@@ -732,7 +714,8 @@ public class DatabaseConnectionHandler {
                             ps = connection.prepareStatement("SELECT * FROM vehicles WHERE v_status = 'A'");
                         } else {
                             ps = connection.prepareStatement("SELECT * FROM vehicles WHERE v_status = 'A' AND v_location = ?");
-                            ps.setString(1, location);;
+                            ps.setString(1, location);
+                            ;
                         }
                     } else {
                         if (location == null) {
@@ -744,14 +727,14 @@ public class DatabaseConnectionHandler {
                             ps.setString(2, location);
                         }
                     }
-                } else{
+                } else {
                     if (endYear == 0) {
                         if (location == null) {
                             ps = connection.prepareStatement("SELECT * FROM vehicles WHERE v_status = 'A' AND v_year >= ?");
                             ps.setInt(1, startYear);
                         } else {
                             ps = connection.prepareStatement("SELECT * FROM vehicles WHERE v_status = 'A' AND v_year >= ? AND v_location = ?");
-                            ps.setInt(1,startYear);
+                            ps.setInt(1, startYear);
                             ps.setString(2, location);
                         }
                     } else {
@@ -775,7 +758,7 @@ public class DatabaseConnectionHandler {
                             ps.setString(1, vtname);
                         } else {
                             ps = connection.prepareStatement("SELECT * FROM vehicles WHERE v_status = 'A' AND vt_name = ? AND v_location = ?");
-                            ps.setString(1,vtname);
+                            ps.setString(1, vtname);
                             ps.setString(2, location);
                         }
                     } else {
@@ -790,7 +773,7 @@ public class DatabaseConnectionHandler {
                             ps.setString(3, location);
                         }
                     }
-                } else{
+                } else {
                     if (endYear == 0) {
                         if (location == null) {
                             ps = connection.prepareStatement("SELECT * FROM vehicles WHERE v_status = 'A' AND vt_name = ? AND v_year >= ?");
@@ -799,13 +782,13 @@ public class DatabaseConnectionHandler {
                         } else {
                             ps = connection.prepareStatement("SELECT * FROM vehicles WHERE v_status = 'A' AND vt_name = ? AND v_year >= ? AND v_location = ?");
                             ps.setString(1, vtname);
-                            ps.setInt(2,startYear);
+                            ps.setInt(2, startYear);
                             ps.setString(3, location);
                         }
                     } else {
                         if (location == null) {
                             ps = connection.prepareStatement("SELECT * FROM vehicles WHERE v_status = 'A' AND vt_name = ? AND v_year >= ? AND v_year <= ?");
-                            ps.setString(1,vtname);
+                            ps.setString(1, vtname);
                             ps.setInt(2, startYear);
                             ps.setInt(3, endYear);
                         } else {
@@ -821,7 +804,7 @@ public class DatabaseConnectionHandler {
 
             rs = ps.executeQuery();
 
-            while(rs.next()) {
+            while (rs.next()) {
                 Vehicle model = new Vehicle(rs.getString("v_license"),
                         rs.getString("v_make"),
                         rs.getString("v_model"),
@@ -843,6 +826,7 @@ public class DatabaseConnectionHandler {
         }
         return result.toArray(new Vehicle[result.size()]);
     }
+
 
     public void viewRtalRptNum(String location, String city, Timestamp sqlDate) {
         PreparedStatement ps;
@@ -898,7 +882,7 @@ public class DatabaseConnectionHandler {
 
             rs = ps.executeQuery();
 
-            while(rs.next()) {
+            while (rs.next()) {
                 Rental model = new Rental(rs.getInt("rentals_rid"),
                         rs.getString("v_license"),
                         rs.getInt("customer_dlicense"),
@@ -946,7 +930,8 @@ public class DatabaseConnectionHandler {
             rollbackConnection();
         }
     }
-    public  Ret[] getRtnRptInfo(String location, String city, Timestamp sqlDate) {
+
+    public Ret[] getRtnRptInfo(String location, String city, Timestamp sqlDate) {
         PreparedStatement ps;
         ResultSet rs;
         ArrayList<Ret> result = new ArrayList<Ret>();
@@ -964,7 +949,7 @@ public class DatabaseConnectionHandler {
 
             rs = ps.executeQuery();
 
-            while(rs.next()) {
+            while (rs.next()) {
                 Ret model = new Ret(rs.getInt("rentals_rid"),
                         rs.getTimestamp("rets_datetime"),
                         rs.getInt("rets_odometer"),
@@ -1002,7 +987,7 @@ public class DatabaseConnectionHandler {
     }
 
     private void rollbackConnection() {
-        try  {
+        try {
             connection.rollback();
         } catch (SQLException e) {
             System.out.println(EXCEPTION_TAG + " " + e.getMessage());
@@ -1015,12 +1000,13 @@ public class DatabaseConnectionHandler {
             ps.setInt(1, confNumber);
             ResultSet rs = ps.executeQuery();
             return rs.next();
-        } catch (SQLException e){
+        } catch (SQLException e) {
             System.out.println(EXCEPTION_TAG + " " + e.getMessage());
             rollbackConnection();
         }
         return false;
     }
+
 
     public int getPhoneFromCustomer(int dlicense) {
         try {
