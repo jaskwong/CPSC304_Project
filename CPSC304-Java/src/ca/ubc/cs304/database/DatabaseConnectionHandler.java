@@ -51,8 +51,37 @@ public class DatabaseConnectionHandler {
         }
     }
 
-    public static int generateRid() {
+    public void setUnrented(String license) {
+        try {
+            PreparedStatement ps = connection.prepareStatement("UPDATE vehicles SET v_status = 'A' WHERE v_license = ?");
+            ps.setString(1, license);
+            ps.executeUpdate();
+            connection.commit();
+            ps.close();
+        } catch (SQLException e) {
+            System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+            rollbackConnection();
+        }
+    }
+
+    public int generateRid() {
         return (int) Math.round((Math.random() * 9000000) + 1000000);
+    }
+
+    public String getVlicenseFromRid(int rid) {
+        try {
+            PreparedStatement ps = connection.prepareStatement("SELECT v_license FROM rentals WHERE rentals_rid = ?");
+            ps.setInt(1, rid);
+            ResultSet rs = ps.executeQuery();
+
+            rs.next();
+            String license = rs.getString("v_license");
+            rs.close();
+            return license;
+        } catch (SQLException e) {
+            System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+            return "";
+        }
     }
 
 
@@ -143,6 +172,19 @@ public class DatabaseConnectionHandler {
         }
     }
 
+    public boolean alreadyRented(int confNo) {
+        try {
+            PreparedStatement ps = connection.prepareStatement("SELECT reservations_confNo FROM rentals where reservations_confNo = ?");
+            ps.setInt(1, confNo);
+            ResultSet rs = ps.executeQuery();
+            return rs.next();
+        } catch (SQLException e) {
+            System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+            rollbackConnection();
+        }
+        return false;
+
+    }
 
     public void deleteRet(int rid) {
         try {
@@ -381,8 +423,6 @@ public class DatabaseConnectionHandler {
             ps.setInt(1, confNumber);
             ResultSet rs = ps.executeQuery();
 
-            // get info on ResultSet
-            ResultSetMetaData rsmd = rs.getMetaData();
             rs.next();
             String vt = rs.getString("vt_name");
             rs.close();

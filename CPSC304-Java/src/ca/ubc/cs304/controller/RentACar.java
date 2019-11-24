@@ -143,8 +143,15 @@ public class RentACar implements LoginWindowDelegate, TerminalTransactionsDelega
 
     public int getPhoneFromCustomer(int dlicense) {return dbHandler.getPhoneFromCustomer(dlicense);}
 
+    public boolean alreadyRented(int confNo){ return  dbHandler.alreadyRented(confNo); }
 
     public int getOdomFromVehicle(String vlicense) {return dbHandler.getOdomFromVehicle(vlicense);}
+
+    public int generateRid() { return dbHandler.generateRid();}
+
+    public String getVlicenseFromRid(int rid) { return dbHandler.getVlicenseFromRid(rid); }
+
+    public void setUnrented(String license){ dbHandler.setUnrented(license); }
 
 
 

@@ -102,6 +102,10 @@ public class VehicleType {
         double hours = Math.floor(TimeUnit.MILLISECONDS.toHours(duration) % 24);
 
         double val = (weeks *(wirate + wrate) + days * (drate + dirate) + hours * (hrate + hirate) + krate * dist);
+        System.out.println("Price calculation: (" + wirate + " + " + wrate + ") * " + weeks + " weeks + ("
+                + dirate + " + " + drate + ") * " + days + " days + ("
+                + hirate + " + " + hrate + ") * " + hours + " hours + "
+                + krate + " * " + dist + " km");
         return (float) val;
     }
 }

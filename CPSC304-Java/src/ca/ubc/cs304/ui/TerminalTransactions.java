@@ -298,10 +298,13 @@ public class TerminalTransactions {
                 end = null;
                 continue;
             }
+            if ((sqlEndDate.getTime() - sqlStartDate.getTime())<0) {
+                System.out.println("This is not a valid end date");
+                sqlEndDate = null;
+            }
         }
 
-        Random rand = new Random();
-        int confno = rand.nextInt(90000000) + 10000000;
+        int confno = delegate.generateRid();
         Reservation reso = new Reservation(confno, vtname, dlicense, sqlStartDate, sqlEndDate);
 
         delegate.insertReservation(reso);
@@ -346,7 +349,7 @@ public class TerminalTransactions {
             if (rid != INVALID_INPUT) {
                 if (!delegate.rentalExists(rid)) {
                     System.out.println("There is no such rental");
-                    rid = INVALID_INPUT;
+                    return;
                 } else if (delegate.returnExists(rid)) {
                     System.out.println("This rental has already been returned");
                     return;
@@ -355,6 +358,7 @@ public class TerminalTransactions {
         }
 
 
+        Timestamp t = delegate.getRentalFromDateFromRid(rid);
         String date = null;
         Timestamp sqlDate = null;
         while (sqlDate == null || date.length() <= 0) {
@@ -367,6 +371,10 @@ public class TerminalTransactions {
                 System.out.println("Not a valid date");
                 date = null;
                 continue;
+            }
+            if ((sqlDate.getTime()-t.getTime() <= 0)) {
+                System.out.println("This is not a valid return date");
+                sqlDate = null;
             }
         }
 
@@ -393,25 +401,33 @@ public class TerminalTransactions {
 
         int initOdom = Math.round(delegate.getInitOdom(rid));
         VehicleType vt = delegate.getVtFromRid(rid);
-        Timestamp t = delegate.getRentalFromDateFromRid(rid);
         float val = vt.calculateValue(t, sqlDate, odom - initOdom);
         Ret ret = new Ret(rid, sqlDate, odom, fullTank, val);
         delegate.makeReturn(ret);
+        delegate.setUnrented(delegate.getVlicenseFromRid(rid));
 
+
+        System.out.println("Your reservation confirmation number is: " + ret.getRid());
+        System.out.println("Your date of return is: " + ret.getTime());
         System.out.println("Your total is: $" + ret.getValue());
     }
 
     private void handleMakeRental() {
         int confNumber = INVALID_INPUT;
         while (confNumber == INVALID_INPUT) {
-            System.out.print("Please enter your reservation confirmation number: ");
+            System.out.print("Please enter your reservation confirmation number or enter 0 if you don't have a reservation: ");
             confNumber = readInteger(false);
         }
 
-        if (!delegate.confNumberExists(confNumber)) {
-            System.out.println("Please complete a reservation first");
+        if (confNumber == 0) {
             handleMakeReservation();
             handleMakeRental();
+            return;
+        } else if (!delegate.confNumberExists(confNumber)) {
+            System.out.println("This is not a valid confirmation number");
+            return;
+        } else if (delegate.alreadyRented(confNumber)){
+            System.out.println("This rental has already been completed");
             return;
         }
 

@@ -60,6 +60,14 @@ public interface TerminalTransactionsDelegate {
 
     String getAvailableVlicenseOfType(String vt);
 
+    int generateRid();
+
+    String getVlicenseFromRid(int rid);
+
+    void setUnrented(String license);
+
+    boolean alreadyRented(int confNo);
+
     String getVtFromRes(int confNumber);
 
     Timestamp getFromDateFromRes(int confNumber);
