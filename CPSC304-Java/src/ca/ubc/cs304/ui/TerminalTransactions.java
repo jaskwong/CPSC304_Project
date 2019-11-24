@@ -161,7 +161,7 @@ public class TerminalTransactions {
     }
 
     private void handleViewAvailableCar() {
-        System.out.print("Please enter the car type you want to view: ");
+        System.out.print("Please enter the car type you want to view or leave blank to see all car types: ");
         String vtname = readLine().trim();
         if (vtname.length() == 0) {
             vtname = null;
@@ -173,21 +173,25 @@ public class TerminalTransactions {
 
         int startYear = INVALID_INPUT;
         while (startYear == INVALID_INPUT) {
-            System.out.print("Please enter the start year of the car you want to view: ");
+            System.out.print("Please enter the start year of the car you want to view or leave blank to see all: ");
             startYear = readInteger(true);
+            if (startYear < 1800 && startYear != 0) {
+                System.out.println("This is not a valid start year, please pick a later year");
+                startYear = INVALID_INPUT;
+            }
         }
 
         int endYear = INVALID_INPUT;
         while (endYear == INVALID_INPUT) {
-            System.out.print("Please enter the end year of the car you want to view: ");
+            System.out.print("Please enter the end year of the car you want to view or leave blank to see all: ");
             endYear = readInteger(true);
-            if (endYear < startYear) {
+            if (endYear < startYear && endYear != 0) {
                 System.out.println("End year is invalid before Start year");
                 endYear = INVALID_INPUT;
             }
         }
 
-        System.out.print("Please enter the location of the car you want to view: ");
+        System.out.print("Please enter the location of the car you want to view or leave blank to see all: ");
         String location = readLine().trim();
         if (location.length() == 0) {
             location = null;

@@ -159,8 +159,7 @@ public class RentACar implements LoginWindowDelegate, TerminalTransactionsDelega
     public void viewCardetail(String vtname, int startYear, int endYear, String location) {
         Vehicle[] models = dbHandler.getCarInfom(vtname, startYear, endYear, location);
 
-        for (int i = 0; i < models.length; i++) {
-            Vehicle model = models[i];
+
             System.out.printf("%-20.20s", "vehicle license");
             System.out.printf("%-20.20s", "vehicle make");
             System.out.printf("%-20.20s", "vehicle model");
@@ -172,6 +171,8 @@ public class RentACar implements LoginWindowDelegate, TerminalTransactionsDelega
             System.out.printf("%-20.20s", "vehicle location");
             System.out.printf("%-20.20s", "vehicle city");
             System.out.println();
+        for (int i = 0; i < models.length; i++) {
+            Vehicle model = models[i];
             System.out.printf("%-20.20s", model.getVlicense());
             if (model.getMake() == null) {
                 System.out.printf("%-20.20s", " ");
