@@ -10,7 +10,6 @@ import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Random;
 
 /**
  * The class is only responsible for handling terminal text inputs.
@@ -202,7 +201,7 @@ public class TerminalTransactions {
         delegate.viewCarnum(vtname, startYear, endYear, location);
         int c = INVALID_INPUT;
         while (c == INVALID_INPUT) {
-            System.out.print("Enter 1 to see detail of the cars, enter other integer to return to the main menu: ");
+            System.out.print("Enter 1 to see detail of the cars, enter 2 to return to the main menu: ");
             c = readInteger(false);
             if (c == 1) {
                 delegate.viewCardetail(vtname, startYear, endYear, location);
