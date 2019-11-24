@@ -123,6 +123,10 @@ public class RentACar implements LoginWindowDelegate, TerminalTransactionsDelega
 
     public void viewAvailableVehicles() {dbHandler.viewAvailableVehicles();}
 
+    public Rental makeRentalFromReservation(int confNo, String v_license, String cardName, int cardNo, Timestamp exp) {
+        return dbHandler.makeRentalFromReservation(confNo, v_license, cardName, cardNo, exp);
+    }
+
     public void viewCarnum(String vtname, int startYear, int endYear, String location) {dbHandler.viewVehiclenum(vtname, startYear, endYear, location);};
 
     public boolean rentalExists(int rid){ return dbHandler.rentalExists(rid); }

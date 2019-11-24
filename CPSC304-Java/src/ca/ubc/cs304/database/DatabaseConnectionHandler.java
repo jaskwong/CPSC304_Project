@@ -4,6 +4,7 @@ import ca.ubc.cs304.model.*;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Random;
 
 /**
  * This class handles all database related transactions
@@ -37,16 +38,9 @@ public class DatabaseConnectionHandler {
 
     public void setRented(String license) {
         try {
-            PreparedStatement ps = connection.prepareStatement("UPDATE vehicle SET status WHERE vlicense = ? THEN ?");
+            PreparedStatement ps = connection.prepareStatement("UPDATE vehicles SET v_status = 'R' WHERE v_license = ?");
             ps.setString(1, license);
-
-            int rowCount = ps.executeUpdate();
-            if (rowCount == 0) {
-                System.out.println(WARNING_TAG + " Vehicle " + license + " does not exist!");
-            } else {
-                ps.setString(2, "RENTED");
-            }
-
+            ps.executeUpdate();
 
             connection.commit();
 
@@ -64,7 +58,7 @@ public class DatabaseConnectionHandler {
 
     public void makeRental(Rental rental) {
         try {
-            PreparedStatement ps = connection.prepareStatement("INSERT INTO rental VALUES (?,?,?,?,?,?,?,?,?,?)");
+            PreparedStatement ps = connection.prepareStatement("INSERT INTO rentals VALUES (?,?,?,?,?,?,?,?,?,?)");
 
             ps.setInt(1, rental.getRid());
             ps.setString(2, rental.getV_license());
@@ -221,7 +215,6 @@ public class DatabaseConnectionHandler {
     }
 
     public void makeReservation(Reservation r) {
-
         try {
             PreparedStatement ps = connection.prepareStatement("INSERT INTO reservations VALUES(?,?,?,?,?)");
             ps.setInt(1, r.getConfNo());
@@ -239,10 +232,38 @@ public class DatabaseConnectionHandler {
         }
     }
 
+    public Rental  makeRentalFromReservation(int confNo, String v_license, String cardName, int cardNo, Timestamp exp) {
+        try {
+            PreparedStatement ps = connection.prepareStatement("SELECT * FROM reservations WHERE reservations_confNo = ?");
+            ps.setInt(1, confNo);
+            ResultSet rs = ps.executeQuery();
+            rs.next();
+
+            Random rand = new Random();
+            int rid = rand.nextInt(90000000) + 10000000;
+
+            Rental r = new Rental(rid, v_license,
+                    rs.getInt("customer_dlicense"),
+                    rs.getTimestamp("reservations_from"),
+                    rs.getTimestamp("reservations_to"),
+                    getOdomFromVehicle(v_license),
+                    cardName,
+                    cardNo,
+                    exp,
+                    confNo);
+            rs.close();
+            return r;
+        } catch (SQLException e) {
+            System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+            return null;
+        }
+    }
+
     public void deleteReservation(int confno) {
         try {
             PreparedStatement ps = connection.prepareStatement("DELETE FROM reservations WHERE reservations_confNo = ?");
             ps.setInt(1, confno);
+
 
             ps.executeUpdate();
             connection.commit();
@@ -326,7 +347,7 @@ public class DatabaseConnectionHandler {
 
     public boolean vehicleTypeAvailable(String vtname) {
         try {
-            PreparedStatement ps = connection.prepareStatement("SELECT vt_name FROM vehicles where (vt_name = ? AND v_status = ?)");
+            PreparedStatement ps = connection.prepareStatement("SELECT vt_name FROM vehicles WHERE (vt_name = ? AND v_status = ?)");
             ps.setString(1, vtname);
             ps.setString(2, "A");
             ResultSet rs = ps.executeQuery();
@@ -340,11 +361,12 @@ public class DatabaseConnectionHandler {
 
     public String getAvailableOfType(String vtname) {
         try {
-            PreparedStatement ps = connection.prepareStatement("SELECT v_license FROM vehicles where (vt_name = ? AND v_status = ?)");
+            PreparedStatement ps = connection.prepareStatement("SELECT v_license FROM vehicles WHERE (vt_name = ? AND v_status = ?)");
             ps.setString(1, vtname);
             ps.setString(2, "A");
             ResultSet rs = ps.executeQuery();
-            return vtname;
+            rs.next();
+            return rs.getString("v_license");
         } catch (SQLException e) {
             System.out.println(EXCEPTION_TAG + " " + e.getMessage());
             rollbackConnection();
@@ -996,7 +1018,7 @@ public class DatabaseConnectionHandler {
 
     public boolean confNumberExists(int confNumber) {
         try {
-            PreparedStatement ps = connection.prepareStatement("SELECT COUNT(*) from RESERVATION where confNumber = ?");
+            PreparedStatement ps = connection.prepareStatement("SELECT reservations_confNo FROM reservations WHERE reservations_confNo = ?");
             ps.setInt(1, confNumber);
             ResultSet rs = ps.executeQuery();
             return rs.next();
@@ -1031,11 +1053,8 @@ public class DatabaseConnectionHandler {
             PreparedStatement ps = connection.prepareStatement("SELECT v_odometer FROM vehicles WHERE v_license = ?");
             ps.setString(1, vlicense);
             ResultSet rs = ps.executeQuery();
-
-            // get info on ResultSet
-            ResultSetMetaData rsmd = rs.getMetaData();
             rs.next();
-            int odom = rs.getInt("reservations_to");
+            int odom = rs.getInt("v_odometer");
             rs.close();
             return odom;
         } catch (SQLException e) {

@@ -54,6 +54,8 @@ public interface TerminalTransactionsDelegate {
 
     void setRented(String vlicense);
 
+    Rental  makeRentalFromReservation(int confNo, String v_license, String cardName, int cardNo, Timestamp exp);
+
     void makeRental(Rental rental);
 
     String getAvailableVlicenseOfType(String vt);

@@ -28,7 +28,7 @@ public class TerminalTransactions {
     }
 
 
-    public void showMainMenu(TerminalTransactionsDelegate delegate) throws ParseException {
+    public void showMainMenu(TerminalTransactionsDelegate delegate) {
         this.delegate = delegate;
 
         bufferedReader = new BufferedReader(new InputStreamReader(System.in));
@@ -86,12 +86,10 @@ public class TerminalTransactions {
 
 
     private void handleMakeReport() {
-
-
         String date = null;
         Timestamp sqlDate = null;
         while (sqlDate == null || date.length() <= 0) {
-            System.out.print("Please enter when you'd like to start your rental (yyyy-mm-dd hh:mm:ss): ");
+            System.out.print("Please enter the date you'd like to see your report for (yyyy-mm-dd 00:00:00): ");
             date = readLine().trim();
             try {
                 Date startDate = dateFormat.parse(date);
@@ -308,13 +306,13 @@ public class TerminalTransactions {
 
         delegate.insertReservation(reso);
 
-        System.out.println("Thank you for the completing the reservation with confirmation number: " + confno);
+        System.out.println("Thank you for the completing the reservation with confirmation number: " + reso.getConfNo());
         System.out.println("These are the details of your reservation: ");
-        System.out.println("Confirmation No: " + confno);
-        System.out.println("Vehicle Type: " + vtname);
-        System.out.println("Start Date: " + sqlStartDate);
-        System.out.println("Return Date: " + sqlEndDate);
-        System.out.println("Your Driver License Number: " + dlicense);
+        System.out.println("Confirmation No: " + reso.getConfNo());
+        System.out.println("Vehicle Type: " + reso.getVtname());
+        System.out.println("Start Date: " + reso.getFromDate());
+        System.out.println("Return Date: " + reso.getToDate());
+        System.out.println("Your Driver License Number: " + reso.getCustomer_dlicense());
     }
 
     private void handleNewCustomer(int dlicense) {
@@ -399,6 +397,8 @@ public class TerminalTransactions {
         float val = vt.calculateValue(t, sqlDate, odom - initOdom);
         Ret ret = new Ret(rid, sqlDate, odom, fullTank, val);
         delegate.makeReturn(ret);
+
+        System.out.println("Your total is: $" + ret.getValue());
     }
 
     private void handleMakeRental() {
@@ -411,11 +411,8 @@ public class TerminalTransactions {
         if (!delegate.confNumberExists(confNumber)) {
             System.out.println("Please complete a reservation first");
             handleMakeReservation();
-            int newResConfNo = INVALID_INPUT;
-            while (newResConfNo == INVALID_INPUT) {
-                System.out.print("Please enter your new reservation confirmation number: ");
-                newResConfNo = readInteger(false);
-            }
+            handleMakeRental();
+            return;
         }
 
         String cardName = null;
@@ -440,40 +437,29 @@ public class TerminalTransactions {
                 sqlDate = new java.sql.Timestamp(endDate.getTime());
             } catch (ParseException e) {
                 System.out.println("Not a valid date");
-                date = null;
+                sqlDate = null;
                 continue;
             }
         }
-
-        Random rand = new Random();
-        int rid = rand.nextInt(90000000) + 10000000;
 
         String vt = delegate.getVtFromRes(confNumber);
         String vlicense = delegate.getAvailableVlicenseOfType(vt);
         delegate.setRented(vlicense);
 
-
-        Timestamp from = delegate.getFromDateFromRes(confNumber);
-        Timestamp to = delegate.getToDateFromRes(confNumber);
-        int dlicense = delegate.getDlicenseFromRes(confNumber);
-        int cellphone = delegate.getPhoneFromCustomer(dlicense);
-        int odomoter = delegate.getOdomFromVehicle(vlicense);
-
-        Rental rental = new Rental(rid, vlicense, cellphone, from, to, odomoter, cardName, cardNo, sqlDate, confNumber);
+        Rental rental = delegate.makeRentalFromReservation(confNumber, vlicense, cardName, cardNo, sqlDate);
 
         delegate.makeRental(rental);
 
-        System.out.println("Thank you for the completing your rental from Reservation: " + confNumber);
+        System.out.println("Thank you for the completing your rental from reservation: " + rental.getConfNo());
         System.out.println("These are the details of your Rental: ");
-        System.out.println("Rental ID: " + rid);
-        System.out.println("Vehicle License: " + vlicense);
-        System.out.println("Customer Phone Number: " + cellphone);
-        System.out.println("Start of Rental: " + from);
-        System.out.println("End of Rental: " + to);
-        System.out.println("Vehicle Initial Odometer: " + odomoter);
-        System.out.println("Customer Card Name: " + cardName);
-        System.out.println("Customer Card Number: " + cardNo);
-        System.out.println("Customer Card Exp Date: " + sqlDate);
+        System.out.println("Rental ID: " + rental.getRid());
+        System.out.println("Vehicle License: " + rental.getV_license());
+        System.out.println("Start of Rental: " + rental.getFromDate());
+        System.out.println("End of Rental: " + rental.getToDate());
+        System.out.println("Vehicle Initial Odometer: " + rental.getOdomoter());
+        System.out.println("Customer Card Name: " + rental.getCardName());
+        System.out.println("Customer Card Number: " + rental.getCardNo());
+        System.out.println("Customer Card Exp Date: " + rental.getExpDate());
     }
 
 
