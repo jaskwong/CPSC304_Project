@@ -162,6 +162,9 @@ public class DatabaseConnectionHandler {
             ps.setTimestamp(2, ret.getTime());
             ps.setInt(3, ret.getOdomoter());
             ps.setBoolean(4, ret.isFulltank());
+            ps.setFloat(5, ret.getValue());
+
+            ps.executeUpdate();
 
             connection.commit();
 
