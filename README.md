@@ -1,1 +1,1 @@
-# CPSC304_Project
+# Car Rental Simulation
